@@ -1,0 +1,21 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Vazir', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$link-color: #000000;
+$link-hover-color: #e3342f;
+
+$enable-gradients: true;
+
+$username-colors: (
+    user: #343a40,
+    admin: #b32e3b,
+    author: #552eb3,
+    partner: #2369b5
+) !default;
+
+$h1-font-size: 1.5rem;

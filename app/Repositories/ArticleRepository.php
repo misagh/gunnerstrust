@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Article;
+use App\Services\ArticleImageFinder;
+
+class ArticleRepository extends Repository {
+
+    public function __construct(Article $article = null)
+    {
+        $this->model = $article ?: new Article();
+    }
+
+    public function insertArticle($data)
+    {
+        $data['cover'] = (new ArticleImageFinder)->find($data['source']);
+        $data['slug'] = $this->getSlug($data['title']);
+        $data['user_id'] = auth()->id();
+
+        $article = $this->create($data);
+
+        $this->insertTags($article, $data['tags']);
+
+        return $article;
+    }
+
+    public function updateArticle($data)
+    {
+        if ($data['source'] !== $this->model->source)
+        {
+            $data['cover'] = (new ArticleImageFinder)->find($data['source']);
+        }
+
+        $this->update($this->model, $data);
+
+        $this->updateTags($this->model, $data['tags']);
+
+        return $this->model;
+    }
+
+    public function getPinnedArticles()
+    {
+        return $this->model->where('pinned', true)
+                           ->orderByDesc('id')
+                           ->get();
+    }
+
+    public function getUnpinnedArticles()
+    {
+        return $this->model->where('pinned', false)
+                           ->orderByDesc('id')
+                           ->paginate(static::PAGINATION_LIMIT);
+    }
+
+    public function getLatestArticles()
+    {
+        return $this->model->orderByDesc('id')
+                           ->paginate(static::PAGINATION_LIMIT);
+    }
+
+    public function getComments($offset = null)
+    {
+        $comments = $this->model->comments()
+                                ->with('user')
+                                ->with('reactions')
+                                ->orderByDesc('id')
+                                ->offset(intval($offset))
+                                ->take(10)
+                                ->get();
+
+        return $comments;
+    }
+
+    private function insertTags(Article $article, $tags_string)
+    {
+        $tags = $this->getTags($article, $tags_string);
+
+        return $article->tags()->saveMany($tags);
+    }
+
+    private function updateTags(Article $article, $tags_string)
+    {
+        $tags = $this->getTags($article, $tags_string);
+
+        return $article->tags()->sync(collect($tags)->pluck('id'));
+    }
+
+    private function getTags(Article $article, $tags_string)
+    {
+        $tags = [];
+
+        foreach (explode(',', $tags_string) as $tag)
+        {
+            $tag = trim($tag);
+
+            empty($tag) OR $tags[] = (new TagRepository)->insertTag($tag);
+        }
+
+        return $tags;
+    }
+}

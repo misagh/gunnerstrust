@@ -1,1 +1,150 @@
-//
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+@font-face {
+    font-family: Vazir;
+    src: url("../fonts/Vazir-WOL.woff") format("woff");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Vazir;
+    src: url("../fonts/Vazir-Bold-WOL.woff") format("woff");
+    font-weight: bold;
+}
+
+@import 'variables';
+@import '~bootstrap-v4-rtl/scss/bootstrap-rtl';
+@import '~summernote/dist/summernote-bs4.css';
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #f1f1f1;
+    background-image: url("../img/bg.png");
+    display: flex;
+    flex-direction: column;
+}
+
+.eng-font {
+    font-family: "Nunito", sans-serif !important;
+    direction: ltr !important;
+}
+
+a {
+    color: $black;
+    text-decoration: none;
+
+    &:hover {
+        color: $danger;
+        text-decoration: none;
+    }
+}
+
+.text-white {
+    a {
+        color: $white !important;
+    }
+}
+
+.articles {
+    .card {
+        cursor: pointer;
+
+        &:hover {
+            background-color: $danger;
+            color: $white;
+
+            a {
+                color: $white;
+            }
+        }
+    }
+}
+
+.article {
+    .card-overlay .card-title {
+        bottom: 0;
+        padding: 1rem;
+        background: rgba(0, 0, 0, .62)
+    }
+
+    .card-text {
+        font-size: 1.05rem;
+        line-height: 1.9rem;
+
+        p {
+            margin: 0 !important;
+        }
+    }
+}
+
+.comment-box {
+    .username {
+        top: -1px;
+        width: 150px;
+        right: -6px;
+        padding: 0.68rem 0.5rem;
+        @include border-top-right-radius(10px);
+    }
+    .user-badge {
+        margin-right: 150px !important;
+    }
+    .reaction-box {
+        padding: 2px 4px;
+        background: #efefef;
+        border: 2px solid #888e92;
+        @include border-radius(10px);
+    }
+    .comment-body {
+        white-space: pre-line;
+        line-height: 1.9rem;
+    }
+}
+
+@each $type, $color in $username-colors {
+    .username-#{$type} {
+        background-color: #{$color};
+    }
+}
+
+.emojies {
+    left: 0;
+    bottom: 35px;
+    width: 185px;
+    background: #eaeaea;
+    text-align: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+footer {
+    width: 100%;
+    bottom: 0;
+
+    a {
+        color: $white;
+
+        &:hover {
+            color: $warning !important;
+        }
+    }
+
+    li {
+        margin-bottom: $spacer - 0.5;
+    }
+
+    .logo {
+        font-size: 1.7rem;
+        letter-spacing: 0.1rem;
+        font-family: 'Metal Mania', cursive !important;
+    }
+
+    .bottom {
+        background-color: #292f35;
+        overflow: hidden;
+    }
+}
