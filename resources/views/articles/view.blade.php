@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
+@section('title', $article->title)
+@section('description', $article->summary)
+
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 article">
+            <div class="col-md-8 article mb-3">
                 <div class="card">
                     <div class="card-overlay position-relative">
                         <img src="{{ get_cover($article->cover) }}" class="card-img-top" alt="{{ $article->title }}">
@@ -27,8 +30,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="list-group">
+            <div class="col-md-4 mb-3">
+                <div class="list-group p-0">
                     @foreach($articles as $article_list)
                     <a href="{{ route('articles.view', $article_list->slug) }}" class="list-group-item list-group-item-action {{ $article_list->id === $article->id ? 'list-group-item-danger active' : '' }}">
                         <i class="fa fa-futbol mr-2"></i>{{ $article_list->title }}
@@ -37,12 +40,8 @@
                 </div>
             </div>
         </div>
-        <div class="comments mt-4" id="comments">
-            @auth
-                <comment-box :commentable="{type: 'article', id: '{{ $article->id }}'}"></comment-box>
-            @else
-                <div class="alert alert-danger">برای ارسال نظر لطفا وارد سایت شوید.</div>
-            @endauth
+        <div class="comments mt-2" id="comments">
+            <comment-box :commentable="{type: 'article', id: '{{ $article->id }}', auth: '{{ $auth }}'}"></comment-box>
         </div>
     </div>
 @endsection

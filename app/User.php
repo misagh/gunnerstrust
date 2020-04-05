@@ -13,6 +13,14 @@ class User extends Authenticatable {
     protected $fillable = ['name', 'username', 'email', 'password'];
     protected $hidden = ['password', 'remember_token'];
     protected $casts = ['email_verified_at' => 'datetime'];
+    protected $appends = ['avatar', 'title'];
+
+    public static $titles = [
+        'admin'   => 'مدیر سایت',
+        'author'  => 'مترجم سایت',
+        'partner' => 'همکار سایت',
+        'user'    => 'کاربر سایت',
+    ];
 
     public function articles()
     {
@@ -37,5 +45,27 @@ class User extends Authenticatable {
     public function points()
     {
         return $this->hasMany(Point::class);
+    }
+
+    public function details()
+    {
+        return $this->hasOne(Detail::class);
+    }
+
+    public function getAvatarAttribute()
+    {
+        $file = null;
+
+        if ($avatar = $this->avatars->first())
+        {
+            $file = $avatar->file_name;
+        }
+
+        return user_avatar($file);
+    }
+
+    public function getTitleAttribute()
+    {
+        return @static::$titles[$this->role];
     }
 }

@@ -39,16 +39,21 @@ class ArticleRepository extends Repository {
         return $this->model;
     }
 
+    public function updatePins()
+    {
+        return $this->model->where('pinned', '>', 0)->update(['pinned' => 0]);
+    }
+
     public function getPinnedArticles()
     {
-        return $this->model->where('pinned', true)
-                           ->orderByDesc('id')
+        return $this->model->where('pinned', '>', 0)
+                           ->orderBy('pinned')
                            ->get();
     }
 
     public function getUnpinnedArticles()
     {
-        return $this->model->where('pinned', false)
+        return $this->model->where('pinned', 0)
                            ->orderByDesc('id')
                            ->paginate(static::PAGINATION_LIMIT);
     }
@@ -57,19 +62,6 @@ class ArticleRepository extends Repository {
     {
         return $this->model->orderByDesc('id')
                            ->paginate(static::PAGINATION_LIMIT);
-    }
-
-    public function getComments($offset = null)
-    {
-        $comments = $this->model->comments()
-                                ->with('user')
-                                ->with('reactions')
-                                ->orderByDesc('id')
-                                ->offset(intval($offset))
-                                ->take(10)
-                                ->get();
-
-        return $comments;
     }
 
     private function insertTags(Article $article, $tags_string)

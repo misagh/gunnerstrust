@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'ذخیره خبر')
+
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header">افزودن خبر جدید</div>
+            <div class="card-header">ذخیره خبر</div>
             <div class="card-body">
                 <form action="" method="post">
                     @csrf

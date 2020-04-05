@@ -48,6 +48,24 @@ a {
     }
 }
 
+header {
+    background-image: url('../img/header.jpg');
+    background-size: cover;
+    height: 180px;
+    overflow: hidden;
+    .title {
+        font-size: 60px;
+        font-family: Metal Mania, cursive !important;
+        letter-spacing: 3px;
+        display: block;
+    }
+    .slogan {
+        font-size: 18px;
+        margin-top: -17px;
+        display: block;
+    }
+}
+
 .articles {
     .card {
         cursor: pointer;
@@ -88,9 +106,6 @@ a {
         padding: 0.68rem 0.5rem;
         @include border-top-right-radius(10px);
     }
-    .user-badge {
-        margin-right: 150px !important;
-    }
     .reaction-box {
         padding: 2px 4px;
         background: #efefef;
@@ -119,6 +134,10 @@ a {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.clearfix {
+    clear: both;
 }
 
 footer {

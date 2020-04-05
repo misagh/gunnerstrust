@@ -1,6 +1,6 @@
 <template>
     <div class="comment-box">
-        <div class="accordion mb-4" id="newComment">
+        <div v-if="commentable.auth" class="accordion mb-4" id="newComment">
             <div class="card bg-gradient-success text-white">
                 <div class="card-header" id="newCommentHead">
                     <h2 class="mb-0">
@@ -22,38 +22,48 @@
                 </div>
             </div>
         </div>
+        <div v-else class="alert alert-danger">برای ارسال نظر لطفا وارد سایت شوید.</div>
         <div class="card shadow mb-3" v-for="comment in comments" :key="comment.id">
             <div class="card-header p-0">
                 <div class="username position-absolute float-right text-center text-white eng-font" :class="'username-' + comment.user.role">
-                    <b>{{ comment.user.username }}</b></div>
-                <!--<div class="user-badge float-right small rounded bg-danger text-white font-weight-bold m-2 px-2 py-1">مدیر سایت</div>-->
+                    <b><a :href="'/users/profile/' + comment.user.username">{{ comment.user.username }}</a></b>
+                </div>
                 <div class="float-left small m-2 px-2 py-1">{{ comment.posted_at }}</div>
             </div>
-            <div class="card-body">
+            <div class="card-body pb-2">
                 <p v-if="comment.edit">
                     <textarea rows="5" class="form-control mb-3" v-model="commentBodyEdited"></textarea>
                     <button type="button" class="btn btn-success" @click="editComment(comment.id)">ذخیره تغییرات</button>
                     <button type="button" class="btn btn-secondary" @click="comment.edit = false">انصراف</button>
                 </p>
-                <p v-else class="card-text mb-4 comment-body" v-html="comment.body"></p>
-                <div class="float-left position-relative" v-if="comment.reactions.length > 0 || ! comment.own_comment">
-                    <div class="emojies shadow-sm py-1 position-absolute eng-font" v-show="comment.emojies">
-                        <div class="d-inline-block m-2 cursor-pointer" v-for="emoji in emojies">
-                            <img v-bind:src="'/img/emoji/' + emoji + '.png'" width="28" @click="addReaction(comment.id, emoji)">
-                        </div>
+                <div v-else class="card-text">
+                    <div class="float-right mr-3 mb-3">
+                        <a :href="'/users/profile/' + comment.user.username">
+                            <img class="rounded-circle shadow" :src="comment.user.avatar" width="100">
+                        </a>
                     </div>
-                    <span class="cursor-pointer d-inline-block mt-2 ml-2" v-if="! comment.own_comment">
+                    <p class="comment-body" v-html="comment.body"></p>
+                </div>
+                <div v-if="user" class="d-block overflow-hidden clearfix pt-3 mb-2">
+                    <div class="float-left position-relative" v-if="comment.reactions.length > 0 || ! comment.own_comment">
+                        <div class="emojies shadow-sm py-1 position-absolute eng-font" v-show="comment.emojies">
+                            <div class="d-inline-block m-2 cursor-pointer" v-for="emoji in emojies">
+                                <img v-bind:src="'/img/emoji/' + emoji + '.png'" width="28" @click="addReaction(comment.id, emoji)">
+                            </div>
+                        </div>
+                        <span class="cursor-pointer d-inline-block mt-2 ml-2" v-if="! comment.own_comment">
                         <i class="show-emojies text-muted fas fa-lg fa-smile" @click="showReactionEmojies(comment.id)"></i>
                     </span>
-                    <div class="reaction-box d-inline-block float-right mx-1" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}">
-                        <span class="font-weight-bold">{{ data.count }}</span>
-                        <img v-bind:src="'/img/emoji/' + data.reaction + '.png'" width="20">
+                        <div class="reaction-box d-inline-block float-right mx-1" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}">
+                            <span class="font-weight-bold">{{ data.count }}</span>
+                            <img v-bind:src="'/img/emoji/' + data.reaction + '.png'" width="20">
+                        </div>
                     </div>
-                </div>
-                <div class="float-right" v-if="(user.role === 'admin' || comment.own_comment) && ! comment.edit">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" @click="comment.edit = true, commentBodyEdited = comment.body">ویرایش</button>
-                    <div class="d-inline-block">
-                        <vue-confirmation-button :messages="customMessages" :css="customCss" v-on:confirmation-success="deleteComment(comment.id)"></vue-confirmation-button>
+                    <div class="float-right" v-if="((user && user.role === 'admin') || comment.own_comment) && ! comment.edit">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" @click="comment.edit = true, commentBodyEdited = comment.body">ویرایش</button>
+                        <div class="d-inline-block">
+                            <vue-confirmation-button :messages="customMessages" :css="customCss" v-on:confirmation-success="deleteComment(comment.id)"></vue-confirmation-button>
+                        </div>
                     </div>
                 </div>
             </div>

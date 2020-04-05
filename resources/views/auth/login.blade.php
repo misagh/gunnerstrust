@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'ورود به سایت')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -57,11 +59,11 @@
                                     {{ __('ورود به سایت') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('فراموشی رمز عبور') }}
-                                    </a>
-                                @endif
+{{--                                @if (Route::has('password.request'))--}}
+{{--                                    <a class="btn btn-link" href="{{ route('password.request') }}">--}}
+{{--                                        {{ __('فراموشی رمز عبور') }}--}}
+{{--                                    </a>--}}
+{{--                                @endif--}}
                             </div>
                         </div>
                     </form>

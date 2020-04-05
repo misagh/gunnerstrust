@@ -17,7 +17,7 @@ class CreateArticlesTable extends Migration {
         {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
-            $table->boolean('pinned')->default(false)->index();
+            $table->unsignedTinyInteger('pinned')->default(0)->index();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('summary');

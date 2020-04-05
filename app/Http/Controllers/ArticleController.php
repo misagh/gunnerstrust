@@ -9,7 +9,7 @@ class ArticleController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('admin', ['except' => 'view']);
+        $this->middleware('author', ['except' => 'view']);
     }
 
     public function add()
@@ -82,7 +82,21 @@ class ArticleController extends Controller {
     public function lists()
     {
         $articles = (new ArticleRepository)->getLatestArticles();
+        $pins = (new ArticleRepository)->getPinnedArticles()->pluck('id');
 
-        return view('articles.lists', compact('articles'));
+        return view('articles.lists', compact('articles', 'pins'));
+    }
+
+    public function pin()
+    {
+        (new ArticleRepository)->updatePins();
+
+        $pin1 = (new ArticleRepository)->findOrFail(intval(request('pin1')));
+        $pin1->setPin(1);
+
+        $pin2 = (new ArticleRepository)->findOrFail(intval(request('pin2')));
+        $pin2->setPin(2);
+
+        return redirect()->back();
     }
 }

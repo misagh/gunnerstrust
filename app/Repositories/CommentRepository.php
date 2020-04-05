@@ -11,6 +11,24 @@ class CommentRepository extends Repository {
         $this->model = $comment ?: new Comment();
     }
 
+    public function getList()
+    {
+        return $this->model->with('user')
+                           ->select(['created_at', 'user_id', 'commentable_type', 'commentable_id'])
+                           ->paginate(static::PAGINATION_LIMIT);
+    }
+
+    public function getComments($model, $offset = null)
+    {
+        return $model->comments()
+                     ->with('user')
+                     ->with('reactions')
+                     ->orderByDesc('id')
+                     ->offset(intval($offset))
+                     ->take(10)
+                     ->get();
+    }
+
     public function insertComment($commentable, $body)
     {
         $this->model->fill(compact('body'));

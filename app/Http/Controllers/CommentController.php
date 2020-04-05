@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\ReactionRepository;
+use App\Repositories\TopicRepository;
 
 class CommentController extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'fetch']);
+    }
+
     public function fetch($type, $id)
     {
-        $article = $this->getModel($type, $id);
+        $model = $this->getModel($type, $id);
 
-        $comments = (new ArticleRepository($article))->getComments(request('offset'));
+        $comments = (new CommentRepository)->getComments($model, request('offset'));
         $user = auth()->user();
 
         return response(compact('comments', 'user'));
@@ -20,11 +26,11 @@ class CommentController extends Controller {
 
     public function add($type, $id)
     {
-        $article = $this->getModel($type, $id);
+        $model = $this->getModel($type, $id);
 
-        (new CommentRepository)->insertComment($article, request('body'));
+        (new CommentRepository)->insertComment($model, request('body'));
 
-        $comments = (new ArticleRepository($article))->getComments();
+        $comments = (new CommentRepository)->getComments($model, request('offset'));
 
         return response(compact('comments'));
     }
@@ -65,12 +71,22 @@ class CommentController extends Controller {
         return response(compact('comment'));
     }
 
+    public function list()
+    {
+        $comments = (new CommentRepository)->getList();
+
+        return view('comments.list', compact('comments'));
+    }
+
     private function getModel($type, $id)
     {
         switch ($type)
         {
             case 'article':
                 return (new ArticleRepository)->findOrFail($id);
+                break;
+            case 'topic':
+                return (new TopicRepository)->findOrFail($id);
                 break;
             default:
                 return null;

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'ثبت نام')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -30,6 +32,7 @@
 
                             <div class="col-md-6">
                                 <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" dir="ltr" required autocomplete="username">
+                                <small class="text-muted">فقط حروف  انگلیسی و اعداد قابل قبول هستند.</small>
 
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -58,6 +61,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" dir="ltr" required autocomplete="new-password">
+                                <small class="text-muted">حداقل باید شامل هشت کاراکتر باشد.</small>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
