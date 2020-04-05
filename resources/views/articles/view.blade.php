@@ -26,7 +26,10 @@
                             </div>
                             <hr class="w-100">
                         </div>
-                        <div class="card-text">{!! $article->body !!}</div>
+                        <div class="card-text">
+                            {!! $article->body !!}
+                            <div class="float-left small mt-3"><a target="_blank" href="{{ $article->source }}" class="rounded text-white bg-info py-1 px-3">لینک منبع</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
