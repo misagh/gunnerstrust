@@ -27,7 +27,7 @@ class ArticleRepository extends Repository {
 
     public function updateArticle($data)
     {
-        if ($data['source'] !== $this->model->source)
+        if ($data['source'] !== $this->model->source || $data['cover'] !== $this->model->cover)
         {
             $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         }
