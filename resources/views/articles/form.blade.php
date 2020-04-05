@@ -22,6 +22,10 @@
                         <input type="text" name="source" class="form-control" value="{{ $article->source ?? '' }}" dir="ltr">
                     </div>
                     <div class="form-group">
+                        <label>لینک تصویر</label>
+                        <input type="text" name="cover" class="form-control" dir="ltr">
+                    </div>
+                    <div class="form-group">
                         <label>تگ ها</label>
                         <tag-selector :tags="{title: this.articleTitle, tags: '{{ $article->tags ?? '' }}', selector: '{{ empty($article->title) }}'}"></tag-selector>
                     </div>

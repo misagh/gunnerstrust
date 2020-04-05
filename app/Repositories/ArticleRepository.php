@@ -14,7 +14,7 @@ class ArticleRepository extends Repository {
 
     public function insertArticle($data)
     {
-        $data['cover'] = (new ArticleImageFinder)->find($data['source']);
+        $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         $data['slug'] = $this->getSlug($data['title']);
         $data['user_id'] = auth()->id();
 
@@ -29,7 +29,7 @@ class ArticleRepository extends Repository {
     {
         if ($data['source'] !== $this->model->source)
         {
-            $data['cover'] = (new ArticleImageFinder)->find($data['source']);
+            $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         }
 
         $this->update($this->model, $data);

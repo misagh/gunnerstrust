@@ -7,11 +7,13 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ArticleImageFinder {
 
-    public function find($url)
+    public function find($url, $cover)
     {
         $file_name = '';
 
-        if ($img = $this->fetchFromUrl($url))
+        $img = $cover ?: $this->fetchFromUrl($url);
+
+        if (! empty($img))
         {
             $extension = last(explode('.', $img));
             $file_name = substr(sha1($img), 0, 15) . '.' . $extension;
