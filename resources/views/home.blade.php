@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><a class="stretched-link" href="{{ route('articles.view', $pin->slug) }}">{{ $pin->title }}</a></h5>
                     <p class="card-text">{{ $pin->summary }}</p>
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                    <p class="card-text"><small>{{ $pin->created_at->diffForHumans() }}</small></p>
                 </div>
             </div>
         @endforeach
@@ -24,7 +24,7 @@
                 <img src="{{ get_cover($article->cover) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a></h5>
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                    <p class="card-text"><small>{{ $article->created_at->diffForHumans() }}</small></p>
                 </div>
             </div>
             @if ($loop->iteration % 3 === 0)
