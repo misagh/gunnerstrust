@@ -11,9 +11,14 @@
             <div class="card shadow bg-dark text-white">
                 <img src="{{ get_cover($pin->cover) }}" class="card-img-top" alt="{{ $pin->title }}">
                 <div class="card-body">
-                    <h5 class="card-title"><a class="stretched-link" href="{{ route('articles.view', $pin->slug) }}">{{ $pin->title }}</a></h5>
+                    <h4 class="card-title font-weight-bold"><a class="stretched-link" href="{{ route('articles.view', $pin->slug) }}">{{ $pin->title }}</a></h4>
                     <p class="card-text">{{ $pin->summary }}</p>
-                    <p class="card-text"><small>{{ $pin->created_at->diffForHumans() }}</small></p>
+                    <p class="card-text">
+                        <small>{{ $pin->created_at->diffForHumans() }}</small>
+                        @if ($pin->comments_count > 0)
+                        <span class="float-left eng-font font-weight-bold"><i class="fas fa-comment-dots ml-1"></i>{{ $pin->comments_count }}</span>
+                        @endif
+                    </p>
                 </div>
             </div>
         @endforeach
@@ -24,7 +29,12 @@
                 <img src="{{ get_cover($article->cover) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a></h5>
-                    <p class="card-text"><small>{{ $article->created_at->diffForHumans() }}</small></p>
+                    <p class="card-text">
+                        <small>{{ $article->created_at->diffForHumans() }}</small>
+                        @if ($article->comments_count > 0)
+                        <span class="float-left eng-font font-weight-bold"><i class="fas fa-comment-dots ml-1"></i>{{ $article->comments_count }}</span>
+                        @endif
+                    </p>
                 </div>
             </div>
             @if ($loop->iteration % 3 === 0)

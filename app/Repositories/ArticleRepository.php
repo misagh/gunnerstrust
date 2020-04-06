@@ -17,6 +17,7 @@ class ArticleRepository extends Repository {
         $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         $data['slug'] = $this->getSlug($data['title']);
         $data['user_id'] = auth()->id();
+        $data['body'] = clean($data['body']);
 
         $article = $this->create($data);
 
@@ -31,6 +32,8 @@ class ArticleRepository extends Repository {
         {
             $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         }
+
+        $data['body'] = clean($data['body']);
 
         $this->update($this->model, $data);
 

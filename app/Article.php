@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model {
 
     protected $guarded = [];
-    protected $appends = ['url'];
+    protected $appends = ['url', 'comments_count'];
 
     public function user()
     {
@@ -32,6 +32,11 @@ class Article extends Model {
     public function getUrlAttribute()
     {
         return route('articles.view', $this->slug);
+    }
+
+    public function getCommentsCountAttribute()
+    {
+        return $this->comments()->count();
     }
 
     public function setPin($pin)

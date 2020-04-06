@@ -66,7 +66,7 @@ abstract class Repository {
 
     public function getSlug($string)
     {
-        $slug = str_replace(['،', ':', '-', ',', '!', '.', '|', '#', '%', '&', '*', '(', ')', '=', '_', '+', '/', '[', ']'], '', $string);
+        $slug = str_replace(['،', '"', ':', '-', ',', '!', '.', '|', '#', '%', '&', '*', '(', ')', '=', '_', '+', '/', '[', ']'], '', $string);
         $slug = remove_extra_space($slug);
         $slug = str_replace(' ', '-', $slug);
         $slug_last = $this->model->where('slug', 'LIKE', $slug . '%')->orderByDesc('id')->first();
