@@ -33,6 +33,7 @@ class ArticleRepository extends Repository {
             $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         }
 
+        empty($data['cover']) AND $data['cover'] = $this->model->cover;
         $data['body'] = clean($data['body']);
 
         $this->update($this->model, $data);

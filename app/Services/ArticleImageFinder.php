@@ -15,6 +15,8 @@ class ArticleImageFinder {
 
         if (! empty($img))
         {
+            $img = preg_replace('/\?.*/', '', $img);
+
             $extension = last(explode('.', $img));
             $file_name = substr(sha1($img), 0, 15) . '.' . $extension;
 
@@ -44,9 +46,7 @@ class ArticleImageFinder {
 
             $crawler = new Crawler($client->getBody()->getContents());
 
-            $url = $crawler->filter('meta[property="og:image"]')->attr('content');
-
-            return preg_replace('/\?.*/', '', $url);
+            return $crawler->filter('meta[property="og:image"]')->attr('content');
         }
         catch (\Exception $e)
         {
