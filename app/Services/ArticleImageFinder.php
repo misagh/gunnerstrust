@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use Image;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class ArticleImageFinder {
 
-    public function find($url, $cover)
+    public function find($url, $cover, $replace = false)
     {
         $file_name = '';
 
@@ -29,13 +31,31 @@ class ArticleImageFinder {
                 mkdir($path);
             }
 
-            if (! file_exists($file_path))
+            if (! file_exists($file_path) || $replace)
             {
                 file_put_contents($file_path, file_get_contents($img));
+
+                $this->optimize($file_path);
             }
         }
 
         return $file_name;
+    }
+
+    private function optimize($file_path)
+    {
+        $img = Image::make($file_path)->resize(960, 540, function ($constraint)
+        {
+            $constraint->aspectRatio();
+        });
+
+        $img->save($file_path);
+
+        $optimizer = OptimizerChainFactory::create();
+
+        $optimizer->optimize($file_path);
+
+        $this->convert($file_path, $file_path);
     }
 
     private function fetchFromUrl($url)
@@ -52,5 +72,17 @@ class ArticleImageFinder {
         {
             return null;
         }
+    }
+
+    public function convert($from, $to)
+    {
+        $command = 'convert '
+                   . $from
+                   . ' '
+                   . '-sampling-factor 4:2:0 -strip -quality 65'
+                   . ' '
+                   . $to;
+
+        return `$command`;
     }
 }

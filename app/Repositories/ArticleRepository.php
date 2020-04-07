@@ -30,7 +30,7 @@ class ArticleRepository extends Repository {
     {
         if ($data['source'] !== $this->model->source || (! empty($data['cover']) && $data['cover'] !== $this->model->cover))
         {
-            $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
+            $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover'], true);
         }
 
         empty($data['cover']) AND $data['cover'] = $this->model->cover;
