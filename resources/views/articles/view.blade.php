@@ -13,8 +13,9 @@
     <meta name="image" content="{{ get_cover($article->cover) }}">
     <meta itemprop="image" content="{{ get_cover($article->cover) }}">
     <meta name="twitter:image:src" content="{{ get_cover($article->cover) }}">
-    <meta name="twitter:card" content="{{ $article->summary }}">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $article->title }}">
+    <meta name="twitter:image:alt" content="{{ $article->title }}">
     <meta name="twitter:description" content="{{ $article->summary }}">
     <meta name="article:published_time" content="{{ $article->created_at->toIso8601String() }}">
     <meta name="article:author" content="{{ $article->user->name }}">
