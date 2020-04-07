@@ -3,6 +3,23 @@
 @section('title', $article->title)
 @section('description', $article->summary)
 
+@section('meta')
+    <meta property="og:title" content="{{ $article->title }}">
+    <meta property="og:site_name" content="GunnersTrust">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:description" content="{{ $article->summary }}">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="{{ get_cover($article->cover) }}">
+    <meta name="image" content="{{ get_cover($article->cover) }}">
+    <meta itemprop="image" content="{{ get_cover($article->cover) }}">
+    <meta name="twitter:image:src" content="{{ get_cover($article->cover) }}">
+    <meta name="twitter:card" content="{{ $article->summary }}">
+    <meta name="twitter:title" content="{{ $article->title }}">
+    <meta name="twitter:description" content="{{ $article->summary }}">
+    <meta name="article:published_time" content="{{ $article->created_at->toIso8601String() }}">
+    <meta name="article:author" content="{{ $article->user->name }}">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
