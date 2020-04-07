@@ -42,7 +42,7 @@ class ArticleImageFinder {
         return $file_name;
     }
 
-    private function optimize($file_path)
+    public function optimize($file_path)
     {
         $img = Image::make($file_path)->resize(960, 540, function ($constraint)
         {

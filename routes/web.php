@@ -32,6 +32,11 @@ Route::prefix('topics')->middleware('auth')->group(function ()
     Route::get('{slug}', 'TopicController@view')->name('topics.view');
 });
 
+Route::prefix('admin')->middleware('admin')->group(function ()
+{
+    Route::get('articles/optimize', 'AdminController@articlesOptimize')->name('admin.articles.optimize');
+});
+
 Route::prefix('users')->middleware('auth')->group(function ()
 {
     Route::post('/edit', 'UserController@edit')->name('users.edit');
