@@ -44,10 +44,7 @@ class ArticleImageFinder {
 
     public function optimize($file_path)
     {
-        $img = Image::make($file_path)->resize(960, 540, function ($constraint)
-        {
-            $constraint->aspectRatio();
-        });
+        $img = Image::make($file_path)->fit(960, 540);
 
         $img->save($file_path);
 
