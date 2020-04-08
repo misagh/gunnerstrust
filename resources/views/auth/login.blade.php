@@ -2,6 +2,20 @@
 
 @section('title', 'ورود به سایت')
 
+@section('meta')
+    <meta property="og:title" content="پایگاه خبری باشگاه آرسنال در ایران | ورود به سایت">
+    <meta property="og:site_name" content="GunnersTrust">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:description" content="وب سایت گانرزتراست، مرجع خبری باشگاه آرسنال انگلیس در ایران با حضور کاربران فارسی زبان، شما را دعوت می کند تا در بحث و تبادل نظرات فوتبالی و آزاد سایت شرکت نمایید.">
+    <meta property="og:image" content="{{ asset('img/favicon/android-chrome-512x512.png') }}">
+    <meta name="image" content="{{ asset('img/favicon/android-chrome-512x512.png') }}">
+    <meta itemprop="image" content="{{ asset('img/favicon/android-chrome-512x512.png') }}">
+    <meta name="twitter:image:src" content="{{ asset('img/cover2.jpg') }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="پایگاه خبری باشگاه آرسنال در ایران | ورود به سایت">
+    <meta name="twitter:description" content="وب سایت گانرزتراست، مرجع خبری باشگاه آرسنال انگلیس در ایران با حضور کاربران فارسی زبان، شما را دعوت می کند تا در بحث و تبادل نظرات فوتبالی و آزاد سایت شرکت نمایید.">
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
