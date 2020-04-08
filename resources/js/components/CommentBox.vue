@@ -44,7 +44,7 @@
                     </div>
                     <p class="comment-body" v-html="comment.body"></p>
                 </div>
-                <div v-if="user" class="d-block overflow-hidden clearfix pt-3 mb-2">
+                <div v-if="user" class="d-block clearfix pt-3 mb-2">
                     <div class="float-left position-relative" v-if="comment.reactions.length > 0 || ! comment.own_comment">
                         <div class="emojies shadow-sm py-1 position-absolute eng-font" v-show="comment.emojies">
                             <div class="d-inline-block m-2 cursor-pointer" v-for="emoji in emojies">

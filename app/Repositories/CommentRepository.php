@@ -15,6 +15,7 @@ class CommentRepository extends Repository {
     {
         return $this->model->with('user')
                            ->select(['created_at', 'user_id', 'commentable_type', 'commentable_id'])
+                           ->orderByDesc('id')
                            ->paginate(static::PAGINATION_LIMIT);
     }
 
