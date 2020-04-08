@@ -66,7 +66,7 @@
     <div class="col-12">
         <div class="card shadow bg-light mb-3 w-100">
             <div class="card-body">
-                <label class="text-danger font-weight-bold">مختری درباره من</label>
+                <label class="text-danger font-weight-bold">مختصری درباره من</label>
                 <span class="d-block">{{ $profile->details->about }}</span>
             </div>
         </div>
