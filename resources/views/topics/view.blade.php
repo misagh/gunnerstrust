@@ -25,6 +25,14 @@
                     </a>
                     @endforeach
                 </div>
+                @foreach($articles as $article)
+                    <div class="card shadow mt-3">
+                        <img class="img-fluid" src="{{ get_cover($article->cover) }}">
+                        <div class="card-body font-weight-bold">
+                            <a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="comments mt-2" id="comments">

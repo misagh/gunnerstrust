@@ -68,6 +68,14 @@ class ArticleRepository extends Repository {
                            ->paginate(static::PAGINATION_LIMIT);
     }
 
+    public function getLatestRandomArticles()
+    {
+        return $this->model->where('created_at', '>', today()->subDays(5))
+                           ->inRandomOrder()
+                           ->limit(2)
+                           ->get();
+    }
+
     private function insertTags(Article $article, $tags_string)
     {
         $tags = $this->getTags($article, $tags_string);

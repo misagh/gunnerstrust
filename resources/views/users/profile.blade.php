@@ -8,9 +8,18 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-7 col-lg-8 text-center text-md-left">
-                        <span class="float-left text-white py-1 px-3 rounded font-weight-bold username-{{ $profile->role }}">{{ $profile->title }}</span>
-                        <h1 class="font-weight-bold eng-font">{{ $profile->username }}</h1>
-                        <span class="d-block">{{ $profile->name }}</span>
+                        <div class="overflow-hidden">
+                            <div class="d-block mb-3">
+                                <span class="float-md-left text-white py-1 px-3 rounded font-weight-bold username-{{ $profile->role }}">{{ $profile->title }}</span>
+                                <h1 class="font-weight-bold eng-font mt-3 mt-md-0">{{ $profile->username }}</h1>
+                            </div>
+                            <div class="d-block">
+                                <span class="float-right">{{ $profile->name }}</span>
+                                <span data-toggle="tooltip" title="" class="float-left eng-font font-weight-bold" data-original-title="تعداد بازدید از پروفایل">
+                                    <i class="fa fa-eye ml-1"></i>{{ number_format($profile->hits) }}
+                                </span>
+                            </div>
+                        </div>
                         <hr>
                         @if (! empty($profile->details))
                             @include('details.view')

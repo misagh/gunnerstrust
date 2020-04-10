@@ -18,6 +18,8 @@ class UserController extends Controller {
     {
         $profile = (new UserRepository)->findByUsername($username);
 
+        $profile->increment('hits');
+
         return view('users.profile', compact('profile'));
     }
 
