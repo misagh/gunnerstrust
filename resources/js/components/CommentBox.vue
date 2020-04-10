@@ -83,7 +83,7 @@
                     <div class="modal-body pt-2">
                         <span class="d-block text-center mt-3" v-if="loadingReactions"><i class="fas fa-spin fa-spinner fa-lg"></i></span>
                         <div class="row" v-if="! loadingReactions">
-                            <div class="col-6 mt-2 text-right" v-for="reactionList in reactionLists">
+                            <div class="col-6 mt-2 ml-auto text-right" v-for="reactionList in reactionLists">
                                 <span class="mr-2 eng-font font-weight-bold"><a :href="'/users/profile/' + reactionList.user.username" target="_blank">{{ reactionList.user.username }}</a></span>
                                 <img v-bind:src="'/img/emoji/' + reactionList.reaction + '.png'" width="20">
                             </div>
