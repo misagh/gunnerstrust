@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/t/{id}', 'ArticleController@short')->name('articles.short');
 
 Route::prefix('articles')->group(function ()
 {

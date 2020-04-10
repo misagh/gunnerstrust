@@ -9,7 +9,21 @@ class ArticleController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('author', ['except' => 'view']);
+        $this->middleware('author', ['except' => ['view', 'short']]);
+    }
+
+    public function short($id)
+    {
+        $id = intval(base64url_decode($id));
+
+        if ($id > 0)
+        {
+            $article = (new ArticleRepository)->findOrFail($id);
+
+            return redirect()->route('articles.view', $article->slug);
+        }
+
+        abort(404);
     }
 
     public function add()
