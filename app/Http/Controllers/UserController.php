@@ -18,7 +18,10 @@ class UserController extends Controller {
     {
         $profile = (new UserRepository)->findByUsername($username);
 
-        $profile->increment('hits');
+        if ($profile->id !== auth()->id())
+        {
+            $profile->increment('hits');
+        }
 
         return view('users.profile', compact('profile'));
     }
