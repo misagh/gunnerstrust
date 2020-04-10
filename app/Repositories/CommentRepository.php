@@ -26,7 +26,7 @@ class CommentRepository extends Repository {
                      ->with('reactions')
                      ->orderByDesc('id')
                      ->offset(intval($offset))
-                     ->take(10)
+                     ->limit(static::PAGINATION_LIMIT)
                      ->get();
     }
 

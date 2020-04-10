@@ -110,6 +110,7 @@
                 emojies: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
                 comments: [],
                 user: '',
+                limit: 20,
                 offset: 0,
                 loadMore: false,
                 loading: false,
@@ -137,14 +138,14 @@
                     .then(({data}) =>
                     {
                         this.comments = this.comments.concat(data.comments);
-                        this.loadMore = data.comments.length && this.comments.length === 10;
+                        this.loadMore = data.comments.length === this.limit;
+                        this.offset += this.limit;
                         this.user = data.user;
                         this.loading = false;
                     })
             },
             moreComments()
             {
-                this.offset += 10;
                 this.loading = true;
 
                 this.fetchComments();
