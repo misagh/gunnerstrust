@@ -15,7 +15,7 @@ class AppComposer {
 
         $new_messages = $auth ? (new MessageRepository)->newCount($auth->id) : null;
 
-        $auth->touchSeen();
+        $auth AND $auth->touchSeen();
 
         $view->with('auth', $auth)
              ->with('topics', $topics)
