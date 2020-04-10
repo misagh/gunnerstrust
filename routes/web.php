@@ -41,6 +41,7 @@ Route::prefix('users')->middleware('auth')->group(function ()
 {
     Route::post('/edit', 'UserController@edit')->name('users.edit');
     Route::post('/password', 'UserController@password')->name('users.password');
+    Route::get('/list', 'UserController@list')->name('users.list');
     Route::get('/messages', 'UserController@messages')->name('users.messages');
     Route::get('/profile/{username}', 'UserController@profile')->name('users.profile');
 });

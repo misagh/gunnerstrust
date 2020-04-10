@@ -68,4 +68,10 @@ class User extends Authenticatable {
     {
         return @static::$titles[$this->role];
     }
+
+    public function touchSeen()
+    {
+        $this->seen_at = now();
+        $this->save();
+    }
 }

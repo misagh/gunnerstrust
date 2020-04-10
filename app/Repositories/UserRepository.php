@@ -15,4 +15,10 @@ class UserRepository extends Repository {
     {
         return $this->findByOrFail('username', $username);
     }
+
+    public function getList()
+    {
+        return $this->model->orderByDesc('seen_at')
+                           ->paginate(static::PAGINATION_LIMIT * 2);
+    }
 }

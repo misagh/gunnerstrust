@@ -84,6 +84,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenu">
                                 <a class="dropdown-item" href="{{ route('comments.list') }}">نظرات کاربران</a>
+                                <a class="dropdown-item" href="{{ route('users.list') }}">آرسنالی ها</a>
                             </div>
                         </li>
                     @endif

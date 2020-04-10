@@ -21,6 +21,13 @@ class UserController extends Controller {
         return view('users.profile', compact('profile'));
     }
 
+    public function list()
+    {
+        $gunners = (new UserRepository)->getList();
+
+        return view('users.list', compact('gunners'));
+    }
+
     public function messages()
     {
         $messages = (new MessageRepository)->getList(auth()->id());
