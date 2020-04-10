@@ -59,7 +59,7 @@ class CommentController extends Controller {
         return response(compact('comments'));
     }
 
-    public function reaction($id, $emoji)
+    public function reactionAdd($id, $emoji)
     {
         $comment = (new CommentRepository)->findOrFail($id);
 
@@ -69,6 +69,15 @@ class CommentController extends Controller {
         }
 
         return response(compact('comment'));
+    }
+
+    public function reactionList($id)
+    {
+        $comment = (new CommentRepository)->findOrFail($id);
+
+        $reactions = $comment->reactions()->with('user')->get();
+
+        return response(compact('reactions'));
     }
 
     public function list()

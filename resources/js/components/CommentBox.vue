@@ -52,9 +52,9 @@
                             </div>
                         </div>
                         <span class="cursor-pointer d-inline-block mt-2 ml-2" v-if="! comment.own_comment">
-                        <i class="show-emojies text-muted fas fa-lg fa-smile" @click="showReactionEmojies(comment.id)"></i>
-                    </span>
-                        <div class="reaction-box d-inline-block float-right mx-1" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}">
+                            <i class="show-emojies text-muted fas fa-lg fa-smile" @click="showReactionEmojies(comment.id)"></i>
+                        </span>
+                        <div class="reaction-box d-inline-block float-right mx-1 cursor-pointer" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}" data-toggle="modal" data-target="#reactionModal" @click="reactionUsers(comment.id)">
                             <span class="font-weight-bold">{{ data.count }}</span>
                             <img v-bind:src="'/img/emoji/' + data.reaction + '.png'" width="20">
                         </div>
@@ -71,6 +71,26 @@
         <div class="comment-more text-center mt-4">
             <button type="button" class="btn btn-outline-secondary" @click="moreComments" v-show="loadMore">نمایش نظرات بیشتر</button>
             <span class="d-block mt-3" v-if="loading"><i class="fas fa-spin fa-spinner fa-lg"></i></span>
+        </div>
+        <div class="modal fade" id="reactionModal" tabindex="-1" role="dialog" aria-labelledby="reactionModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header py-2 text-white bg-dark" v-if="! loadingReactions">
+                        <h6 class="modal-title">
+                            <span>مجموع واکنش ها:</span> <span class="font-weight-bold" v-text="reactionsCount"></span>
+                        </h6>
+                    </div>
+                    <div class="modal-body pt-2">
+                        <span class="d-block text-center mt-3" v-if="loadingReactions"><i class="fas fa-spin fa-spinner fa-lg"></i></span>
+                        <div class="row" v-if="! loadingReactions">
+                            <div class="col-6 mt-2 text-right" v-for="reactionList in reactionLists">
+                                <span class="mr-2 eng-font font-weight-bold"><a :href="'/users/profile/' + reactionList.user.username" target="_blank">{{ reactionList.user.username }}</a></span>
+                                <img v-bind:src="'/img/emoji/' + reactionList.reaction + '.png'" width="20">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -109,12 +129,15 @@
             return {
                 emojies: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
                 comments: [],
+                reactionLists: [],
                 user: '',
                 limit: 20,
                 offset: 0,
                 loadMore: false,
                 loading: false,
                 loadingComment: false,
+                loadingReactions: true,
+                reactionsCount: 0,
                 showEmojies: false,
                 commentBody: '',
                 commentBodyEdited: '',
@@ -183,7 +206,7 @@
             },
             addReaction(id, emoji)
             {
-                axios.post('/comments/reaction/' + id + '/' + emoji)
+                axios.post('/comments/reaction/add/' + id + '/' + emoji)
                     .then(({data}) =>
                     {
                         this.comments.filter(comment =>
@@ -225,6 +248,19 @@
                         });
                     });
             },
+            reactionUsers(id)
+            {
+                this.reactionLists = [];
+                this.loadingReactions = true;
+
+                axios.post('/comments/reaction/list/' + id)
+                    .then(({data}) =>
+                    {
+                        this.loadingReactions = false;
+                        this.reactionLists = data.reactions;
+                        this.reactionsCount = data.reactions.length;
+                    });
+            }
         }
     }
 </script>

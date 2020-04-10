@@ -58,7 +58,8 @@ Route::prefix('comments')->group(function ()
     Route::post('add/{type}/{id}', 'CommentController@add')->name('comments.add');
     Route::post('delete/{id}', 'CommentController@delete')->name('comments.delete');
     Route::post('edit/{id}', 'CommentController@edit')->name('comments.edit');
-    Route::post('reaction/{id}/{emoji}', 'CommentController@reaction')->name('comments.reaction');
+    Route::post('reaction/add/{id}/{emoji}', 'CommentController@reactionAdd')->name('comments.reaction.add');
+    Route::post('reaction/list/{id}', 'CommentController@reactionList')->name('comments.reaction.list');
 });
 
 Route::prefix('messages')->middleware('auth')->group(function ()
