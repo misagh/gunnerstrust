@@ -17,6 +17,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/t/{id}', 'ArticleController@short')->name('articles.short');
+Route::get('/p/{id}', 'PostController@short')->name('posts.short');
 
 Route::prefix('articles')->group(function ()
 {
@@ -28,9 +29,32 @@ Route::prefix('articles')->group(function ()
     Route::get('{slug}', 'ArticleController@view')->name('articles.view');
 });
 
+Route::prefix('challenges')->group(function ()
+{
+    Route::any('/add', 'ChallengeController@add')->name('challenges.add');
+    Route::any('/edit/{id}', 'ChallengeController@edit')->name('challenges.edit');
+    Route::get('/delete/{id}', 'ChallengeController@delete')->name('challenges.delete');
+    Route::any('/lists', 'ChallengeController@lists')->name('challenges.lists');
+    Route::get('{slug}', 'ChallengeController@view')->name('challenges.view');
+});
+
+Route::prefix('posts')->group(function ()
+{
+    Route::any('/add/{challenge_id}', 'PostController@add')->name('posts.add');
+    Route::any('/edit/{id}', 'PostController@edit')->name('posts.edit');
+    Route::post('/score/{id}', 'PostController@score')->name('posts.score');
+    Route::any('/lists', 'PostController@lists')->name('posts.lists');
+    Route::get('{slug}', 'PostController@view')->name('posts.view');
+});
+
 Route::prefix('topics')->middleware('auth')->group(function ()
 {
     Route::get('{slug}', 'TopicController@view')->name('topics.view');
+});
+
+Route::prefix('notifications')->middleware('auth')->group(function ()
+{
+    Route::get('/', 'NotificationController@index')->name('notifications');
 });
 
 Route::prefix('admin')->middleware('admin')->group(function ()

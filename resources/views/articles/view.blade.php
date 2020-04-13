@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="comments mt-2" id="comments">
-            <comment-box :commentable="{type: 'article', id: '{{ $article->id }}', auth: '{{ $auth }}'}"></comment-box>
+            <comment-box :commentable="{type: 'article', id: '{{ $article->id }}', auth: '{{ ! empty($auth) }}'}"></comment-box>
         </div>
     </div>
 @endsection

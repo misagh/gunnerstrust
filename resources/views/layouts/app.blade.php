@@ -51,11 +51,27 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('users.profile', $auth->username) }}">{{ __('حساب کابری') }}</a>
-                                <a class="dropdown-item" href="{{ route('users.messages') }}">{{ __('پیام خصوصی') }}</a>
+                                <a class="dropdown-item" href="{{ route('notifications') }}">{{ __('اطلاعیه ها') }}
+                                    @if ($new_notifications)
+                                    <span class="badge badge-success ml-1">{{ $new_notifications }}</span>
+                                    @endif
+                                </a>
+                                <a class="dropdown-item" href="{{ route('users.messages') }}">{{ __('پیام خصوصی') }}
+                                    @if ($new_messages)
+                                        <span class="badge badge-success ml-1">{{ $new_messages }}</span>
+                                    @endif
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 @if (is_admin($auth) || is_author($auth))
                                     <a class="dropdown-item" href="{{ route('articles.add') }}">{{ __('افزودن خبر') }}</a>
                                     <a class="dropdown-item" href="{{ route('articles.lists') }}">{{ __('ویرایش اخبار') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                @endif
+                                @if (is_admin($auth))
+                                    <a class="dropdown-item" href="{{ route('challenges.add') }}">{{ __('افزودن چالش') }}</a>
+                                    <a class="dropdown-item" href="{{ route('challenges.lists') }}">{{ __('ویرایش چالش ها') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('posts.lists') }}">{{ __('بررسی پست کابران') }}</a>
                                     <div class="dropdown-divider"></div>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -103,6 +119,16 @@
     </header>
 
     <main class="py-4">
+        @if (! empty($new_notifications))
+            <div class="container">
+                <div class="alert alert-warning shadow">
+                    <a href="{{ route('notifications') }}">
+                        <span class="mr-1"><i class="fas fa-compact-disc fa-spin fa-lg"></i></span>
+                        <b>شما {{ $new_notifications }} اطلاعیه جدید دارید. لطفا اطلاعیه های خود را بررسی کنید.</b>
+                    </a>
+                </div>
+            </div>
+        @endif
         @if (! empty($new_messages))
             <div class="container">
                 <div class="alert alert-warning shadow">

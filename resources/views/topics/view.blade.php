@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="comments mt-2" id="comments">
-            <comment-box :commentable="{type: 'topic', id: '{{ $current_topic->id }}', auth: '{{ $auth }}'}"></comment-box>
+            <comment-box :commentable="{type: 'topic', id: '{{ $current_topic->id }}', auth: '{{ ! empty($auth) }}'}"></comment-box>
         </div>
     </div>
 @endsection

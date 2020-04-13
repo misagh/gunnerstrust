@@ -44,8 +44,8 @@
                     </div>
                     <p class="comment-body" v-html="comment.body"></p>
                 </div>
-                <div v-if="user" class="d-block clearfix pt-3 mb-2">
-                    <div class="float-left position-relative" v-if="comment.reactions.length > 0 || ! comment.own_comment">
+                <div v-if="user" class="d-block clearfix mb-2">
+                    <div class="float-left position-relative mt-3" v-if="comment.reactions.length > 0 || ! comment.own_comment">
                         <div class="emojies shadow-sm py-1 position-absolute eng-font" v-show="comment.emojies">
                             <div class="d-inline-block m-2 cursor-pointer" v-for="emoji in emojies">
                                 <img v-bind:src="'/img/emoji/' + emoji + '.png'" width="28" @click="addReaction(comment.id, emoji)">
@@ -54,12 +54,12 @@
                         <span class="cursor-pointer d-inline-block mt-2 ml-2" v-if="! comment.own_comment">
                             <i class="show-emojies text-muted fas fa-lg fa-smile" @click="showReactionEmojies(comment.id)"></i>
                         </span>
-                        <div class="reaction-box d-inline-block float-right mx-1 cursor-pointer" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}" data-toggle="modal" data-target="#reactionModal" @click="reactionUsers(comment.id)">
+                        <div class="reaction-box d-inline-block float-right mx-1 mb-1 cursor-pointer" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}" data-toggle="modal" data-target="#reactionModal" @click="reactionUsers(comment.id)">
                             <span class="font-weight-bold">{{ data.count }}</span>
                             <img v-bind:src="'/img/emoji/' + data.reaction + '.png'" width="20">
                         </div>
                     </div>
-                    <div class="float-right" v-if="((user && user.role === 'admin') || comment.own_comment) && ! comment.edit">
+                    <div class="float-right mt-3" v-if="((user && user.role === 'admin') || comment.own_comment) && ! comment.edit">
                         <button type="button" class="btn btn-outline-secondary btn-sm" @click="comment.edit = true, commentBodyEdited = comment.body">ویرایش</button>
                         <div class="d-inline-block">
                             <vue-confirmation-button :messages="customMessages" :css="customCss" v-on:confirmation-success="deleteComment(comment.id)"></vue-confirmation-button>

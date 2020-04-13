@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
+use App\Repositories\PostRepository;
 use App\Repositories\ReactionRepository;
 use App\Repositories\TopicRepository;
 
@@ -96,6 +97,9 @@ class CommentController extends Controller {
                 break;
             case 'topic':
                 return (new TopicRepository)->findOrFail($id);
+                break;
+            case 'post':
+                return (new PostRepository)->findOrFail($id);
                 break;
             default:
                 return null;
