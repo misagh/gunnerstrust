@@ -20,6 +20,40 @@
 @section('content')
 
 <div class="container articles">
+    @if (! empty($challenge))
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3 shadow">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <a href="{{ route('challenges.view', $challenge->slug) }}">
+                            <img src="{{ get_cover($challenge->cover) }}" class="card-img" alt="{{ $challenge->title }}">
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">
+                                <a href="{{ route('challenges.view', $challenge->slug) }}">{{ $challenge->title }}</a>
+                            </h5>
+                            <p class="card-text">{{ $challenge->summary }}</p>
+                        </div>
+                        <div class="card-footer border-0 bg-transparent">
+                            <div class="float-left">
+                                <a class="btn btn-success" href="{{ route('posts.add', $challenge->id) }}">نوشتن تحلیل جدید</a>
+                            </div>
+                            <div class="float-right bg-secondary text-white py-1 px-3 rounded mt-2">
+                                <span>مهلت شرکت:</span>
+                                <span class="font-weight-bold">{{ now()->diffInDays($challenge->finished_at) }}</span>
+                                <span>روز</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    @endif
     <div class="card-deck">
         @foreach($pinned as $pin)
             <div class="card shadow bg-dark text-white">

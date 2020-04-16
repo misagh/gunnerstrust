@@ -41,7 +41,7 @@
             <div class="rounded p-3 bg-success overflow-hidden">
                 <div class="float-right">
                     <a href="{{ route('posts.add', $challenge->id) }}" class="btn btn-success">
-                        <i class="fas fa-plus-circle mr-2"></i><span>شرکت در چالش</span>
+                        <i class="fas fa-plus-circle mr-2"></i><span>نوشتن تحلیل جدید</span>
                     </a>
                 </div>
                 <div class="float-left">
@@ -85,6 +85,6 @@
                 {{ $posts->links() }}
             </div>
         @endif
-        <div class="text-right mt-4"><a class="btn btn-outline-secondary" href="{{ route('challenges.lists') }}">آرشیو چالش ها</a></div>
+        <div class="text-right mt-4"><a class="btn btn-outline-secondary" href="{{ route('challenges.lists') }}">آرشیو موضوعات</a></div>
     </div>
 @endsection

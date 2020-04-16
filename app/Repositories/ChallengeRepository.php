@@ -39,6 +39,13 @@ class ChallengeRepository extends Repository {
         return $this->model;
     }
 
+    public function getCurrentChallenge()
+    {
+        return $this->model->where('finished_at', '>=', today())
+                           ->orderBy('id')
+                           ->first();
+    }
+
     public function getLatestChallenges()
     {
         return $this->model->orderByDesc('id')

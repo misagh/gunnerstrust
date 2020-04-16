@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'شرکت در چالش')
+@section('title', 'نوشتن تحلیل')
 
 @section('content')
     <div class="container">
@@ -63,15 +63,15 @@
                         <button type="submit" name="publish" class="btn btn-success float-right">انتشار مقاله</button>
                     @endif
                     @if (empty($post))
-                        <a class="btn btn-secondary float-left" href="{{ route('challenges.lists') }}">بازگشت به چالش ها</a>
+                        <a class="btn btn-secondary float-left" href="{{ route('challenges.lists') }}">بازگشت به موضوعات</a>
                     @else
                         <a class="btn btn-secondary float-left" href="{{ route('posts.lists') }}">بازگشت به مقالات</a>
                     @endif
                 </form>
                 @else
-                    <div class="alert alert-danger">مهلت شرکت در این چالش به اتمام رسیده است.</div>
+                    <div class="alert alert-danger">مهلت شرکت در این موضوع به اتمام رسیده است.</div>
                     <div class="text-center mt-4">
-                        <a class="btn btn-info" href="{{ route('challenges.lists') }}">بازگشت به چالش ها</a>
+                        <a class="btn btn-info" href="{{ route('challenges.lists') }}">بازگشت به موضوعات</a>
                     </div>
                 @endif
             </div>

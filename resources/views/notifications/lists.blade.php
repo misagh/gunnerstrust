@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'مقالات ارسالی')
+@section('title', 'اطلاعیه ها')
 
 @section('content')
     <div class="container">

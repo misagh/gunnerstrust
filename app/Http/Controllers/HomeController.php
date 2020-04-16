@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ArticleRepository;
+use App\Repositories\ChallengeRepository;
 
 class HomeController extends Controller {
 
@@ -10,7 +11,8 @@ class HomeController extends Controller {
     {
         $pinned = (new ArticleRepository)->getPinnedArticles();
         $articles = (new ArticleRepository)->getUnpinnedArticles();
+        $challenge = (new ChallengeRepository)->getCurrentChallenge();
 
-        return view('home', compact('articles', 'pinned'));
+        return view('home', compact('articles', 'pinned', 'challenge'));
     }
 }

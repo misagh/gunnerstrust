@@ -1,6 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'چالش های اضافه شده')
+@section('title', 'کارشناسی و تحلیل')
+@section('description', 'در بخش کارشناسی و تحلیل، شما هواداران آرسنال در مورد موضوع انتخاب شده هفته مطالبی را خواهید نوشت و پس از بررسی و ویرایش در سایت به نام خود شما منتشر خواهد شد.')
+
+@section('meta')
+    <meta property="og:title" content="کارشناسی و تحلیل">
+    <meta property="og:site_name" content="GunnersTrust">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:description" content="در بخش کارشناسی و تحلیل، شما هواداران آرسنال در مورد موضوع انتخاب شده هفته مطالبی را خواهید نوشت و پس از بررسی و ویرایش در سایت به نام خود شما منتشر خواهد شد.">
+    <meta property="og:image" content="{{ asset('img/cover.png') }}">
+    <meta name="image" content="{{ asset('img/cover.png') }}">
+    <meta itemprop="image" content="{{ asset('img/cover.png') }}">
+    <meta name="twitter:image:src" content="{{ asset('img/cover.jpg') }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="کارشناسی و تحلیل">
+    <meta name="twitter:description" content="در بخش کارشناسی و تحلیل، شما هواداران آرسنال در مورد موضوع انتخاب شده هفته مطالبی را خواهید نوشت و پس از بررسی و ویرایش در سایت به نام خود شما منتشر خواهد شد.">
+@endsection
 
 @section('content')
     <div class="container">
@@ -36,7 +51,7 @@
                                         @if (is_admin($auth))
                                             <a class="btn btn-warning" href="{{ route('challenges.edit', $challenge->id) }}">ویرایش</a>
                                         @endif
-                                        <a class="btn btn-success" href="{{ route('posts.add', $challenge->id) }}">شرکت در چالش</a>
+                                        <a class="btn btn-success" href="{{ route('posts.add', $challenge->id) }}">نوشتن تحلیل جدید</a>
                                     </div>
                                     <div class="float-right bg-secondary text-white py-1 px-3 rounded mt-2">
                                         <span>مهلت شرکت:</span>
