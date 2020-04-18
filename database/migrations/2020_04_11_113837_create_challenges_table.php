@@ -18,7 +18,7 @@ class CreateChallengesTable extends Migration {
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('summary');
+            $table->text('summary');
             $table->string('cover');
             $table->timestamp('started_at')->nullable()->index();
             $table->timestamp('finished_at')->nullable()->index();

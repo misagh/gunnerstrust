@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         <label>خلاصه</label>
-                        <input type="text" name="summary" class="form-control" value="{{ $challenge->summary ?? '' }}" maxlength="160" minlength="150" required>
+                        <input type="text" name="summary" class="form-control" value="{{ $challenge->summary ?? '' }}" required>
                     </div>
                     <div class="form-group">
                         <label>لینک تصویر</label>

@@ -46,7 +46,7 @@
                                     @endif
                                 </div>
                                 @if ($loop->index === 0)
-                                <div class="card-footer border-0 bg-transparent">
+                                <div class="card-footer border-0 overflow-hidden mb-2 bg-transparent">
                                     <div class="float-left">
                                         @if (is_admin($auth))
                                             <a class="btn btn-warning" href="{{ route('challenges.edit', $challenge->id) }}">ویرایش</a>

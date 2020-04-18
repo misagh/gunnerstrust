@@ -37,14 +37,9 @@
                             </h5>
                             <p class="card-text">{{ $challenge->summary }}</p>
                         </div>
-                        <div class="card-footer border-0 bg-transparent">
+                        <div class="card-footer border-0 overflow-hidden mb-2 bg-transparent">
                             <div class="float-left">
                                 <a class="btn btn-success" href="{{ route('posts.add', $challenge->id) }}">نوشتن تحلیل جدید</a>
-                            </div>
-                            <div class="float-right bg-secondary text-white py-1 px-3 rounded mt-2">
-                                <span>مهلت شرکت:</span>
-                                <span class="font-weight-bold">{{ now()->diffInDays($challenge->finished_at) }}</span>
-                                <span>روز</span>
                             </div>
                         </div>
                     </div>
