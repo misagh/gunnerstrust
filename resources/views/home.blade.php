@@ -55,13 +55,15 @@
                 <img src="{{ get_cover($pin->cover) }}" class="card-img-top" alt="{{ $pin->title }}">
                 <div class="card-body">
                     <h4 class="card-title font-weight-bold"><a class="stretched-link" href="{{ route('articles.view', $pin->slug) }}">{{ $pin->title }}</a></h4>
-                    <p class="card-text">{{ $pin->summary }}</p>
-                    <p class="card-text">
-                        <small>{{ $pin->created_at->diffForHumans() }}</small>
-                        @if ($pin->comments_count > 0)
+                    <p class="card-text mb-0">{{ $pin->summary }}</p>
+                </div>
+                <div class="card-footer p-3">
+                    <small>{{ $pin->created_at->diffForHumans() }}</small>
+                    @if ($pin->comments_count > 0)
                         <span class="float-left eng-font font-weight-bold"><i class="fas fa-comment-dots ml-1"></i>{{ $pin->comments_count }}</span>
-                        @endif
-                    </p>
+                    @else
+                        <small class="float-left bg-info text-white py-1 px-2 rounded">ارسال نظر</small>
+                    @endif
                 </div>
             </div>
         @endforeach
@@ -71,13 +73,15 @@
             <div class="card shadow">
                 <img src="{{ get_cover($article->cover) }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title"><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a></h5>
-                    <p class="card-text">
-                        <small>{{ $article->created_at->diffForHumans() }}</small>
-                        @if ($article->comments_count > 0)
+                    <h5 class="card-title mb-0"><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a></h5>
+                </div>
+                <div class="card-footer p-2">
+                    <small>{{ $article->created_at->diffForHumans() }}</small>
+                    @if ($article->comments_count > 0)
                         <span class="float-left eng-font font-weight-bold"><i class="fas fa-comment-dots ml-1"></i>{{ $article->comments_count }}</span>
-                        @endif
-                    </p>
+                    @else
+                        <small class="float-left bg-success text-white py-1 px-2 rounded">ارسال نظر</small>
+                    @endif
                 </div>
             </div>
             @if ($loop->iteration % 3 === 0)

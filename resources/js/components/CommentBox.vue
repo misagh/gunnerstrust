@@ -25,7 +25,7 @@
         <div v-else class="alert alert-danger">برای ارسال نظر لطفا وارد سایت شوید.</div>
         <div class="card shadow mb-3" v-for="comment in comments" :key="comment.id">
             <div class="card-header p-0">
-                <div class="username position-absolute float-right text-center text-white eng-font" :class="'username-' + comment.user.role">
+                <div class="username username-user position-absolute float-right text-center text-white eng-font">
                     <b><a :href="'/users/profile/' + comment.user.username">{{ comment.user.username }}</a></b>
                 </div>
                 <div class="float-left small m-2 px-2 py-1">{{ comment.posted_at }}</div>
