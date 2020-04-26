@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Telegram;
 use App\Repositories\ArticleRepository;
-use Illuminate\Http\Request;
 
 class ArticleController extends Controller {
 
@@ -38,7 +38,9 @@ class ArticleController extends Controller {
 
             $this->validate(request(), $rules);
 
-            (new ArticleRepository)->insertArticle(request()->all());
+            $article = (new ArticleRepository)->insertArticle(request()->all());
+
+            $this->updateTelegram($article);
 
             session()->flash('success', 'خبر با موفقیت افزوده شد.');
 
@@ -112,5 +114,29 @@ class ArticleController extends Controller {
         $pin2->setPin(2);
 
         return redirect()->back();
+    }
+
+    private function updateTelegram($article)
+    {
+        try
+        {
+            if (! empty(env('TELEGRAM_BOT_TOKEN')))
+            {
+                $link = route('articles.short', base64url_encode($article->id));
+
+                $telegram = [
+                    'chat_id'    => '@gunnerstrust',
+                    'photo'      => get_cover($article->cover),
+                    'caption'    => "\xE2\x9A\xBD <b>{$article->title}</b>\n{$article->summary}\n\n\xF0\x9F\x92\xA5 <a href='{$link}'>برای خواندن متن خبر و ارسال نظر کلیک کنید</a>\n\n@GunnersTrust",
+                    'parse_mode' => 'HTML',
+                ];
+
+                Telegram::sendPhoto($telegram);
+            }
+        }
+        catch (\Exception $e)
+        {
+            // Pass
+        }
     }
 }
