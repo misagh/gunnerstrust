@@ -13,6 +13,9 @@ class HomeController extends Controller {
         $articles = (new ArticleRepository)->getUnpinnedArticles();
         $challenge = (new ChallengeRepository)->getCurrentChallenge();
 
-        return view('home', compact('articles', 'pinned', 'challenge'));
+        $articles_group1 = $articles->take(6);
+        $articles_group2 = $articles->skip(6);
+
+        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'pinned', 'challenge'));
     }
 }

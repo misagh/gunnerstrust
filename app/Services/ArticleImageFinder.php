@@ -42,7 +42,7 @@ class ArticleImageFinder {
         return $file_name;
     }
 
-    public function optimize($file_path, $w = 960, $h = 540)
+    public function optimize($file_path, $w = 728, $h = 410)
     {
         $img = Image::make($file_path)->fit($w, $h);
 

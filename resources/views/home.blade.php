@@ -69,9 +69,9 @@
         @endforeach
     </div>
     <div class="card-deck mt-sm-4">
-        @foreach($articles as $key => $article)
+        @foreach($articles_group1 as $key => $article)
             <div class="card shadow">
-                <img src="{{ get_cover($article->cover) }}" class="card-img-top" alt="...">
+                <img src="{{ get_cover($article->cover) }}" class="card-img-top" alt="{{ $article->summary }}">
                 <div class="card-body">
                     <h5 class="card-title mb-0"><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a></h5>
                 </div>
@@ -89,6 +89,23 @@
             @endif
         @endforeach
     </div>
+    @if ($articles_group2->isNotEmpty())
+    <div class="card-group">
+        @foreach($articles_group2 as $key => $article)
+            <div class="card border {{ $loop->iteration % 2 === 0 ? 'ml-sm-1' : 'mr-sm-1' }}">
+                <div class="card-body">
+                    <h5 class="card-title mb-2">
+                        <i class="fa fa-futbol mr-2"></i><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a>
+                    </h5>
+                    <small>{{ $article->summary }}</small>
+                </div>
+            </div>
+            @if ($loop->iteration % 2 === 0)
+            </div><div class="card-group mt-sm-2">
+            @endif
+        @endforeach
+    </div>
+    @endif
     <div class="mt-5 row justify-content-center">
         {{ $articles->links() }}
     </div>
