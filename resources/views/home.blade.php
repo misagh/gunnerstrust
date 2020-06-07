@@ -51,8 +51,8 @@
     @endif
     <div class="card-deck">
         @foreach($pinned as $pin)
-            @if (empty($posts) ? true : $loop->index === 0)
-            <div class="card shadow bg-dark text-white {{ $loop->index === 0 && ! empty($posts) ? 'ml-sm-3 mr-sm-0' : '' }}">
+            @if ($posts->isEmpty() ? true : $loop->index === 0)
+            <div class="card shadow bg-dark text-white {{ $loop->index === 0 && $posts->isNotEmpty() ? 'ml-sm-3 mr-sm-0' : '' }}">
                 <img src="{{ get_cover($pin->cover) }}" class="card-img-top" alt="{{ $pin->title }}">
                 <div class="card-body">
                     <h4 class="card-title font-weight-bold"><a class="stretched-link" href="{{ route('articles.view', $pin->slug) }}">{{ $pin->title }}</a></h4>
@@ -69,7 +69,7 @@
             </div>
             @endif
         @endforeach
-        @if (! empty($posts))
+        @if ($posts->isNotEmpty())
             <div class="card bg-transparent border-0">
                 <ul class="list-group p-0 shadow">
                     @foreach($posts as $post)
