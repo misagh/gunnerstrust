@@ -26,7 +26,11 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
+                                        @if ($post->challenge)
                                         <a class="d-block" href="{{ route('challenges.view', $post->challenge->slug) }}">{{ $post->challenge->title }}</a>
+                                        @else
+                                        <a class="d-block" href="{{ route('posts.edit', $post->id) }}">{{ $post->title }}</a>
+                                        @endif
                                         @if (is_admin($auth))
                                             <a class="d-block font-weight-bold eng-font" href="{{ route('posts.edit', $post->id) }}">{{ $post->user->username }}</a>
                                         @endif
@@ -65,12 +69,18 @@
                             @foreach($verified as $post)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    @if ($post->challenge)
                                     <td>
-                                        <a class="d-block" href="{{ route('challenges.view', $post->challenge->slug) }}">{{ $post->challenge->title }}</a>
+                                        @if ($post->challenge)
+                                            <a class="d-block" href="{{ route('challenges.view', $post->challenge->slug) }}">{{ $post->challenge->title }}</a>
+                                        @else
+                                            <a class="d-block" href="{{ route('posts.view', $post->slug) }}">{{ $post->title }}</a>
+                                        @endif
                                         @if (is_admin($auth))
                                             <a class="d-block font-weight-bold eng-font" href="{{ route('posts.edit', $post->id) }}">{{ $post->user->username }}</a>
                                         @endif
                                     </td>
+                                    @endif
                                     <td class="eng-font">{{ $post->created_at }}</td>
                                     <td class="eng-font">
                                         @if (is_admin($auth))

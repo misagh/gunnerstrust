@@ -1,20 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'نوشتن تحلیل')
+@section('title', 'نوشتن مطلب')
 
 @section('content')
     <div class="container">
         <div class="card">
+            @if (! empty($challenge))
             <div class="card-header">
                 <span>موضوع:</span>
                 <span>{{ $challenge->title }}</span>
             </div>
+            @endif
             <div class="card-body">
-                @if ($challenge->finished_at->isFuture())
+                @if (empty($challenge) || $challenge->finished_at->isFuture())
                 <div class="alert alert-info">
                     <p>مقاله شما پس از بازبینی و ویرایش توسط مدیریت سایت، منتشر خواهد شد. در نظر داشته باشید که هنگام بازبینی مقاله ها، نکات زیر مد نظر قرار خواهد گرفت. بنابراین لطفا موارد زیر را هنگام نوشتن رعایت فرمایید.</p>
                     <ul class="mb-0">
-                        <li>عنوان مقاله باید مختصر، گویا و متفاوت با واژه های موضوع چالش باشد.</li>
+                        <li>عنوان مقاله باید مختصر، گویا و مرتبط با متون اصلی مطلب شما باشد.</li>
                         <li>هنگام نوشتن خلاصه مقاله در نظر داشته باشید که تعداد حروف آن بین ۱۵۰ تا ۱۶۰ کاراکتر باشد.</li>
                         <li>انتخاب جمله های مناسب برای خلاصه مقاله به این دلیل مهم است که این جملات هنگام جستجوی مقاله شما در موتورهای جستجو نمایش داده میشود.</li>
                         <li>اگر تصویر خاصی برای مقاله خود مد نظر دارید، لینک تصویر را در قسمت مربوطه قرار دهید، در غیراین صورت پس از بازبینی، تصویری مناسب برای مقاله انتخاب خواهد شد.</li>
@@ -62,7 +64,7 @@
                     @if (! empty($post) && is_admin($auth))
                         <button type="submit" name="publish" class="btn btn-success float-right">انتشار مقاله</button>
                     @endif
-                    @if (empty($post))
+                    @if (empty($post) && ! empty($challenge))
                         <a class="btn btn-secondary float-left" href="{{ route('challenges.lists') }}">بازگشت به موضوعات</a>
                     @else
                         <a class="btn btn-secondary float-left" href="{{ route('posts.lists') }}">بازگشت به مقالات</a>

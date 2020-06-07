@@ -40,7 +40,7 @@ Route::prefix('challenges')->group(function ()
 
 Route::prefix('posts')->group(function ()
 {
-    Route::any('/add/{challenge_id}', 'PostController@add')->name('posts.add');
+    Route::any('/add/{challenge_id?}', 'PostController@add')->name('posts.add');
     Route::any('/edit/{id}', 'PostController@edit')->name('posts.edit');
     Route::post('/score/{id}', 'PostController@score')->name('posts.score');
     Route::any('/lists', 'PostController@lists')->name('posts.lists');

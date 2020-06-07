@@ -84,6 +84,15 @@ class PostRepository extends Repository {
                            ->get();
     }
 
+    public function getLatestGlobalPosts()
+    {
+        return $this->model->with('user')
+                           ->where('verified', true)
+                           ->orderByDesc('id')
+                           ->limit(9)
+                           ->get();
+    }
+
     public function getUserScore()
     {
         $score = $this->model->scores()

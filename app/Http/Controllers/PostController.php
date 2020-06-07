@@ -30,9 +30,9 @@ class PostController extends Controller {
         abort(404);
     }
 
-    public function add($challenge_id)
+    public function add($challenge_id = null)
     {
-        $challenge = (new ChallengeRepository)->findOrFail($challenge_id);
+        $challenge = $challenge_id ? (new ChallengeRepository)->findOrFail($challenge_id) : null;
 
         if (request()->isMethod('post'))
         {
@@ -49,7 +49,7 @@ class PostController extends Controller {
     public function edit($id)
     {
         $post = (new PostRepository)->findOrFail($id);
-        $challenge = $post->challenge;
+        $challenge = $post->challenge ?? null;
         $auth = auth()->user();
 
         if (! is_admin($auth) && ($post->user_id !== $auth->id || $post->verified))

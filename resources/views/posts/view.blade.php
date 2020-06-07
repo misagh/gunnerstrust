@@ -25,29 +25,31 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-3">
+                @if ($post->challenge)
                 <div class="card bg-secondary text-white shadow mb-3 p-3">
                     <a class="stretched-link" href="{{ route('challenges.view', $post->challenge->slug) }}">{{ $post->challenge->title }}</a>
                 </div>
-                    <ul class="list-group w-100 p-0 shadow mb-3">
-                        <li class="list-group-item bg-danger text-white">
-                            <span class="float-right">نویسنده</span>
-                            <span class="float-left eng-font font-weight-bold">
-                                <a class="stretched-link" href="{{ route('users.profile', $post->user->username) }}">{{ $post->user->username }}</a>
-                            </span>
-                        </li>
-                        <li class="list-group-item bg-danger text-white">
-                            <span class="float-right">تاریخ ارسال</span>
-                            <span class="float-left eng-font font-weight-bold">{{ $post->created_at->format('Y-m-d') }}</span>
-                        </li>
-                        <li class="list-group-item bg-danger text-white">
-                            <span class="float-right">تعداد بازدید</span>
-                            <span class="float-left eng-font font-weight-bold">{{ $post->hit }}</span>
-                        </li>
-                        <li class="list-group-item bg-danger text-white">
-                            <span class="float-right">میانگین امتیاز</span>
-                            <span class="float-left eng-font font-weight-bold">{{ $post->score ?? '-' }}</span>
-                        </li>
-                    </ul>
+                @endif
+                <ul class="list-group w-100 p-0 shadow mb-3">
+                    <li class="list-group-item bg-danger text-white">
+                        <span class="float-right">نویسنده</span>
+                        <span class="float-left eng-font font-weight-bold">
+                            <a class="stretched-link" href="{{ route('users.profile', $post->user->username) }}">{{ $post->user->username }}</a>
+                        </span>
+                    </li>
+                    <li class="list-group-item bg-danger text-white">
+                        <span class="float-right">تاریخ ارسال</span>
+                        <span class="float-left eng-font font-weight-bold">{{ $post->created_at->format('Y-m-d') }}</span>
+                    </li>
+                    <li class="list-group-item bg-danger text-white">
+                        <span class="float-right">تعداد بازدید</span>
+                        <span class="float-left eng-font font-weight-bold">{{ $post->hit }}</span>
+                    </li>
+                    <li class="list-group-item bg-danger text-white">
+                        <span class="float-right">میانگین امتیاز</span>
+                        <span class="float-left eng-font font-weight-bold">{{ $post->score ?? '-' }}</span>
+                    </li>
+                </ul>
                 @if ($posts->isNotEmpty())
                     @foreach($posts as $other_post)
                     <div class="card shadow mb-3">

@@ -51,7 +51,8 @@
     @endif
     <div class="card-deck">
         @foreach($pinned as $pin)
-            <div class="card shadow bg-dark text-white">
+            @if (empty($posts) ? true : $loop->index === 0)
+            <div class="card shadow bg-dark text-white {{ $loop->index === 0 && ! empty($posts) ? 'ml-sm-3 mr-sm-0' : '' }}">
                 <img src="{{ get_cover($pin->cover) }}" class="card-img-top" alt="{{ $pin->title }}">
                 <div class="card-body">
                     <h4 class="card-title font-weight-bold"><a class="stretched-link" href="{{ route('articles.view', $pin->slug) }}">{{ $pin->title }}</a></h4>
@@ -66,7 +67,23 @@
                     @endif
                 </div>
             </div>
+            @endif
         @endforeach
+        @if (! empty($posts))
+            <div class="card bg-transparent border-0">
+                <ul class="list-group p-0 shadow">
+                    @foreach($posts as $post)
+                        <li class="list-group-item text-white bg-secondary py-0 pl-0 pr-2">
+                            <a href="{{ route('posts.view', $post->slug) }}">
+                                <img src="{{ get_cover($post->cover) }}" width="100" alt="{{ $post->summary }}">
+                                <span class="h5 font-weight-bold ml-2">{{ $post->title }}</span>
+                            </a>
+                            <a href="{{ route('users.profile', $post->user->username) }}" class="small float-left my-2">{{ $post->user->username }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
     <div class="card-deck mt-sm-4">
         @foreach($articles_group1 as $key => $article)

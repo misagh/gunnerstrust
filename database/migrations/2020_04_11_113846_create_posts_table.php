@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration {
         {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('challenge_id');
+            $table->unsignedInteger('challenge_id')->nullable();
             $table->boolean('verified')->default(false)->index();
             $table->string('title');
             $table->string('slug')->nullable()->unique();

@@ -69,9 +69,12 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     {{ __('ورود به سایت') }}
                                 </button>
+                                <a href="{{ route('register') }}" class="btn btn-secondary ml-2">
+                                    {{ __('ثبت نام در سایت') }}
+                                </a>
 
 {{--                                @if (Route::has('password.request'))--}}
 {{--                                    <a class="btn btn-link" href="{{ route('password.request') }}">--}}

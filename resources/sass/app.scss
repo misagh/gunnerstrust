@@ -140,6 +140,14 @@ header {
     clear: both;
 }
 
+.bottom-menu {
+    background: $gray-900;
+    z-index: 100;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
 footer {
     width: 100%;
     bottom: 0;
@@ -165,5 +173,8 @@ footer {
     .bottom {
         background-color: #292f35;
         overflow: hidden;
+        .col {
+            z-index: 101;
+        }
     }
 }

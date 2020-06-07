@@ -34,10 +34,11 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
+                <ul class="navbar-nav mr-auto"></ul>
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-4">
+                        <a class="nav-link" href="{{ route('posts.add') }}">{{ __('نوشتن مطلب') }}</a>
+                    </li>
                     @if (empty($auth))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('ورود') }}</a>
@@ -177,6 +178,12 @@
         @endif
         @yield('content')
     </main>
+    <div class="position-fixed bottom-menu text-white p-3 shadow">
+        <div class="container p-0 text-center">
+            <span class="my-2 font-weight-bold">جای نوشته‌های آرسنالی شما در سایت خالیست!</span>
+            <a class="btn btn-danger ml-1" href="{{ route('posts.add') }}">نوشتن مطلب</a>
+        </div>
+    </div>
 </div>
 
 <footer class="bg-dark text-white mt-auto">
