@@ -35,4 +35,9 @@ class Post extends Model {
 
         return $avg ? round($avg, 1) : null;
     }
+
+    public function getUrlAttribute()
+    {
+        return route('posts.view', $this->slug);
+    }
 }
