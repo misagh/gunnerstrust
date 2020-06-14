@@ -178,7 +178,7 @@
         @endif
         @yield('content')
     </main>
-    <div class="position-fixed bottom-menu text-white p-3 shadow">
+    <div class="fixed-bottom bottom-menu text-white p-3 shadow">
         <div class="container p-0 text-center">
             <span class="my-2 font-weight-bold">جای نوشته‌های آرسنالی شما در سایت خالیست!</span>
             <a class="btn btn-danger ml-1" href="{{ route('posts.add') }}">نوشتن مطلب</a>
@@ -186,25 +186,22 @@
     </div>
 </div>
 
-<footer class="bg-dark text-white mt-auto">
+<footer class="bg-dark text-white mt-auto pb-5 mb-3">
     <div class="container py-4 text-right">
         <div class="row">
-            <div class="col">
+            <div class="col-12">
                 <p class="logo m-0">Gunners<span class="text-danger">Trust</span></p>
                 <h1 class="small">گانرزتراست، مرجع خبری باشگاه آرسنال انگلیس برای فارسی زبانان</h1>
             </div>
-        </div>
-    </div>
-    <div class="bottom eng-font py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <span class="float-left ltr"><i class="far fa-copyright"></i> {{ date('Y') }} GunnersTrust</span>
-                    <span class="float-right ltr">
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12 eng-font">
+                <span class="float-left ltr"><i class="far fa-copyright"></i> {{ date('Y') }} GunnersTrust</span>
+                <span class="float-right ltr">
 						<a href="https://t.me/GunnersTrust" class="mr-3" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
 						<a href="https://twitter.com/GunnersTrust" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
-					</span>
-                </div>
+				</span>
             </div>
         </div>
     </div>

@@ -141,11 +141,14 @@ header {
 }
 
 .bottom-menu {
-    background: $gray-900;
-    z-index: 100;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    background: #292f35;
+
+    @media (max-width: 410px)
+    {
+        a, span {
+            font-size: 85% !important;
+        }
+    }
 }
 
 footer {
@@ -168,13 +171,5 @@ footer {
         font-size: 1.7rem;
         letter-spacing: 0.1rem;
         font-family: 'Metal Mania', cursive !important;
-    }
-
-    .bottom {
-        background-color: #292f35;
-        overflow: hidden;
-        .col {
-            z-index: 101;
-        }
     }
 }

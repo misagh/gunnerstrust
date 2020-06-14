@@ -19,6 +19,6 @@ class UserRepository extends Repository {
     public function getList()
     {
         return $this->model->orderByDesc('seen_at')
-                           ->paginate(static::PAGINATION_LIMIT * 2);
+                           ->paginate(18);
     }
 }

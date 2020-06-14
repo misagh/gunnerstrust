@@ -107,11 +107,11 @@ class ArticleController extends Controller {
     {
         (new ArticleRepository)->updatePins();
 
-        $pin1 = (new ArticleRepository)->findOrFail(intval(request('pin1')));
-        $pin1->setPin(1);
+        $pin1 = (new ArticleRepository)->find(intval(request('pin1')));
+        $pin1 AND $pin1->setPin(1);
 
-        $pin2 = (new ArticleRepository)->findOrFail(intval(request('pin2')));
-        $pin2->setPin(2);
+        $pin2 = (new ArticleRepository)->find(intval(request('pin2')));
+        $pin2 AND $pin2->setPin(2);
 
         return redirect()->back();
     }
