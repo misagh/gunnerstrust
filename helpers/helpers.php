@@ -47,3 +47,11 @@ function base64url_decode($data)
 {
     return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
 }
+
+function format_body($body)
+{
+    $body = str_replace('&lt;&lt;', '<blockquote><i class="fas fa-quote-right"></i>', $body);
+    $body = str_replace('&gt;&gt;', '<i class="fas fa-quote-left"></i></blockquote>', $body);
+
+    return $body;
+}

@@ -45,7 +45,7 @@
                             <hr class="w-100">
                         </div>
                         <div class="card-text">
-                            {!! $article->body !!}
+                            {!! format_body($article->body) !!}
                             <div class="float-left small mt-5" id="article-details">
                                 <a target="_blank" href="{{ route('articles.short', base64url_encode($article->id)) }}" class="rounded text-white bg-secondary py-1 px-3" rel="nofollow">لینک کوتاه</a>
                                 <a target="_blank" href="{{ $article->source }}" class="rounded text-white bg-info py-1 px-3">لینک منبع</a>

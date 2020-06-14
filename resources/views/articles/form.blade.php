@@ -34,6 +34,9 @@
                         <textarea id="summernote" name="body" class="form-control" required>{{ $article->body ?? '' }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                    @if (! empty($article))
+                    <a href="{{ route('articles.view', $article->slug) }}" class="btn btn-secondary float-left" target="_blank">مشاهده خبر</a>
+                    @endif
                 </form>
             </div>
         </div>

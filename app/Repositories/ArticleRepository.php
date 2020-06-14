@@ -17,7 +17,7 @@ class ArticleRepository extends Repository {
         $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         $data['slug'] = $this->getSlug($data['title']);
         $data['user_id'] = auth()->id();
-        $data['body'] = $this->formatBody($data['body']);
+        $data['body'] = clean($data['body']);
 
         $article = $this->create($data);
 
@@ -34,7 +34,7 @@ class ArticleRepository extends Repository {
         }
 
         empty($data['cover']) AND $data['cover'] = $this->model->cover;
-        $data['body'] = $this->formatBody($data['body']);
+        $data['body'] = clean($data['body']);
 
         $this->update($this->model, $data);
 
@@ -102,14 +102,5 @@ class ArticleRepository extends Repository {
         }
 
         return $tags;
-    }
-
-    private function formatBody($body)
-    {
-        $body = clean($body);
-        $body = str_replace('&lt;&lt;', '<blockquote><i class="fas fa-quote-right"></i>', $body);
-        $body = str_replace('&gt;&gt;', '<i class="fas fa-quote-left"></i></blockquote>', $body);
-
-        return $body;
     }
 }
