@@ -19,6 +19,26 @@
 
 @section('content')
 
+<div class="container">
+    @if (! empty($fixtures['today']))
+        <div class="row mb-2">
+            <div class="col-12">
+                @include('fixtures.menu', ['fixture' => $fixtures['today']])
+            </div>
+        </div>
+    @endif
+    @if (empty($fixtures['today']) && (! empty($fixtures['next']) || ! empty($fixtures['previous'])))
+        <div class="row mb-1">
+            <div class="col-lg-6 mb-2">
+                @include('fixtures.menu', ['fixture' => $fixtures['next'], 'bg_color' => 'info'])
+            </div>
+            <div class="col-lg-6">
+                @include('fixtures.menu', ['fixture' => $fixtures['previous'], 'bg_color' => 'danger'])
+            </div>
+        </div>
+    @endif
+</div>
+
 <div class="container articles">
     @if (! empty($challenge))
     <div class="row">

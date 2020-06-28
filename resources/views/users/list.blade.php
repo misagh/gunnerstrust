@@ -9,7 +9,7 @@
             <div class="col mb-4">
                 <div class="card text-center shadow">
                     <img src="{{ $gunner->avatar }}" class="card-img-top shadow-sm">
-                    <div class="card-body">
+                    <div class="card-body px-2">
                         <h5 class="card-title eng-font font-weight-bold mb-0"><a class="stretched-link" href="{{ route('users.profile', $gunner->username) }}">{{ $gunner->username }}</a></h5>
                     </div>
                 </div>

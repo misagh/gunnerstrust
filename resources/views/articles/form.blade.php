@@ -30,6 +30,15 @@
                         <tag-selector :tags="{title: this.articleTitle, tags: '{{ $article->tags ?? '' }}', selector: '{{ empty($article->title) }}'}"></tag-selector>
                     </div>
                     <div class="form-group">
+                        <label>منوی بازی</label>
+                        <select name="fixture_id" class="form-control">
+                            <option value="">----------------------------------------------------</option>
+                            @foreach($fixtures as $fixture)
+                                <option value="{{ $fixture->id }}" {{ $fixture->id === ($article->fixture_id ?? null) ? 'selected' : '' }}>{{ fixture_title($fixture) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>متن</label>
                         <textarea id="summernote" name="body" class="form-control" required>{{ $article->body ?? '' }}</textarea>
                     </div>

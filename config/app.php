@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Telegram\Bot\Laravel\TelegramServiceProvider::class,
+        Hekmatinasser\Verta\VertaServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -231,6 +232,7 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Image'        => Intervention\Image\Facades\Image::class,
         'Telegram'     => Telegram\Bot\Laravel\Facades\Telegram::class,
+        'Verta'        => Hekmatinasser\Verta\Verta::class,
     ],
 
 ];

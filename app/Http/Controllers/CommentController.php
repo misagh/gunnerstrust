@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PostRepository;
+use App\Repositories\TopicRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
-use App\Repositories\PostRepository;
+use App\Repositories\FixtureRepository;
 use App\Repositories\ReactionRepository;
-use App\Repositories\TopicRepository;
 
 class CommentController extends Controller {
 
@@ -100,6 +101,9 @@ class CommentController extends Controller {
                 break;
             case 'post':
                 return (new PostRepository)->findOrFail($id);
+                break;
+            case 'fixture':
+                return (new FixtureRepository)->findOrFail($id);
                 break;
             default:
                 return null;

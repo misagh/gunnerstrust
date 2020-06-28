@@ -57,6 +57,11 @@ abstract class Repository {
         return $this->model->updateOrCreate($attrs, $values);
     }
 
+    public function getSimplePaginated()
+    {
+        return $this->model->paginate(static::PAGINATION_LIMIT);
+    }
+
     public function getColumns()
     {
         return $this->model->getConnection()

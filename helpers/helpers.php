@@ -55,3 +55,33 @@ function format_body($body)
 
     return $body;
 }
+
+function fixture_title($fixture, $mid = 'vs')
+{
+    $team1 = $fixture->team1->name_en . ' ' . $fixture->score1;
+    $team2 = $fixture->score2 . ' ' . $fixture->team2->name_en;
+
+    $mid = is_null($fixture->score1) ? $mid : '-';
+
+    return trim($team1) . " {$mid} " . trim($team2);
+}
+
+function yesterday()
+{
+    return today()->subDay();
+}
+
+function tomorrow()
+{
+    return today()->addDay();
+}
+
+function shamsi($date)
+{
+    return verta(Carbon\Carbon::parse($date)->timezone('Asia/Tehran')->toDateTimeString(), 'Asia/Tehran');
+}
+
+function shamsi_format($date, $format)
+{
+    return \Hekmatinasser\Verta\Verta::persianNumbers(shamsi($date)->format($format));
+}

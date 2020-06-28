@@ -101,6 +101,12 @@ header {
     }
 }
 
+h1.card-title {
+    @include media-breakpoint-down(sm) {
+        font-size: 1.2rem !important;
+    }
+}
+
 .comment-box {
     .username {
         top: -1px;
@@ -166,6 +172,26 @@ blockquote {
 
     .fa-quote-left {
         margin-right: 8px;
+    }
+}
+
+.fixture-menu-logo {
+    width: 70px;
+
+    @include media-breakpoint-up(md) {
+        width: 100px;
+    }
+}
+
+.fixture-menu-logo-compact {
+    width: 50px !important;
+}
+
+.team-name {
+    font-size: $h5-font-size;
+
+    @include media-breakpoint-up(md) {
+        font-size: $h4-font-size;
     }
 }
 

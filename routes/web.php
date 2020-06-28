@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/t/{id}', 'ArticleController@short')->name('articles.short');
 Route::get('/p/{id}', 'PostController@short')->name('posts.short');
+Route::get('/f/{id}', 'FixtureController@short')->name('fixtures.short');
 
 Route::prefix('articles')->group(function ()
 {
@@ -45,6 +46,28 @@ Route::prefix('posts')->group(function ()
     Route::post('/score/{id}', 'PostController@score')->name('posts.score');
     Route::any('/lists', 'PostController@lists')->name('posts.lists');
     Route::get('{slug}', 'PostController@view')->name('posts.view');
+});
+
+Route::prefix('fixtures')->group(function ()
+{
+    Route::any('/add', 'FixtureController@add')->name('fixtures.add');
+    Route::any('/edit/{id}', 'FixtureController@edit')->name('fixtures.edit');
+    Route::any('/lists', 'FixtureController@lists')->name('fixtures.lists');
+    Route::get('{slug}', 'FixtureController@view')->name('fixtures.view');
+});
+
+Route::prefix('teams')->middleware('admin')->group(function ()
+{
+    Route::any('/add', 'TeamController@add')->name('teams.add');
+    Route::any('/edit/{id}', 'TeamController@edit')->name('teams.edit');
+    Route::any('/lists', 'TeamController@lists')->name('teams.lists');
+});
+
+Route::prefix('stadiums')->middleware('admin')->group(function ()
+{
+    Route::any('/add', 'StadiumController@add')->name('stadiums.add');
+    Route::any('/edit/{id}', 'StadiumController@edit')->name('stadiums.edit');
+    Route::any('/lists', 'StadiumController@lists')->name('stadiums.lists');
 });
 
 Route::prefix('topics')->middleware('auth')->group(function ()

@@ -73,6 +73,15 @@
                                     <a class="dropdown-item" href="{{ route('challenges.add') }}">{{ __('افزودن چالش') }}</a>
                                     <a class="dropdown-item" href="{{ route('challenges.lists') }}">{{ __('ویرایش چالش ها') }}</a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('fixtures.add') }}">{{ __('افزودن منوی بازی') }}</a>
+                                    <a class="dropdown-item" href="{{ route('fixtures.lists') }}">{{ __('ویرایش منوی بازی‌ها') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('teams.add') }}">{{ __('افزودن تیم') }}</a>
+                                    <a class="dropdown-item" href="{{ route('teams.lists') }}">{{ __('ویرایش تیم‌ها') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('stadiums.add') }}">{{ __('افزودن استادیوم') }}</a>
+                                    <a class="dropdown-item" href="{{ route('stadiums.lists') }}">{{ __('ویرایش استادیوم‌ها') }}</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('posts.lists') }}">{{ __('بررسی پست کابران') }}</a>
                                     <div class="dropdown-divider"></div>
                                 @endif

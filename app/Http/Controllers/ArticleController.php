@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Telegram;
 use App\Repositories\ArticleRepository;
+use App\Repositories\FixtureRepository;
 
 class ArticleController extends Controller {
 
@@ -47,7 +48,9 @@ class ArticleController extends Controller {
             return redirect()->back();
         }
 
-        return view('articles.form');
+        $fixtures = (new FixtureRepository)->getLatestFixtures();
+
+        return view('articles.form', compact('fixtures'));
     }
 
     public function edit($id)
@@ -73,7 +76,9 @@ class ArticleController extends Controller {
 
         $article->tags = $article->tags->pluck('name')->implode(',');
 
-        return view('articles.form', compact('article'));
+        $fixtures = (new FixtureRepository)->getLatestFixtures();
+
+        return view('articles.form', compact('article', 'fixtures'));
     }
 
     public function delete($id)
