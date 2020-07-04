@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Metal+Mania" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ad682e5c71.js" crossorigin="anonymous"></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <link rel="canonical" href="{{ url()->current() }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon/favicon-32x32.png') }}">
@@ -227,7 +227,7 @@
             <div class="col-12">
                 <hr>
             </div>
-            <div class="col-12 eng-font pb-3">
+            <div class="col-12 eng-font pb-5 pb-md-3">
                 <span class="float-left ltr"><i class="far fa-copyright"></i> {{ date('Y') }} GunnersTrust</span>
                 <span class="float-right ltr">
                     <a href="https://t.me/GunnersTrust" class="mr-3" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
@@ -238,7 +238,7 @@
     </div>
 </footer>
 
-<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ mix('/js/app.js') }}" defer></script>
 
 </body>
 </html>

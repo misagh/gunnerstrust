@@ -58,6 +58,11 @@
                         </div>
                     </div>
                 </div>
+                @if ($article->fixture)
+                    <div class="mt-2">
+                        @include('fixtures.menu', ['fixture' => $article->fixture, 'bg_color' => 'info'])
+                    </div>
+                @endif
             </div>
             <div class="col-md-4 mb-3">
                 <div class="list-group p-0">

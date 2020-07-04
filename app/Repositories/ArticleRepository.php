@@ -70,7 +70,7 @@ class ArticleRepository extends Repository {
 
     public function getLatestRandomArticles()
     {
-        return $this->model->where('created_at', '>', today()->subDays(5))
+        return $this->model->where('created_at', '>', today()->subDays(3))
                            ->inRandomOrder()
                            ->limit(2)
                            ->get();

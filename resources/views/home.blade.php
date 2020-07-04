@@ -112,10 +112,10 @@
                     <div class="bg-white text-dark shadow rounded mt-2 p-3">
                         <span class="font-weight-bold">آخرین نظردهندگان</span>
                         <hr class="my-1">
-                        <div class="text-center">
+                        <div class="text-center overflow-auto text-nowrap nice-scroll pb-2 comment-users">
                             @foreach($comments as $comment)
                                 <a href="{{ $comment->commentable->url }}" class="d-inline-block mx-1 mt-1 text-center text-dark eng-font">
-                                    <img class="rounded-circle shadow-sm mx-auto border border-danger p-1" width="50" src="{{ $comment->user->avatar }}">
+                                    <img class="rounded-circle shadow-sm mx-auto border border-danger" width="50" src="{{ $comment->user->avatar }}">
                                     <span class="d-block">{{ $comment->user->username }}</span>
                                 </a>
                             @endforeach
