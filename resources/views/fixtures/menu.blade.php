@@ -3,7 +3,7 @@
         <div class="text-center">
             <p class="eng-font mb-3">
                 <span class="mb-2 font-weight-bold team-name">{{ $fixture->team1->name_en }}</span>
-                @if ($fixture->played_at >= today())
+                @if ($fixture->played_at > now())
                     <span> vs </span>
                 @else
                     <span> {{ $fixture->score1 }} - {{ $fixture->score2 }} </span>
