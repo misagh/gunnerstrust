@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\PostRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\FixtureRepository;
+use App\Repositories\CommentRepository;
 use App\Repositories\ChallengeRepository;
 
 class HomeController extends Controller {
@@ -15,6 +16,7 @@ class HomeController extends Controller {
         $articles = (new ArticleRepository)->getUnpinnedArticles();
         $challenge = (new ChallengeRepository)->getCurrentChallenge();
         $posts = (new PostRepository)->getLatestGlobalPosts();
+        $comments = (new CommentRepository)->getList();
 
         $articles_group1 = $articles->take(6);
         $articles_group2 = $articles->skip(6);
@@ -27,6 +29,6 @@ class HomeController extends Controller {
             $fixtures['previous'] = (new FixtureRepository)->getPreviousFixture();
         }
 
-        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'pinned', 'challenge', 'posts', 'fixtures'));
+        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'pinned', 'challenge', 'posts', 'fixtures', 'comments'));
     }
 }

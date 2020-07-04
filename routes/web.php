@@ -20,6 +20,9 @@ Route::get('/t/{id}', 'ArticleController@short')->name('articles.short');
 Route::get('/p/{id}', 'PostController@short')->name('posts.short');
 Route::get('/f/{id}', 'FixtureController@short')->name('fixtures.short');
 
+Route::get('login/{provider}', 'SocialiteController@login')->name('socialite.login')->where(['provider' => 'google']);
+Route::get('login/{provider}/callback', 'SocialiteController@callback')->name('socialite.login.callback')->where(['provider' => 'google']);
+
 Route::get('/privacy', function ()
 {
     return view('pages.privacy');
@@ -80,7 +83,7 @@ Route::prefix('stadiums')->middleware('admin')->group(function ()
     Route::any('/lists', 'StadiumController@lists')->name('stadiums.lists');
 });
 
-Route::prefix('topics')->middleware('auth')->group(function ()
+Route::prefix('topics')->group(function ()
 {
     Route::get('{slug}', 'TopicController@view')->name('topics.view');
 });
@@ -101,7 +104,8 @@ Route::prefix('users')->middleware('auth')->group(function ()
     Route::post('/password', 'UserController@password')->name('users.password');
     Route::get('/list', 'UserController@list')->name('users.list');
     Route::get('/messages', 'UserController@messages')->name('users.messages');
-    Route::get('/profile/{username}', 'UserController@profile')->name('users.profile');
+    Route::get('/profile/{username?}', 'UserController@profile')->name('users.profile');
+    Route::any('/username', 'UserController@username')->name('users.username');
 });
 
 Route::prefix('details')->middleware('auth')->group(function ()

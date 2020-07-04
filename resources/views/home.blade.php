@@ -75,7 +75,7 @@
     @endif
     <div class="card-deck">
         @foreach($pinned as $pin)
-            @if ($posts->isEmpty() ? true : $loop->index === 0)
+            @if ($posts->isEmpty() || $comments->isNotEmpty() ? true : $loop->index === 0)
             <div class="card shadow bg-dark text-white {{ $loop->index === 0 && $posts->isNotEmpty() ? 'ml-sm-3 mr-sm-0' : '' }}">
                 <img src="{{ get_cover($pin->cover) }}" class="card-img-top" alt="{{ $pin->title }}">
                 <div class="card-body">
@@ -93,19 +93,35 @@
             </div>
             @endif
         @endforeach
-        @if ($posts->isNotEmpty())
+        @if ($posts->isNotEmpty() || $comments->isNotEmpty())
             <div class="card bg-transparent border-0">
-                <ul class="list-group p-0 shadow">
-                    @foreach($posts as $post)
-                        <li class="list-group-item text-white bg-secondary py-0 pl-0 pr-2">
-                            <a href="{{ route('posts.view', $post->slug) }}">
-                                <img src="{{ get_cover($post->cover) }}" width="100" alt="{{ $post->summary }}">
-                                <span class="h5 font-weight-bold ml-2">{{ $post->title }}</span>
-                            </a>
-                            <a href="{{ route('users.profile', $post->user->username) }}" class="small float-left my-2">{{ $post->user->username }}</a>
-                        </li>
-                    @endforeach
-                </ul>
+                @if ($posts->isNotEmpty())
+                    <ul class="list-group p-0 shadow">
+                        @foreach($posts as $post)
+                            <li class="list-group-item text-white bg-secondary py-0 pl-0 pr-2">
+                                <a href="{{ route('posts.view', $post->slug) }}">
+                                    <img src="{{ get_cover($post->cover) }}" width="100" alt="{{ $post->summary }}">
+                                    <span class="h5 font-weight-bold ml-2">{{ $post->title }}</span>
+                                </a>
+                                <a href="{{ route('users.profile', $post->user->username) }}" class="small float-left my-2">{{ $post->user->username }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+                @if ($comments->isNotEmpty())
+                    <div class="bg-white text-dark shadow rounded mt-2 p-3">
+                        <span class="font-weight-bold">آخرین نظردهندگان</span>
+                        <hr class="my-1">
+                        <div class="text-center">
+                            @foreach($comments as $comment)
+                                <a href="{{ $comment->commentable->url }}" class="d-inline-block mx-1 mt-1 text-center text-dark eng-font">
+                                    <img class="rounded-circle shadow-sm mx-auto border border-danger p-1" width="50" src="{{ $comment->user->avatar }}">
+                                    <span class="d-block">{{ $comment->user->username }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
         @endif
     </div>

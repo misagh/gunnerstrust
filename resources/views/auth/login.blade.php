@@ -27,7 +27,14 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="form-group row">
+                        <a href="{{ route('socialite.login', 'google') }}?nb" class="btn btn-info btn-block">
+                            <i class="fab fa-google mr-1"></i>
+                            <span>ورود با اکانت گوگل</span>
+                        </a>
+
+                        <hr>
+
+                        <div class="form-group row mt-3">
                             <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('نام کاربری') }}</label>
 
                             <div class="col-md-6">

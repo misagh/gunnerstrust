@@ -14,7 +14,7 @@ class UserController extends Controller {
         $this->middleware('auth');
     }
 
-    public function profile($username)
+    public function profile($username = null)
     {
         $profile = (new UserRepository)->findByUsername($username);
 
@@ -58,11 +58,32 @@ class UserController extends Controller {
         return redirect()->back();
     }
 
+    public function username()
+    {
+        $user = auth()->user();
+
+        if (empty($user->username))
+        {
+            if (request()->isMethod('post'))
+            {
+                $this->validate(request(), ['username' => ['required', 'string', 'min:3', 'max:15', 'username', 'unique:users']]);
+
+                (new UserRepository)->update($user, ['username' => request('username')]);
+
+                return redirect(session('socialite_back') ?: route('users.profile', request('username')));
+            }
+
+            return view('users.username');
+        }
+
+        return redirect()->route('users.profile', $user->username);
+    }
+
     public function password()
     {
         $user = auth()->user();
 
-        if (! Hash::check(request('password_current'), $user->password))
+        if (! empty($user->password) && ! Hash::check(request('password_current'), $user->password))
         {
             session()->flash('error', 'رمز عبور فعلی را اشتباه وارد کرده اید.');
 

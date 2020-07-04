@@ -22,7 +22,13 @@
                 </div>
             </div>
         </div>
-        <div v-else class="alert alert-danger">برای ارسال نظر لطفا وارد سایت شوید.</div>
+        <div v-else class="alert alert-danger overflow-hidden">
+            <span class="float-right my-1">برای ارسال نظر لطفا وارد سایت شوید.</span>
+            <span class="float-left">
+                <a href="/login/google" class="btn btn-success btn-sm">ورود با گوگل<i class="fab fa-google ml-1"></i></a>
+                <a href="/login" class="btn btn-info btn-sm">ورود با نام کاربری</a>
+            </span>
+        </div>
         <div class="card shadow mb-3" v-for="comment in comments" :key="comment.id">
             <div class="card-header p-0">
                 <div class="username username-user position-absolute float-right text-center text-white eng-font">

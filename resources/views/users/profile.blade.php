@@ -65,12 +65,14 @@
                 <div class="card-body">
                     <form action="{{ route('users.password') }}" method="post">
                         @csrf
+                        @if (! empty($auth->password))
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">رمز عبور فعلی</label>
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" name="password_current" dir="ltr" required>
                             </div>
                         </div>
+                        @endif
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">رمز عبور جدید</label>
                             <div class="col-sm-10">

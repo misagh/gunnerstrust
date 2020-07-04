@@ -50,7 +50,7 @@
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ $auth->name }} <span class="caret"></span>
+                                {{ $auth->name ?? $auth->email }} <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('users.profile', $auth->username) }}">{{ __('حساب کابری') }}</a>
@@ -122,11 +122,20 @@
     </nav>
 
     <header class="shadow">
-        <div class="container text-white text-center position-relative">
-            <div class="eng-font mt-4">
+        <div class="container text-center position-relative">
+            <div class="eng-font mt-3 text-white">
                 <span class="title">Gunners<span class="text-danger">Trust</span></span>
                 <span class="slogan font-weight-bold ml-md-3">Arsenal Fan Club Website in Iran</span>
             </div>
+            @if (empty($auth))
+            <div class="row mt-2">
+                <div class="col-12">
+                    <a href="{{ route('login') }}" class="btn btn-light text-black-50 btn-sm">ورود با نام کاربری</a>
+                    <a href="{{ route('socialite.login', 'google') }}" class="btn btn-primary text-white btn-sm">ورود با اکانت گوگل</a>
+                    <a href="{{ route('register') }}" class="btn btn-light text-black-50 btn-sm">ثبت نام در سایت</a>
+                </div>
+            </div>
+            @endif
         </div>
     </header>
 
@@ -151,7 +160,7 @@
                 </div>
             </div>
         @endif
-        @if (! empty($auth) && empty($auth->details))
+        @if (! empty($auth) && ! empty($auth->username) && empty($auth->details))
             <div class="container">
                 <div class="alert alert-warning shadow">
                     <a href="{{ route('users.profile', $auth->username) }}">
@@ -190,8 +199,20 @@
     </main>
     <div class="fixed-bottom bottom-menu text-white p-3 shadow">
         <div class="container p-0 text-center">
-            <span class="my-2 font-weight-bold">جای نوشته‌های آرسنالی شما در سایت خالیست!</span>
-            <a class="btn btn-danger ml-1" href="{{ route('posts.add') }}">نوشتن مطلب</a>
+            <div class="row">
+                <div class="col-md-3 col-6 mb-2 mb-md-0">
+                    <a href="{{ route('topics.view', 'اخبار-و-شایعات-نقل-و-انتقالات') }}" class="btn btn-orange btn-block">نقل و انتقالات</a>
+                </div>
+                <div class="col-md-3 col-6 mb-2 mb-md-0">
+                    <a href="{{ route('topics.view', 'بحث-و-تبادل-نظر-فوتبالی') }}" class="btn btn-info btn-block">بحث فوتبالی</a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="{{ route('topics.view', 'قهوه-خونه') }}" class="btn btn-success btn-block">قهوه خونه</a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="{{ route('posts.add') }}" class="btn btn-danger btn-block">ارسال مطلب</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -209,8 +230,8 @@
             <div class="col-12 eng-font pb-3">
                 <span class="float-left ltr"><i class="far fa-copyright"></i> {{ date('Y') }} GunnersTrust</span>
                 <span class="float-right ltr">
-						<a href="https://t.me/GunnersTrust" class="mr-3" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
-						<a href="https://twitter.com/GunnersTrust" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="https://t.me/GunnersTrust" class="mr-3" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
+                    <a href="https://twitter.com/GunnersTrust" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
 				</span>
             </div>
         </div>
