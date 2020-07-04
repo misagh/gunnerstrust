@@ -20,6 +20,16 @@ Route::get('/t/{id}', 'ArticleController@short')->name('articles.short');
 Route::get('/p/{id}', 'PostController@short')->name('posts.short');
 Route::get('/f/{id}', 'FixtureController@short')->name('fixtures.short');
 
+Route::get('/privacy', function ()
+{
+    return view('pages.privacy');
+});
+
+Route::get('/terms', function ()
+{
+    return view('pages.terms');
+});
+
 Route::prefix('articles')->group(function ()
 {
     Route::any('/add', 'ArticleController@add')->name('articles.add');
