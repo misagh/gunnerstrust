@@ -18,6 +18,15 @@
                         <input type="text" name="name_fa" class="form-control" value="{{ $stadium->name_fa ?? '' }}">
                     </div>
                     <div class="form-group">
+                        <label>تیم</label>
+                        <select name="team_id" class="form-control">
+                            <option value="">----------------------------------------------------</option>
+                            @foreach($teams as $team)
+                                <option value="{{ $team->id }}" {{ $team->id === ($stadium->team_id ?? null) ? 'selected' : '' }}>{{ $team->name_en }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>لوگو</label>
                         <input type="file" name="logo" class="form-control-file">
                         @if (! empty($stadium->logo))

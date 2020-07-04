@@ -19,6 +19,7 @@
     <link rel="manifest" href="{{ asset('img/favicon/site.webmanifest') }}">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <meta name="google-site-verification" content="e5MJx7cW7IXtU5wxsklQqRabBFlp0NgISYr6ZkdK6lM" />
     @yield('meta')
 </head>
 <body>
@@ -205,7 +206,7 @@
             <div class="col-12">
                 <hr>
             </div>
-            <div class="col-12 eng-font">
+            <div class="col-12 eng-font pb-3">
                 <span class="float-left ltr"><i class="far fa-copyright"></i> {{ date('Y') }} GunnersTrust</span>
                 <span class="float-right ltr">
 						<a href="https://t.me/GunnersTrust" class="mr-3" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>

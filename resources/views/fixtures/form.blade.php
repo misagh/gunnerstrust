@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="form-group eng-font">
-                        <input type="text" name="played_at" class="form-control" value="{{ $fixture->played_at ?? now() }}" required>
+                        <input type="text" name="played_at" class="form-control" value="{{ $fixture->played_at ?? now()->format('Y-m-d H:i:\00') }}" required>
                     </div>
                     <div class="form-group">
                         <textarea id="summernote" name="body" class="form-control">{{ $fixture->body ?? '' }}</textarea>

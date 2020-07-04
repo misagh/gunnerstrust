@@ -16,7 +16,6 @@ class FixtureRepository extends Repository {
     {
         $data['body'] = clean($data['body']);
         $data['slug'] = $this->generateSlug($data);
-        $data['played_at'] = Carbon::parse($data['played_at'])->toDateTimeString();
 
         return $this->create($data);
     }
@@ -24,7 +23,6 @@ class FixtureRepository extends Repository {
     public function updateFixture($data)
     {
         $data['body'] = clean($data['body']);
-        $data['played_at'] = Carbon::parse($data['played_at'])->toDateTimeString();
 
         $this->update($this->model, $data);
 

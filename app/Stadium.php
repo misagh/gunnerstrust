@@ -12,6 +12,11 @@ class Stadium extends Model {
     protected $guarded = [];
     protected $appends = ['logo'];
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function getLogoAttribute()
     {
         $file = 'img/logos/' . $this->name_en . '.jpg';

@@ -14,7 +14,7 @@
         <div class="row justify-content-between">
             @if ($logo2 = $fixture->team2->logo)
             <div class="float-left pl-2 pl-sm-3">
-                <img src="{{ $logo2 }}" class="fixture-menu-logo {{ empty($compact) ? '' : 'fixture-menu-logo-compact' }}">
+                <img src="{{ $logo2 }}" class="fixture-menu-logo {{ empty($compact) ? '' : 'fixture-menu-logo-compact' }}" width="100">
             </div>
             @endif
             <div class="col text-center {{ empty($compact) ? '' : 'mt-2 pt-1' }}">
@@ -33,7 +33,7 @@
             </div>
             @if ($logo1 = $fixture->team1->logo)
             <div class="float-right pr-2 pr-sm-3">
-                <img src="{{ $logo1 }}" class="fixture-menu-logo {{ empty($compact) ? '' : 'fixture-menu-logo-compact' }}">
+                <img src="{{ $logo1 }}" class="fixture-menu-logo {{ empty($compact) ? '' : 'fixture-menu-logo-compact' }}" width="100">
             </div>
             @endif
         </div>

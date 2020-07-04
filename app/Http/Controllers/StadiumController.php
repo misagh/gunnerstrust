@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Validation\Rule;
 use App\Services\ArticleImageFinder;
+use App\Repositories\TeamRepository;
 use App\Repositories\StadiumRepository;
 
 class StadiumController extends Controller {
@@ -23,7 +24,9 @@ class StadiumController extends Controller {
             return redirect()->back();
         }
 
-        return view('stadiums.form');
+        $teams = (new TeamRepository)->getAllTeams();
+
+        return view('stadiums.form', compact('teams'));
     }
 
     public function edit($id)
@@ -43,7 +46,9 @@ class StadiumController extends Controller {
             return redirect()->back();
         }
 
-        return view('stadiums.form', compact('stadium'));
+        $teams = (new TeamRepository)->getAllTeams();
+
+        return view('stadiums.form', compact('stadium', 'teams'));
     }
 
     public function delete($id)

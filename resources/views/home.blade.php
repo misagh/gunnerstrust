@@ -30,10 +30,14 @@
     @if (empty($fixtures['today']) && (! empty($fixtures['next']) || ! empty($fixtures['previous'])))
         <div class="row mb-1">
             <div class="col-lg-6 mb-2">
-                @include('fixtures.menu', ['fixture' => $fixtures['next'], 'bg_color' => 'info'])
+                @if (! empty($fixtures['next']))
+                    @include('fixtures.menu', ['fixture' => $fixtures['next'], 'bg_color' => 'info'])
+                @endif
             </div>
             <div class="col-lg-6">
-                @include('fixtures.menu', ['fixture' => $fixtures['previous'], 'bg_color' => 'danger'])
+                @if (! empty($fixtures['previous']))
+                    @include('fixtures.menu', ['fixture' => $fixtures['previous'], 'bg_color' => 'danger'])
+                @endif
             </div>
         </div>
     @endif
