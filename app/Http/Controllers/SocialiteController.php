@@ -34,7 +34,7 @@ class SocialiteController extends Controller {
                 $user = (new UserRepository)->create(compact('name', 'email'));
             }
 
-            auth()->login($user);
+            auth()->login($user, true);
 
             return redirect(session('socialite_back') ?: route('home'));
         }
