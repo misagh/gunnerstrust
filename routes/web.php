@@ -19,6 +19,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/t/{id}', 'ArticleController@short')->name('articles.short');
 Route::get('/p/{id}', 'PostController@short')->name('posts.short');
 Route::get('/f/{id}', 'FixtureController@short')->name('fixtures.short');
+Route::get('/o/{id}', 'TopicController@short')->name('topics.short');
 
 Route::get('login/{provider}', 'SocialiteController@login')->name('socialite.login')->where(['provider' => 'google']);
 Route::get('login/{provider}/callback', 'SocialiteController@callback')->name('socialite.login.callback')->where(['provider' => 'google']);

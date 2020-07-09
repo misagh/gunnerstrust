@@ -13,7 +13,12 @@
                         <h1 class="card-title font-weight-bold position-absolute text-left text-white w-100">{{ $current_topic->title }}</h1>
                     </div>
                     <div class="card-body">
-                        <div class="card-text">{!! $current_topic->body !!}</div>
+                        <div class="card-text">
+                            {!! $current_topic->body !!}
+                            <div class="float-left small mt-5">
+                                <a target="_blank" href="{{ route('topics.short', base64url_encode($current_topic->id)) }}" class="rounded text-white bg-secondary py-1 px-3" rel="nofollow">لینک کوتاه</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
