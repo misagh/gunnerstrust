@@ -18,7 +18,8 @@ class UserRepository extends Repository {
 
     public function getList()
     {
-        return $this->model->orderByDesc('seen_at')
+        return $this->model->whereNotNull('username')
+                           ->orderByDesc('seen_at')
                            ->paginate(18);
     }
 }
