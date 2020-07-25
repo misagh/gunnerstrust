@@ -10,7 +10,7 @@ class InterviewController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('admin', ['except' => ['view', 'short']]);
+        $this->middleware('admin', ['except' => ['view', 'short', 'score']]);
     }
 
     public function short($id)
