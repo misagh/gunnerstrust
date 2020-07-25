@@ -20,6 +20,7 @@ Route::get('/t/{id}', 'ArticleController@short')->name('articles.short');
 Route::get('/p/{id}', 'PostController@short')->name('posts.short');
 Route::get('/f/{id}', 'FixtureController@short')->name('fixtures.short');
 Route::get('/o/{id}', 'TopicController@short')->name('topics.short');
+Route::get('/i/{id}', 'InterviewController@short')->name('interviews.short');
 
 Route::get('login/{provider}', 'SocialiteController@login')->name('socialite.login')->where(['provider' => 'google']);
 Route::get('login/{provider}/callback', 'SocialiteController@callback')->name('socialite.login.callback')->where(['provider' => 'google']);
@@ -60,6 +61,15 @@ Route::prefix('posts')->group(function ()
     Route::post('/score/{id}', 'PostController@score')->name('posts.score');
     Route::any('/lists', 'PostController@lists')->name('posts.lists');
     Route::get('{slug}', 'PostController@view')->name('posts.view');
+});
+
+Route::prefix('interviews')->group(function ()
+{
+    Route::any('/add', 'InterviewController@add')->name('interviews.add');
+    Route::any('/edit/{id}', 'InterviewController@edit')->name('interviews.edit');
+    Route::post('/score/{id}', 'InterviewController@score')->name('interviews.score');
+    Route::any('/lists', 'InterviewController@lists')->name('interviews.lists');
+    Route::get('{slug}', 'InterviewController@view')->name('interviews.view');
 });
 
 Route::prefix('fixtures')->group(function ()

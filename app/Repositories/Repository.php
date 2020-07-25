@@ -62,6 +62,11 @@ abstract class Repository {
         return $this->model->paginate(static::PAGINATION_LIMIT);
     }
 
+    public function getAllRecords()
+    {
+        return $this->model->get()->all();
+    }
+
     public function getColumns()
     {
         return $this->model->getConnection()

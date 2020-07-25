@@ -8,6 +8,7 @@ use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\FixtureRepository;
 use App\Repositories\ReactionRepository;
+use App\Repositories\InterviewRepository;
 
 class CommentController extends Controller {
 
@@ -104,6 +105,9 @@ class CommentController extends Controller {
                 break;
             case 'fixture':
                 return (new FixtureRepository)->findOrFail($id);
+                break;
+            case 'interview':
+                return (new InterviewRepository)->findOrFail($id);
                 break;
             default:
                 return null;

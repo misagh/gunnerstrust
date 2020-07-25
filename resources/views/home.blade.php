@@ -75,7 +75,7 @@
     @endif
     <div class="card-deck">
         @foreach($pinned as $pin)
-            @if ($posts->isEmpty() || $comments->isNotEmpty() ? true : $loop->index === 0)
+            @if ($posts->isEmpty() || $comments->isNotEmpty() || $interviews->isNotEmpty() ? true : $loop->index === 0)
             <div class="card shadow bg-dark text-white {{ $loop->index === 0 && $posts->isNotEmpty() ? 'ml-sm-3 mr-sm-0' : '' }}">
                 <img src="{{ get_cover($pin->cover) }}" class="card-img-top" alt="{{ $pin->title }}">
                 <div class="card-body">
@@ -93,9 +93,9 @@
             </div>
             @endif
         @endforeach
-        @if ($posts->isNotEmpty() || $comments->isNotEmpty())
+        @if ($posts->isNotEmpty() || $comments->isNotEmpty() || $interviews->isNotEmpty())
             <div class="card bg-transparent border-0">
-                @if ($posts->isNotEmpty())
+                @if ($posts->isNotEmpty() && $interviews->isEmpty())
                     <ul class="list-group p-0 shadow">
                         @foreach($posts as $post)
                             <li class="list-group-item text-white bg-secondary py-0 pl-0 pr-2">
@@ -107,6 +107,22 @@
                             </li>
                         @endforeach
                     </ul>
+                @endif
+                @if ($interviews->isNotEmpty())
+                    <div class="bg-white text-dark shadow rounded p-3">
+                        <span class="font-weight-bold">مصاحبه با هواداران</span>
+                        <hr class="my-1">
+                        <ul class="list-group p-0 mt-2">
+                            @foreach($interviews as $interview)
+                                <li class="list-group-item text-white bg-purple py-0 pl-0 pr-2">
+                                    <a href="{{ route('interviews.view', $interview->slug) }}">
+                                        <img src="{{ get_cover($interview->cover) }}" width="100" alt="{{ $interview->summary }}">
+                                        <span class="h6 font-weight-bold ml-2">{{ $interview->title }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
                 @if ($comments->isNotEmpty())
                     <div class="bg-white text-dark shadow rounded mt-2 p-3">

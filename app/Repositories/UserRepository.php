@@ -22,4 +22,11 @@ class UserRepository extends Repository {
                            ->orderByDesc('seen_at')
                            ->paginate(18);
     }
+
+    public function getSelectUsers()
+    {
+        return $this->model->orderBy('username')
+                           ->get()
+                           ->all();
+    }
 }
