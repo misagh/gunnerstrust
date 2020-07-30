@@ -25,11 +25,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-3">
-                @if ($interview->challenge)
-                <div class="card bg-secondary text-white shadow mb-3 p-3">
-                    <a class="stretched-link" href="{{ route('challenges.view', $interview->challenge->slug) }}">{{ $interview->challenge->title }}</a>
-                </div>
-                @endif
                 <ul class="list-group w-100 p-0 shadow mb-3">
                     <li class="list-group-item bg-info text-white">
                         <span class="float-right">مصاحبه شونده</span>

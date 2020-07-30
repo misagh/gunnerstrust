@@ -7,6 +7,7 @@ use App\Repositories\TopicRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\FixtureRepository;
+use App\Repositories\PodcastRepository;
 use App\Repositories\ReactionRepository;
 use App\Repositories\InterviewRepository;
 
@@ -108,6 +109,9 @@ class CommentController extends Controller {
                 break;
             case 'interview':
                 return (new InterviewRepository)->findOrFail($id);
+                break;
+            case 'podcast':
+                return (new PodcastRepository)->findOrFail($id);
                 break;
             default:
                 return null;

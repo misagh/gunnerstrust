@@ -86,6 +86,9 @@
                                     <a class="dropdown-item" href="{{ route('interviews.add') }}">{{ __('افزودن مصاحبه') }}</a>
                                     <a class="dropdown-item" href="{{ route('interviews.lists') }}">{{ __('ویرایش مصاحبه‌ها') }}</a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('podcasts.add') }}">{{ __('افزودن پادکست') }}</a>
+                                    <a class="dropdown-item" href="{{ route('podcasts.lists') }}">{{ __('ویرایش پادکست‌ها') }}</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('posts.lists') }}">{{ __('بررسی پست کابران') }}</a>
                                     <div class="dropdown-divider"></div>
                                 @endif

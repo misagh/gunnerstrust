@@ -6,6 +6,7 @@ use App\Repositories\PostRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\FixtureRepository;
 use App\Repositories\CommentRepository;
+use App\Repositories\PodcastRepository;
 use App\Repositories\ChallengeRepository;
 use App\Repositories\InterviewRepository;
 
@@ -19,6 +20,7 @@ class HomeController extends Controller {
         $posts = (new PostRepository)->getLatestGlobalPosts();
         $comments = (new CommentRepository)->getList();
         $interviews = (new InterviewRepository)->getLatestInterviews();
+        $podcast = (new PodcastRepository)->getLatestPodcast();
 
         $articles_group1 = $articles->take(6);
         $articles_group2 = $articles->skip(6);
@@ -31,6 +33,6 @@ class HomeController extends Controller {
             $fixtures['previous'] = (new FixtureRepository)->getPreviousFixture();
         }
 
-        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'pinned', 'challenge', 'posts', 'fixtures', 'comments', 'interviews'));
+        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'pinned', 'challenge', 'posts', 'fixtures', 'comments', 'interviews', 'podcast'));
     }
 }

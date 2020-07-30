@@ -21,6 +21,7 @@ Route::get('/p/{id}', 'PostController@short')->name('posts.short');
 Route::get('/f/{id}', 'FixtureController@short')->name('fixtures.short');
 Route::get('/o/{id}', 'TopicController@short')->name('topics.short');
 Route::get('/i/{id}', 'InterviewController@short')->name('interviews.short');
+Route::get('/c/{id}', 'PodcastController@short')->name('podcasts.short');
 
 Route::get('login/{provider}', 'SocialiteController@login')->name('socialite.login')->where(['provider' => 'google']);
 Route::get('login/{provider}/callback', 'SocialiteController@callback')->name('socialite.login.callback')->where(['provider' => 'google']);
@@ -70,6 +71,14 @@ Route::prefix('interviews')->group(function ()
     Route::post('/score/{id}', 'InterviewController@score')->name('interviews.score');
     Route::any('/lists', 'InterviewController@lists')->name('interviews.lists');
     Route::get('{slug}', 'InterviewController@view')->name('interviews.view');
+});
+
+Route::prefix('podcasts')->group(function ()
+{
+    Route::any('/add', 'PodcastController@add')->name('podcasts.add');
+    Route::any('/edit/{id}', 'PodcastController@edit')->name('podcasts.edit');
+    Route::any('/lists', 'PodcastController@lists')->name('podcasts.lists');
+    Route::get('{slug}', 'PodcastController@view')->name('podcasts.view');
 });
 
 Route::prefix('fixtures')->group(function ()
