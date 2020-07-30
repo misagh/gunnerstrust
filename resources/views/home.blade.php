@@ -47,11 +47,11 @@
 <div class="container mb-3">
     <div class="row">
         <div class="col-12 text-center">
-            <div class="card bg-success text-white shadow-sm">
+            <div class="card bg-primary text-white shadow-sm py-3">
                 <div class="card-body">
-                    <h5 class="mb-0 font-weight-bold">
+                    <h4 class="mb-0 font-weight-bold">
                         <a href="{{ route('podcasts.view', $podcast->slug) }}" class="stretched-link mx-1">{{ $podcast->title }}</a>
-                    </h5>
+                    </h4>
                 </div>
             </div>
         </div>
