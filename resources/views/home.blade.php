@@ -124,7 +124,7 @@
             <div class="card-body">
                 <span class="card-title text-secondary"><img class="rounded-circle shadow-sm mr-2" width="30" src="{{ $comment->user->avatar }}">{{ $comment->commentable->title }}</span>
                 <p class="card-text mt-3">
-                    <a href="{{ $comment->commentable->url }}" class="stretched-link">{{ str_limit($comment->body, 500) }}</a>
+                    <a href="{{ $comment->commentable->url }}" class="stretched-link">{{ str_limit(strip_tags($comment->body), 500) }}</a>
                 </p>
             </div>
         </div>
