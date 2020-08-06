@@ -14,25 +14,16 @@ class HomeController extends Controller {
 
     public function index()
     {
-        $pinned = (new ArticleRepository)->getPinnedArticles();
-        $articles = (new ArticleRepository)->getUnpinnedArticles();
-        $challenge = (new ChallengeRepository)->getCurrentChallenge();
-        $posts = (new PostRepository)->getLatestGlobalPosts();
-        $comments = (new CommentRepository)->getList();
-        $interviews = (new InterviewRepository)->getLatestInterviews();
-        $podcast = (new PodcastRepository)->getLatestPodcast();
+        $articles = (new ArticleRepository)->getLatestArticles();
+        $interviews = (new InterviewRepository)->getLatestInterviews(6);
+        $podcasts = (new PodcastRepository)->getLatestPodcasts(6);
+        $comments = (new CommentRepository)->getLatestComments();
 
-        $articles_group1 = $articles->take(6);
-        $articles_group2 = $articles->skip(6);
+        $articles_group1 = $articles->take(3);
+        $articles_group2 = $articles->skip(3);
 
-        $fixtures['today'] = (new FixtureRepository)->getTodayFixture();
+        $article_active = rand(0, $articles_group1->count() - 1);
 
-        if (empty($fixtures['today']))
-        {
-            $fixtures['next'] = (new FixtureRepository)->getNextFixture();
-            $fixtures['previous'] = (new FixtureRepository)->getPreviousFixture();
-        }
-
-        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'pinned', 'challenge', 'posts', 'fixtures', 'comments', 'interviews', 'podcast'));
+        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'interviews', 'podcasts', 'article_active', 'comments'));
     }
 }

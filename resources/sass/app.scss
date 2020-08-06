@@ -99,15 +99,58 @@ header {
 }
 
 .articles {
-    .card {
-        cursor: pointer;
+    .carousel-caption {
+        left: 0 !important;
+        right: 0 !important;
+    }
 
-        &:hover {
-            background-color: $danger;
+    .carousel-caption-title {
+        background: rgba(0, 0, 0, .8);
+        font-size: 1rem;
+        @include media-breakpoint-up(sm) {
+            font-size: 1.35rem !important;
+        }
+    }
+
+    .side-articles {
+        height: 193px;
+        overflow: auto;
+        @include media-breakpoint-down(sm) {
+            margin-left: 15px;
+        }
+        @include media-breakpoint-only(md) {
+            height: 254px;
+        }
+        @include media-breakpoint-only(lg) {
+            height: 344px;
+        }
+        @include media-breakpoint-only(xl) {
+            height: 411px;
+        }
+    }
+}
+
+.home-cards {
+    .card-title {
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        padding: 0.6rem;
+        background: rgba(0, 0, 0, .8);
+        color: $white;
+        font-weight: bold;
+        font-size: 1rem;
+
+        @include media-breakpoint-up(lg) {
+            font-size: 1.15rem !important;
+        }
+
+        a {
             color: $white;
 
-            a {
-                color: $white;
+            &:hover {
+                color: $yellow;
             }
         }
     }
@@ -117,7 +160,7 @@ header {
     .card-overlay .card-title {
         bottom: 0;
         padding: 1rem;
-        background: rgba(0, 0, 0, .62)
+        background: rgba(0, 0, 0, .62);
     }
 
     .card-text {

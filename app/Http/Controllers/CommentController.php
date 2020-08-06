@@ -15,7 +15,7 @@ class CommentController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'fetch']);
+        $this->middleware('auth', ['except' => ['fetch', 'list']]);
     }
 
     public function fetch($type, $id)

@@ -19,184 +19,145 @@
 
 @section('content')
 
-<div class="container">
-    @if (! empty($fixtures['today']))
-        <div class="row mb-2">
-            <div class="col-12">
-                @include('fixtures.menu', ['fixture' => $fixtures['today']])
-            </div>
-        </div>
-    @endif
-    @if (empty($fixtures['today']) && (! empty($fixtures['next']) || ! empty($fixtures['previous'])))
-        <div class="row mb-1">
-            <div class="col-lg-6 mb-2">
-                @if (! empty($fixtures['next']))
-                    @include('fixtures.menu', ['fixture' => $fixtures['next'], 'bg_color' => 'info'])
-                @endif
-            </div>
-            <div class="col-lg-6">
-                @if (! empty($fixtures['previous']))
-                    @include('fixtures.menu', ['fixture' => $fixtures['previous'], 'bg_color' => 'danger'])
-                @endif
-            </div>
-        </div>
-    @endif
-</div>
-
-@if (! empty($podcast))
-<div class="container mb-3">
-    <div class="row">
-        <div class="col-12 text-center">
-            <div class="card bg-primary text-white shadow-sm py-3">
-                <div class="card-body">
-                    <h4 class="mb-0 font-weight-bold">
-                        <a href="{{ route('podcasts.view', $podcast->slug) }}" class="stretched-link mx-1">{{ $podcast->title }}</a>
-                    </h4>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endif
-
 <div class="container articles">
-    @if (! empty($challenge))
     <div class="row">
-        <div class="col-12">
-            <div class="card mb-3 shadow">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <a href="{{ route('challenges.view', $challenge->slug) }}">
-                            <img src="{{ get_cover($challenge->cover) }}" class="card-img" alt="{{ $challenge->title }}">
-                        </a>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold">
-                                <a href="{{ route('challenges.view', $challenge->slug) }}">{{ $challenge->title }}</a>
-                            </h5>
-                            <p class="card-text">{{ $challenge->summary }}</p>
-                        </div>
-                        <div class="card-footer border-0 overflow-hidden mb-2 bg-transparent">
-                            <div class="float-left">
-                                <a class="btn btn-success" href="{{ route('posts.add', $challenge->id) }}">نوشتن تحلیل جدید</a>
+        <div class="col-md-8 mb-2">
+            <div id="articleSlider" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @foreach($articles_group1 as $key => $article)
+                        <li data-target="#articleSlider" data-slide-to="{{ $key }}" @if ($key === $article_active) class="active" @endif></li>
+                    @endforeach
+                </ol>
+                <div class="carousel-inner">
+                    @foreach($articles_group1 as $key => $article)
+                        <div class="carousel-item {{ $key === $article_active ? 'active' : '' }}">
+                            <img src="{{ get_cover($article->cover) }}" class="d-block w-100" alt="{{ $article->summary }}">
+                            <div class="carousel-caption">
+                                <h2 class="carousel-caption-title text-white font-weight-bold p-3">
+                                    <a href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a>
+                                </h2>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
+                <a class="carousel-control-prev" href="#articleSlider" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#articleSlider" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <hr>
+        </div>
+        <div class="col-md-4 pr-md-1 pl-md-0 nice-scroll side-articles">
+            <ul class="list-group pr-0">
+            @foreach($articles_group2 as $key => $article)
+                <li class="list-group-item rounded-0">
+                    <h3 class="mb-2 h6">
+                        <i class="fa fa-futbol mr-2"></i><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a>
+                    </h3>
+                    <small>{{ $article->summary }}</small>
+                </li>
+            @endforeach
+            </ul>
         </div>
     </div>
-    @endif
-    <div class="card-deck">
-        @foreach($pinned as $pin)
-            @if ($posts->isEmpty() || $comments->isNotEmpty() || $interviews->isNotEmpty() ? true : $loop->index === 0)
-            <div class="card shadow bg-dark text-white {{ $loop->index === 0 && $posts->isNotEmpty() ? 'ml-sm-3 mr-sm-0' : '' }}">
-                <img src="{{ get_cover($pin->cover) }}" class="card-img-top" alt="{{ $pin->title }}">
-                <div class="card-body">
-                    <h4 class="card-title font-weight-bold"><a class="stretched-link" href="{{ route('articles.view', $pin->slug) }}">{{ $pin->title }}</a></h4>
-                    <p class="card-text mb-0">{{ $pin->summary }}</p>
-                </div>
-                <div class="card-footer p-3">
-                    <small>{{ $pin->created_at->diffForHumans() }}</small>
-                    @if ($pin->comments_count > 0)
-                        <span class="float-left eng-font font-weight-bold"><i class="fas fa-comment-dots ml-1"></i>{{ $pin->comments_count }}</span>
-                    @else
-                        <small class="float-left bg-info text-white py-1 px-2 rounded">ارسال نظر</small>
-                    @endif
-                </div>
-            </div>
-            @endif
-        @endforeach
-        @if ($posts->isNotEmpty() || $comments->isNotEmpty() || $interviews->isNotEmpty())
-            <div class="card bg-transparent border-0">
-                @if ($posts->isNotEmpty() && $interviews->isEmpty())
-                    <ul class="list-group p-0 shadow">
-                        @foreach($posts as $post)
-                            <li class="list-group-item text-white bg-secondary py-0 pl-0 pr-2">
-                                <a href="{{ route('posts.view', $post->slug) }}">
-                                    <img src="{{ get_cover($post->cover) }}" width="100" alt="{{ $post->summary }}">
-                                    <span class="h5 font-weight-bold ml-2">{{ $post->title }}</span>
-                                </a>
-                                <a href="{{ route('users.profile', $post->user->username) }}" class="small float-left my-2">{{ $post->user->username }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-                @if ($interviews->isNotEmpty())
-                    <div class="bg-white text-dark shadow rounded p-3">
-                        <span class="font-weight-bold">مصاحبه با هواداران</span>
-                        <hr class="my-1">
-                        <ul class="list-group p-0 mt-2">
-                            @foreach($interviews as $interview)
-                                <li class="list-group-item text-white bg-purple py-0 pl-0 pr-2">
-                                    <a href="{{ route('interviews.view', $interview->slug) }}">
-                                        <img src="{{ get_cover($interview->cover) }}" width="100" alt="{{ $interview->summary }}">
-                                        <span class="h6 font-weight-bold ml-2">{{ $interview->title }}</span>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
+</div>
+
+<div class="container home-cards">
+    <hr>
+    <div class="row">
+        @if ($podcasts->isNotEmpty())
+        <div class="col-md-6">
+            @foreach($podcasts as $podcast)
+                @if ($loop->iteration === 1)
+                <div class="card">
+                    <img src="{{ get_cover($podcast->cover) }}" class="card-img-top" alt="...">
+                    <div class="card-title text-center">
+                        <a href="{{ route('podcasts.view', $podcast->slug) }}">{{ $podcast->title }}</a>
                     </div>
-                @endif
-                @if ($comments->isNotEmpty())
-                    <div class="bg-white text-dark shadow rounded mt-2 p-3">
-                        <span class="font-weight-bold">آخرین نظردهندگان</span>
-                        <hr class="my-1">
-                        <div class="text-center overflow-auto text-nowrap nice-scroll pb-2 comment-users">
-                            @foreach($comments as $comment)
-                                <a href="{{ $comment->commentable->url }}" class="d-inline-block mx-1 mt-1 text-center text-dark eng-font">
-                                    <img class="rounded-circle shadow-sm mx-auto border border-danger" width="50" src="{{ $comment->user->avatar }}">
-                                    <span class="d-block">{{ $comment->user->username }}</span>
-                                </a>
-                            @endforeach
+                </div>
+                @else
+                    <div class="card mt-1">
+                        <div class="card-body py-3 bg-orange text-white">
+                            <i class="fas fa-podcast fa-lg mr-1"></i>
+                            <a class="font-weight-bold stretched-link" href="{{ route('podcasts.view', $podcast->slug) }}">{{ $podcast->title }}</a>
                         </div>
                     </div>
                 @endif
-            </div>
+            @endforeach
+{{--            <a class="btn btn-block btn-secondary mt-1 rounded-0" href="{{ route('podcasts.lists') }}">فهرست همه پادکست ها</a>--}}
+            <hr class="d-md-none">
+        </div>
+        @endif
+        @if ($interviews->isNotEmpty())
+        <div class="col-md-6 mb-2">
+            @foreach($interviews as $interview)
+                @if ($loop->iteration === 1)
+                    <div class="card">
+                        <img src="{{ get_cover($interview->cover) }}" class="card-img-top" alt="...">
+                        <div class="card-title text-center">
+                            <a href="{{ route('interviews.view', $interview->slug) }}">{{ $interview->title }}</a>
+                        </div>
+                    </div>
+                @else
+                    <div class="card mt-1">
+                        <div class="card-body py-3 bg-purple text-white">
+                            <i class="fas fa-user-astronaut fa-lg mr-1"></i>
+                            <a class="font-weight-bold stretched-link" href="{{ route('interviews.view', $interview->slug) }}">{{ $interview->title }}</a>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+{{--            <a class="btn btn-block btn-secondary mt-1 rounded-0" href="{{ route('interviews.lists') }}">فهرست همه مصاحبه ها</a>--}}
+        </div>
         @endif
     </div>
-    <div class="card-deck mt-sm-4">
-        @foreach($articles_group1 as $key => $article)
-            <div class="card shadow">
-                <img src="{{ get_cover($article->cover) }}" class="card-img-top" alt="{{ $article->summary }}">
-                <div class="card-body">
-                    <h5 class="card-title mb-0"><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a></h5>
-                </div>
-                <div class="card-footer p-2">
-                    <small>{{ $article->created_at->diffForHumans() }}</small>
-                    @if ($article->comments_count > 0)
-                        <span class="float-left eng-font font-weight-bold"><i class="fas fa-comment-dots ml-1"></i>{{ $article->comments_count }}</span>
-                    @else
-                        <small class="float-left bg-success text-white py-1 px-2 rounded">ارسال نظر</small>
-                    @endif
-                </div>
+</div>
+
+<div class="container">
+    <hr>
+    <div class="card-columns">
+    @foreach($comments as $comment)
+        <div class="card">
+            <div class="card-body">
+                <span class="card-title text-secondary"><img class="rounded-circle shadow-sm mr-2" width="30" src="{{ $comment->user->avatar }}">{{ $comment->commentable->title }}</span>
+                <p class="card-text mt-3">
+                    <a href="{{ $comment->commentable->url }}" class="stretched-link">{{ str_limit($comment->body, 500) }}</a>
+                </p>
             </div>
-            @if ($loop->iteration % 3 === 0)
-            </div><div class="card-deck mt-sm-4">
-            @endif
-        @endforeach
+        </div>
+    @endforeach
     </div>
-    @if ($articles_group2->isNotEmpty())
-    <div class="card-group">
-        @foreach($articles_group2 as $key => $article)
-            <div class="card border {{ $loop->iteration % 2 === 0 ? 'ml-sm-1' : 'mr-sm-1' }}">
-                <div class="card-body">
-                    <h5 class="card-title mb-2">
-                        <i class="fa fa-futbol mr-2"></i><a class="stretched-link" href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a>
-                    </h5>
-                    <small>{{ $article->summary }}</small>
-                </div>
-            </div>
-            @if ($loop->iteration % 2 === 0)
-            </div><div class="card-group mt-sm-2">
-            @endif
-        @endforeach
-    </div>
-    @endif
-    <div class="mt-5 row justify-content-center">
-        {{ $articles->links() }}
+    <div class="text-right">
+        <a href="{{ route('users.list') }}" class="btn btn-secondary rounded-0">کاربران سایت</a>
+        <a href="{{ route('comments.list') }}" class="btn btn-success rounded-0">مشاهده همه نظرات</a>
     </div>
 </div>
+
+{{--<div class="container d-none">--}}
+{{--    @if (! empty($fixtures['today']))--}}
+{{--        <div class="row mb-2">--}}
+{{--            <div class="col-12">--}}
+{{--                @include('fixtures.menu', ['fixture' => $fixtures['today']])--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    @endif--}}
+{{--    @if (empty($fixtures['today']) && (! empty($fixtures['next']) || ! empty($fixtures['previous'])))--}}
+{{--        <div class="row mb-1">--}}
+{{--            <div class="col-lg-6 mb-2">--}}
+{{--                @if (! empty($fixtures['next']))--}}
+{{--                    @include('fixtures.menu', ['fixture' => $fixtures['next'], 'bg_color' => 'info'])--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--            <div class="col-lg-6">--}}
+{{--                @if (! empty($fixtures['previous']))--}}
+{{--                    @include('fixtures.menu', ['fixture' => $fixtures['previous'], 'bg_color' => 'danger'])--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    @endif--}}
+{{--</div>--}}
+
 @endsection

@@ -17,10 +17,6 @@
                         <input type="text" name="summary" class="form-control" value="{{ $interview->summary ?? '' }}" maxlength="160" minlength="150" required>
                     </div>
                     <div class="form-group">
-                        <label>توکن ویدیو</label>
-                        <input type="text" name="embed" class="form-control eng-font" value="{{ $interview->embed ?? '' }}" placeholder="123456789-xxxxx">
-                    </div>
-                    <div class="form-group">
                         <label>مصاحبه شونده</label>
                         <select name="user_id" class="form-control eng-font" required>
                             <option value="">----------------------------------------------------</option>
@@ -35,6 +31,14 @@
                         @if (! empty($interview->cover))
                             <span class="float-left"><img src="{{ get_cover($interview->cover) }}" width="200"></span>
                         @endif
+                    </div>
+                    <div class="form-group">
+                        <label>فایل</label>
+                        <input type="text" name="file" class="form-control eng-font" value="{{ $interview->file ?? '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label>اسکریپت</label>
+                        <textarea name="embed" rows="5" class="form-control eng-font">{{ $interview->embed ?? '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label>متن</label>

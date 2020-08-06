@@ -118,7 +118,7 @@ Route::prefix('admin')->middleware('admin')->group(function ()
     Route::get('articles/optimize', 'AdminController@articlesOptimize')->name('admin.articles.optimize');
 });
 
-Route::prefix('users')->middleware('auth')->group(function ()
+Route::prefix('users')->group(function ()
 {
     Route::post('/edit', 'UserController@edit')->name('users.edit');
     Route::post('/password', 'UserController@password')->name('users.password');

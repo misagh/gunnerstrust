@@ -19,6 +19,14 @@ class CommentRepository extends Repository {
                            ->paginate(static::PAGINATION_LIMIT);
     }
 
+    public function getLatestComments()
+    {
+        return $this->model->with('user')
+                           ->orderByDesc('id')
+                           ->limit(9)
+                           ->get();
+    }
+
     public function getComments($model, $offset = null)
     {
         return $model->comments()

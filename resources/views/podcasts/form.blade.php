@@ -16,16 +16,20 @@
                         <label>خلاصه</label>
                         <input type="text" name="summary" class="form-control" value="{{ $podcast->summary ?? '' }}" maxlength="160" minlength="150" required>
                     </div>
-                    <div class="form-group">
-                        <label>توکن صدا</label>
-                        <input type="text" name="embed" class="form-control eng-font" value="{{ $podcast->embed ?? '' }}" placeholder="123456789">
-                    </div>
                     <div class="form-group overflow-hidden">
                         <label>تصویر</label>
                         <input type="file" name="cover" class="form-control-file" {{ empty($podcast->cover) ? 'required' : '' }}>
                         @if (! empty($podcast->cover))
                             <span class="float-left"><img src="{{ get_cover($podcast->cover) }}" width="200"></span>
                         @endif
+                    </div>
+                    <div class="form-group">
+                        <label>فایل</label>
+                        <input type="text" name="file" class="form-control eng-font" value="{{ $podcast->file ?? '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label>اسکریپت</label>
+                        <textarea name="embed" rows="5" class="form-control eng-font">{{ $podcast->embed ?? '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label>متن</label>

@@ -79,7 +79,7 @@ class InterviewController extends Controller {
     public function view($slug)
     {
         $interview = (new InterviewRepository)->findByOrFail('slug', $slug);
-        $interviews = (new InterviewRepository)->getLatestInterviews($interview->id);
+        $interviews = (new InterviewRepository)->getLatestInterviews(2, $interview->id);
         $user_score = (new InterviewRepository($interview))->getUserScore();
 
         $interview->increment('hit');

@@ -40,6 +40,27 @@
                     <li class="nav-item mr-4">
                         <a class="nav-link" href="{{ route('posts.add') }}">{{ __('نوشتن مطلب') }}</a>
                     </li>
+                    @if ($topics->isNotEmpty())
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdownTopics" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <span>تاپیک ها</span> <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownTopics">
+                                @foreach($topics as $topic)
+                                    <a class="dropdown-item" href="{{ route('topics.view', $topic->slug) }}">{{ $topic->title }}</a>
+                                @endforeach
+                            </div>
+                        </li>
+                    @endif
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdownMenu" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <span>منوی سایت</span> <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenu">
+                            <a class="dropdown-item" href="{{ route('comments.list') }}">نظرات کاربران</a>
+                            <a class="dropdown-item" href="{{ route('users.list') }}">آرسنالی ها</a>
+                        </div>
+                    </li>
                     @if (empty($auth))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('ورود') }}</a>
@@ -98,27 +119,6 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
-                            </div>
-                        </li>
-                        @if ($topics->isNotEmpty())
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdownTopics" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <span>تاپیک ها</span> <span class="caret"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownTopics">
-                                @foreach($topics as $topic)
-                                <a class="dropdown-item" href="{{ route('topics.view', $topic->slug) }}">{{ $topic->title }}</a>
-                                @endforeach
-                            </div>
-                        </li>
-                        @endif
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdownMenu" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <span>منوی سایت</span> <span class="caret"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenu">
-                                <a class="dropdown-item" href="{{ route('comments.list') }}">نظرات کاربران</a>
-                                <a class="dropdown-item" href="{{ route('users.list') }}">آرسنالی ها</a>
                             </div>
                         </li>
                     @endif
@@ -203,27 +203,55 @@
         @endif
         @yield('content')
     </main>
-    <div class="fixed-bottom bottom-menu text-white p-3 shadow">
-        <div class="container p-0 text-center">
-            <div class="row">
-                <div class="col-md-3 col-6 mb-2 mb-md-0">
-                    <a href="{{ route('topics.view', 'اخبار-و-شایعات-نقل-و-انتقالات') }}" class="btn btn-orange btn-block">نقل و انتقالات</a>
-                </div>
-                <div class="col-md-3 col-6 mb-2 mb-md-0">
-                    <a href="{{ route('topics.view', 'بحث-و-تبادل-نظر-فوتبالی') }}" class="btn btn-info btn-block">بحث فوتبالی</a>
-                </div>
-                <div class="col-md-3 col-6">
-                    <a href="{{ route('topics.view', 'قهوه-خونه') }}" class="btn btn-success btn-block">قهوه خونه</a>
-                </div>
-                <div class="col-md-3 col-6">
-                    <a href="{{ route('posts.add') }}" class="btn btn-danger btn-block">ارسال مطلب</a>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="fixed-bottom bottom-menu p-2 shadow">--}}
+{{--        <div class="container p-0 text-center">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-6">--}}
+{{--                    <div class="btn-group dropup w-100">--}}
+{{--                        <button type="button" class="btn btn-link text-white btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                            <span><i class="fas fa-lg fa-street-view mr-2"></i>بخش هواداری</span>--}}
+{{--                        </button>--}}
+{{--                        <div class="dropdown-menu">--}}
+{{--                            <a class="dropdown-item" href="#">Action</a>--}}
+{{--                            <a class="dropdown-item" href="#">Another action</a>--}}
+{{--                            <a class="dropdown-item" href="#">Something else here</a>--}}
+{{--                            <div class="dropdown-divider"></div>--}}
+{{--                            <a class="dropdown-item" href="#">Separated link</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-6">--}}
+{{--                    <div class="btn-group dropup w-100">--}}
+{{--                        <button type="button" class="btn btn-link text-white btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                            <span><i class="fas fa-lg fa-street-view mr-2"></i>بخش هواداری</span>--}}
+{{--                        </button>--}}
+{{--                        <div class="dropdown-menu">--}}
+{{--                            <a class="dropdown-item" href="#">Action</a>--}}
+{{--                            <a class="dropdown-item" href="#">Another action</a>--}}
+{{--                            <a class="dropdown-item" href="#">Something else here</a>--}}
+{{--                            <div class="dropdown-divider"></div>--}}
+{{--                            <a class="dropdown-item" href="#">Separated link</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3 col-6 mb-2 mb-md-0">--}}
+{{--                    <a href="{{ route('topics.view', 'اخبار-و-شایعات-نقل-و-انتقالات') }}" class="btn btn-orange btn-block">نقل و انتقالات</a>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3 col-6 mb-2 mb-md-0">--}}
+{{--                    <a href="{{ route('topics.view', 'بحث-و-تبادل-نظر-فوتبالی') }}" class="btn btn-info btn-block">بحث فوتبالی</a>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3 col-6">--}}
+{{--                    <a href="{{ route('topics.view', 'قهوه-خونه') }}" class="btn btn-success btn-block">قهوه خونه</a>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3 col-6">--}}
+{{--                    <a href="{{ route('posts.add') }}" class="btn btn-danger btn-block">ارسال مطلب</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 </div>
 
-<footer class="bg-dark text-white mt-auto pb-5 mb-3">
+<footer class="bg-dark text-white mt-auto">
     <div class="container py-4 text-right">
         <div class="row">
             <div class="col-12">
@@ -236,7 +264,8 @@
             <div class="col-12 eng-font pb-5 pb-md-3">
                 <span class="float-left ltr"><i class="far fa-copyright"></i> {{ date('Y') }} GunnersTrust</span>
                 <span class="float-right ltr">
-                    <a href="https://t.me/GunnersTrust" class="mr-3" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
+                    <a href="https://t.me/GunnersTrust" class="mr-2" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
+                    <a href="https://instagram.com/GunnersTrust1" class="mr-2" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
                     <a href="https://twitter.com/GunnersTrust" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
 				</span>
             </div>

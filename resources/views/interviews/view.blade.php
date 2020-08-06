@@ -67,7 +67,14 @@
                             <p>{!! $interview->summary !!}</p>
                             @if (! empty($interview->embed))
                             <div class="my-4 embed-video shadow">
-                                {!! $interview->embed_script !!}
+                                {!! $interview->embed !!}
+                            </div>
+                            @endif
+                            @if (! empty($interview->file))
+                            <div class="my-4 pt-3 text-center">
+                                <audio controls autoplay class="w-100">
+                                    <source src="{{ $interview->file }}" type="audio/mpeg">
+                                </audio>
                             </div>
                             @endif
                             <p>{!! $interview->body !!}</p>

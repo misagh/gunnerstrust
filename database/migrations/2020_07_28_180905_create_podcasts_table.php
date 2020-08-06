@@ -21,7 +21,7 @@ class CreatePodcastsTable extends Migration {
             $table->string('summary');
             $table->text('body')->nullable();
             $table->string('cover');
-            $table->string('embed');
+            $table->text('embed')->nullable();
             $table->unsignedInteger('hit')->default(0)->index();
             $table->timestamps();
         });

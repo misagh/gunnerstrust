@@ -35,16 +35,4 @@ class Interview extends Model {
     {
         return route('interviews.view', $this->slug);
     }
-
-    public function getEmbedScriptAttribute()
-    {
-        if (empty($this->embed))
-        {
-            return null;
-        }
-
-        $embed = explode('-', $this->embed);
-
-        return '<div id="' . $embed[0] . '"><p class="text-center py-5 text-muted font-weight-bold font-italic">در حال بارگذاری ویدئو...</p><script type="text/JavaScript" src="https://www.aparat.com/embed/' . @$embed[1] . '?data[rnddiv]=' . $embed[0] . '&data[responsive]=yes" defer async></script></div>';
-    }
 }

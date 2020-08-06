@@ -28,12 +28,12 @@ class InterviewRepository extends Repository {
         return $this->model;
     }
 
-    public function getLatestInterviews($exclude = null)
+    public function getLatestInterviews($limit, $exclude = null)
     {
         return $this->model->with('user')
                            ->whereNotIn('id', array_wrap($exclude))
                            ->inRandomOrder()
-                           ->limit(4)
+                           ->limit($limit)
                            ->get();
     }
 

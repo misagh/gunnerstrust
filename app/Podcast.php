@@ -17,9 +17,4 @@ class Podcast extends Model {
     {
         return route('podcasts.view', $this->slug);
     }
-
-    public function getEmbedScriptAttribute()
-    {
-        return '<iframe class="shenotoIframe2" src="https://shenoto.com/iframe2/album/' . $this->embed . '" scrolling="no" style="min-width: 100%; height: 165px"></iframe>';
-    }
 }

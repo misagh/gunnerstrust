@@ -57,7 +57,14 @@
                             <p>{!! $podcast->summary !!}</p>
                             @if (! empty($podcast->embed))
                             <div class="my-4 pt-3 embed-video">
-                                {!! $podcast->embed_script !!}
+                                {!! $podcast->embed !!}
+                            </div>
+                            @endif
+                            @if (! empty($podcast->file))
+                            <div class="my-4 pt-3 text-center">
+                                <audio controls autoplay class="w-100">
+                                    <source src="{{ $podcast->file }}" type="audio/mpeg">
+                                </audio>
                             </div>
                             @endif
                             <p>{!! $podcast->body !!}</p>
