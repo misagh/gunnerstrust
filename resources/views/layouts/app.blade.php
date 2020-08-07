@@ -24,7 +24,7 @@
 </head>
 <body>
 <div id="app" class="rtl">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <span>گانرزتراست</span>
@@ -110,6 +110,7 @@
                                     <a class="dropdown-item" href="{{ route('podcasts.add') }}">{{ __('افزودن پادکست') }}</a>
                                     <a class="dropdown-item" href="{{ route('podcasts.lists') }}">{{ __('ویرایش پادکست‌ها') }}</a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('admin.upload') }}">{{ __('آپلود') }}</a>
                                     <a class="dropdown-item" href="{{ route('posts.lists') }}">{{ __('بررسی پست کابران') }}</a>
                                     <div class="dropdown-divider"></div>
                                 @endif
@@ -127,7 +128,7 @@
         </div>
     </nav>
 
-    <header class="shadow">
+    <header class="shadow mt-5">
         <div class="container text-center position-relative">
             <div class="eng-font mt-3 text-white">
                 <span class="title">Gunners<span class="text-danger">Trust</span></span>

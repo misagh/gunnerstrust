@@ -17,7 +17,7 @@ class ArticleRepository extends Repository {
         $data['cover'] = (new ArticleImageFinder)->find($data['source'], $data['cover']);
         $data['slug'] = $this->getSlug($data['title']);
         $data['user_id'] = auth()->id();
-        $data['body'] = clean($data['body']);
+        $data['body'] = $this->processBodyText($data['body']);
 
         $article = $this->create($data);
 
@@ -34,7 +34,8 @@ class ArticleRepository extends Repository {
         }
 
         empty($data['cover']) AND $data['cover'] = $this->model->cover;
-        $data['body'] = clean($data['body']);
+
+        $data['body'] = $this->processBodyText($data['body']);
 
         $this->update($this->model, $data);
 

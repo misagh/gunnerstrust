@@ -13,7 +13,7 @@ class InterviewRepository extends Repository {
 
     public function insertInterview($data)
     {
-        $data['body'] = clean($data['body']);
+        $data['body'] = $this->processBodyText($data['body']);
         $data['slug'] = $this->getSlug($data['title']);
 
         return $this->create($data);
@@ -21,7 +21,7 @@ class InterviewRepository extends Repository {
 
     public function updateInterview($data)
     {
-        $data['body'] = clean($data['body']);
+        $data['body'] = $this->processBodyText($data['body']);
 
         $this->update($this->model, $data);
 

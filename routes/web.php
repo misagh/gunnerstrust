@@ -115,7 +115,7 @@ Route::prefix('notifications')->middleware('auth')->group(function ()
 
 Route::prefix('admin')->middleware('admin')->group(function ()
 {
-    Route::get('articles/optimize', 'AdminController@articlesOptimize')->name('admin.articles.optimize');
+    Route::any('upload', 'AdminController@upload')->name('admin.upload');
 });
 
 Route::prefix('users')->group(function ()

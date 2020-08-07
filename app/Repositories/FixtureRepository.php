@@ -14,7 +14,7 @@ class FixtureRepository extends Repository {
 
     public function insertFixture($data)
     {
-        $data['body'] = clean($data['body']);
+        $data['body'] = $this->processBodyText($data['body']);
         $data['slug'] = $this->generateSlug($data);
 
         return $this->create($data);
@@ -22,7 +22,7 @@ class FixtureRepository extends Repository {
 
     public function updateFixture($data)
     {
-        $data['body'] = clean($data['body']);
+        $data['body'] = $this->processBodyText($data['body']);
 
         $this->update($this->model, $data);
 

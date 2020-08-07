@@ -44,7 +44,18 @@ class ArticleImageFinder {
 
     public function optimize($file_path, $w = 728, $h = 410)
     {
-        $img = Image::make($file_path)->fit($w, $h);
+        if (is_null($h))
+        {
+            $img = Image::make($file_path)->resize($w, $h, function ($constraint)
+            {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+        }
+        else
+        {
+            $img = Image::make($file_path)->fit($w, $h);
+        }
 
         $img->save($file_path);
 

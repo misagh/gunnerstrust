@@ -31,7 +31,7 @@ class PostRepository extends Repository {
     public function insertPost($challenge_id, $data)
     {
         $data['challenge_id'] = $challenge_id;
-        $data['body'] = clean($data['body']);
+        $data['body'] = $this->processBodyText($data['body']);
         $data['user_id'] = auth()->id();
 
         return $this->create($data);
@@ -39,7 +39,7 @@ class PostRepository extends Repository {
 
     public function updatePost($data)
     {
-        $data['body'] = clean($data['body']);
+        $data['body'] = $this->processBodyText($data['body']);
 
         $this->update($this->model, $data);
 

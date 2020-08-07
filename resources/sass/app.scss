@@ -130,6 +130,10 @@ header {
     }
 }
 
+.card-body img {
+    max-width: 100% !important;
+}
+
 .home-cards {
     .card-title {
         position: absolute;

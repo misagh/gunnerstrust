@@ -121,10 +121,13 @@
     <div class="card-columns">
     @foreach($comments as $comment)
         <div class="card">
-            <div class="card-body">
+            <div class="card-body p-3">
                 <span class="card-title text-secondary"><img class="rounded-circle shadow-sm mr-2" width="30" src="{{ $comment->user->avatar }}">{{ $comment->commentable->title }}</span>
                 <p class="card-text mt-3">
                     <a href="{{ $comment->commentable->url }}" class="stretched-link">{{ str_limit(strip_tags($comment->body), 500) }}</a>
+                </p>
+                <p class="text-right mb-0">
+                    <small class="eng-font text-left text-secondary font-weight-bold">{{ $comment->user->username }}</small>
                 </p>
             </div>
         </div>

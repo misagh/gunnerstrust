@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Services\ArticleImageFinder;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class Repository {
@@ -91,5 +92,37 @@ abstract class Repository {
         }
 
         return $slug . ($index ? '-' . $index : '');
+    }
+
+    public function processBodyText($body)
+    {
+        $body = clean($body);
+
+        preg_match_all('/src="data([^\"]*)"/i', $body, $matches);
+
+        if ($images = @$matches[1])
+        {
+            foreach ($images as $key => $image)
+            {
+                $image = 'data' . $image;
+
+                [$mime, $content] = explode(';', $image);
+                [, $content] = explode(',', $content);
+                $content = base64_decode($content);
+
+                $mime = explode(':', $mime)[1];
+                $ext = explode('/', $mime)[1];
+                $file_name = sha1(time() . $key) . '.' . $ext;
+                $path = storage_path('app/uploads/' . $file_name);
+
+                file_put_contents($path, $content);
+
+                (new ArticleImageFinder)->optimize($path, 728, null);
+
+                $body = str_replace($image, asset('img/uploads/' . $file_name), $body);
+            }
+        }
+
+        return $body;
     }
 }
