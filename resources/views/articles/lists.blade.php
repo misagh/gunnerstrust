@@ -4,7 +4,8 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
+        @if (is_admin() || is_author())
+        <div class="card mb-3">
             <div class="card-header">اخبار اضافه شده</div>
             <div class="card-body">
                 <form method="post" action="{{ route('articles.pin') }}">
@@ -33,20 +34,28 @@
                         </div>
                     </div>
                 </form>
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped">
-                        @foreach($articles as $article)
-                            <tr>
-                                <td><a href="{{ route('articles.view', $article->slug) }}">{{ $article->title }}</a></td>
-                                <td><a href="{{ route('articles.edit', $article->id) }}" class="mr-2"><i class="fas fa-lg fa-pen-square"></i></a></td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
-                <div class="mt-5 row justify-content-center">
-                    {{ $articles->links() }}
+            </div>
+        </div>
+        @endif
+        <div class="row">
+            <div class="col-12">
+                <div class="card-deck">
+                    @foreach($articles as $article)
+                        <div class="card mb-2 shadow">
+                            <img class="card-img-top" src="{{ get_cover($article->cover) }}" alt="{{ $article->summary }}">
+                            <div class="card-body">
+                                <h2 class="h6 font-weight-bold"><a href="{{ route('articles.view', $article->slug) }}" class="stretched-link">{{ $article->title }}</a></h2>
+                            </div>
+                        </div>
+                        @if ($loop->iteration % 3 === 0)
+                        </div><div class="card-deck">
+                        @endif
+                    @endforeach
                 </div>
             </div>
+        </div>
+        <div class="mt-5 row justify-content-center">
+            {{ $articles->links() }}
         </div>
     </div>
 @endsection

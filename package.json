@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "bootstrap-v4-rtl": "^4.4.1-1",
+        "flickity": "^2.2.1",
         "summernote": "^0.8.16",
         "vue-avatar-editor-improved": "^1.0.5",
         "vue-confirmation-button": "^1.0.1"

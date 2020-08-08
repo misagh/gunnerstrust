@@ -12,6 +12,7 @@ try {
 
     require('bootstrap');
     require('summernote/dist/summernote-bs4');
+    require('flickity');
 } catch (e) {}
 
 /**

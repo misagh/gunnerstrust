@@ -56,17 +56,18 @@ class ArticleRepository extends Repository {
                            ->get();
     }
 
-    public function getUnpinnedArticles()
+    public function getUnpinnedArticles($limit)
     {
         return $this->model->where('pinned', 0)
                            ->orderByDesc('id')
-                           ->paginate(static::PAGINATION_LIMIT);
+                           ->limit($limit)
+                           ->get();
     }
 
-    public function getLatestArticles()
+    public function getLatestArticles($limit = null)
     {
         return $this->model->orderByDesc('id')
-                           ->paginate(static::PAGINATION_LIMIT);
+                           ->paginate($limit ?: static::PAGINATION_LIMIT);
     }
 
     public function getLatestRandomArticles()

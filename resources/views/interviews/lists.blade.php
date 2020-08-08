@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'مصاحبه های هواداران')
+@section('title', 'مصاحبه با هواداران آرسنال')
 
 @section('content')
     <div class="container">
+        <div class="overflow-hidden">
+            <h1 class="mt-3 h5 font-weight-bold float-right"><i class="fas fa-microphone-alt fa-lg mr-2"></i>مصاحبه اختصاصی با هواداران آرسنال</h1>
+        </div>
+        <hr class="mt-0 mb-4">
         <div class="row">
             @foreach($interviews as $key => $interview)
                 <div class="col-md-6 col-lg-4">

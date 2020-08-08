@@ -10,7 +10,7 @@ class ArticleController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('author', ['except' => ['view', 'short']]);
+        $this->middleware('author', ['except' => ['view', 'short', 'lists']]);
     }
 
     public function short($id)
@@ -102,7 +102,7 @@ class ArticleController extends Controller {
 
     public function lists()
     {
-        $articles = (new ArticleRepository)->getLatestArticles();
+        $articles = (new ArticleRepository)->getLatestArticles(12);
         $pins = (new ArticleRepository)->getPinnedArticles()->pluck('id');
 
         return view('articles.lists', compact('articles', 'pins'));

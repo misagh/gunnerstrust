@@ -14,16 +14,14 @@ class HomeController extends Controller {
 
     public function index()
     {
-        $articles = (new ArticleRepository)->getLatestArticles();
+        $articles = (new ArticleRepository)->getUnpinnedArticles(10);
+        $pinned = (new ArticleRepository)->getPinnedArticles();
         $interviews = (new InterviewRepository)->getLatestInterviews(6);
         $podcasts = (new PodcastRepository)->getLatestPodcasts(6);
         $comments = (new CommentRepository)->getLatestComments();
 
-        $articles_group1 = $articles->take(3);
-        $articles_group2 = $articles->skip(3);
+        $pinned = @$pinned[0];
 
-        $article_active = rand(0, $articles_group1->count() - 1);
-
-        return view('home', compact('articles', 'articles_group1', 'articles_group2', 'interviews', 'podcasts', 'article_active', 'comments'));
+        return view('home', compact('articles', 'pinned', 'interviews', 'podcasts', 'comments'));
     }
 }
