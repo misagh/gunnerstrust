@@ -10,7 +10,7 @@
         <hr class="mt-0 mb-4">
         <div class="row">
             @foreach($interviews as $key => $interview)
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-4 mb-3">
                     <div class="card shadow">
                         <img src="{{ get_cover($interview->cover) }}" class="card-img-top" alt="{{ $interview->summary }}">
                         <div class="card-body">

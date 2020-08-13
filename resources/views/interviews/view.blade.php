@@ -24,7 +24,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 order-1 order-md-0">
                 <ul class="list-group w-100 p-0 shadow mb-3">
                     <li class="list-group-item bg-info text-white">
                         <span class="float-right">مصاحبه شونده</span>
@@ -40,10 +40,6 @@
                         <span class="float-right">تعداد بازدید</span>
                         <span class="float-left eng-font font-weight-bold">{{ $interview->hit }}</span>
                     </li>
-                    <li class="list-group-item bg-info text-white">
-                        <span class="float-right">میانگین امتیاز</span>
-                        <span class="float-left eng-font font-weight-bold">{{ $interview->score ?? '-' }}/10</span>
-                    </li>
                 </ul>
                 @if ($interviews->isNotEmpty())
                     @foreach($interviews as $other_interview)
@@ -56,7 +52,7 @@
                     @endforeach
                 @endif
             </div>
-            <div class="col-md-8 article mb-3">
+            <div class="col-md-8 article mb-3 order-0 order-md-1">
                 <div class="card">
                     <div class="card-overlay position-relative">
                         <img src="{{ get_cover($interview->cover) }}" class="card-img-top" alt="{{ $interview->title }}">
@@ -89,37 +85,6 @@
                         </div>
                     </div>
                 </div>
-                @if (! empty($auth) && $auth->id !== $interview->user_id)
-                    @if ($user_score)
-                        <div class="text-center mt-4 mb-2">
-                            <span class="bg-dark text-white rounded-right py-2 px-3 m-0 font-weight-bold">امتیاز شما به این مصاحبه</span><span class="bg-orange text-white rounded-left py-2 px-3 m-0 font-weight-bold">{{ $user_score }}</span>
-                        </div>
-                    @else
-                    <div class="card mt-3">
-                        <div class="card-header font-weight-bold bg-dark text-white">امتیاز به مصاحبه</div>
-                        <div class="card-body text-center">
-                            <p>از ۱ تا ۱۰ چه امتیازی به این مصاحبه می دهید؟</p>
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col-md-7 col-lg-4">
-                                    <form method="post" action="{{ route('interviews.score', $interview->id) }}">
-                                        @csrf
-                                        <div class="input-group">
-                                            <select name="score" class="form-control">
-                                                @foreach(range(10, 1) as $score)
-                                                    <option value="{{ $score }}">{{ $score }}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="input-group-prepend">
-                                                <button type="submit" class="btn btn-success">ثبت امتیاز</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                @endif
             </div>
         </div>
         <div class="comments mt-2" id="comments">

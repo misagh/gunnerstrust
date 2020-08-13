@@ -24,7 +24,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 order-1 order-md-0">
                 <ul class="list-group w-100 p-0 shadow mb-3">
                     <li class="list-group-item bg-orange text-white">
                         <span class="float-right">تاریخ انتشار</span>
@@ -46,7 +46,7 @@
                     @endforeach
                 @endif
             </div>
-            <div class="col-md-8 article mb-3">
+            <div class="col-md-8 article mb-3 order-0 order-md-1">
                 <div class="card">
                     <div class="card-overlay position-relative">
                         <img src="{{ get_cover($podcast->cover) }}" class="card-img-top" alt="{{ $podcast->title }}">

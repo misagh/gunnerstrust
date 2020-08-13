@@ -6,7 +6,7 @@
         </div>
         <hr class="mt-0">
         <div class="main-carousel mt-3"
-             data-flickity='{ "cellAlign": "left", "freeScroll": true, "wrapAround": true, "rightToLeft": true, "pageDots": false, "percentPosition": false }'>
+             data-flickity='{ "cellAlign": "center", "freeScroll": true, "wrapAround": true, "rightToLeft": true, "pageDots": false, "percentPosition": false }'>
             @foreach($interviews as $interview)
                 <div class="carousel-cell">
                     <div class="card shadow-sm">

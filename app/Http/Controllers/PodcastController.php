@@ -10,7 +10,7 @@ class PodcastController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('admin', ['except' => ['view', 'short']]);
+        $this->middleware('admin', ['except' => ['view', 'short', 'lists']]);
     }
 
     public function short($id)
