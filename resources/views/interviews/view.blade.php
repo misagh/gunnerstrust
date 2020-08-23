@@ -56,9 +56,10 @@
                 <div class="card">
                     <div class="card-overlay position-relative">
                         <img src="{{ get_cover($interview->cover) }}" class="card-img-top" alt="{{ $interview->title }}">
-                        <h1 class="card-title font-weight-bold position-absolute text-left text-white w-100">{{ $interview->title }}</h1>
                     </div>
                     <div class="card-body">
+                        <h1 class="card-title font-weight-bold w-100">{{ $interview->title }}</h1>
+                        <hr>
                         <div class="card-text">
                             <p>{!! $interview->summary !!}</p>
                             @if (! empty($interview->embed))

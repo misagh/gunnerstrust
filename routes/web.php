@@ -154,3 +154,8 @@ Route::prefix('avatars')->middleware('auth')->group(function ()
 {
     Route::post('add', 'AvatarController@add')->name('avatars.add');
 });
+
+Route::prefix('partners')->group(function ()
+{
+    Route::get('profile/{slug}', 'PartnerController@profile')->name('partners.profile');
+});

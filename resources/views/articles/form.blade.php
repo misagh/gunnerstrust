@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         <label>خلاصه</label>
-                        <input type="text" name="summary" class="form-control" value="{{ $article->summary ?? '' }}" maxlength="160" minlength="150" required>
+                        <input type="text" name="summary" class="form-control" value="{{ $article->summary ?? '' }}" maxlength="160" minlength="150">
                     </div>
                     <div class="form-group">
                         <label>لینک منبع</label>
@@ -31,13 +31,33 @@
                     </div>
                     <div class="form-group">
                         <label>منوی بازی</label>
-                        <select name="fixture_id" class="form-control">
+                        <select name="fixture_id" class="form-control eng-font">
                             <option value="">----------------------------------------------------</option>
                             @foreach($fixtures as $fixture)
                                 <option value="{{ $fixture->id }}" {{ $fixture->id === ($article->fixture_id ?? null) ? 'selected' : '' }}>{{ fixture_title($fixture) }}</option>
                             @endforeach
                         </select>
                     </div>
+                    @if (is_admin())
+                    <div class="form-group">
+                        <label>تغییر کاربر</label>
+                        <select name="user_id" class="form-control eng-font">
+                            <option value="">----------------------------------------------------</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ $user->id === ($article->user_id ?? null) ? 'selected' : '' }}>{{ $user->username ?: $user->email }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>همکار</label>
+                        <select name="partner_id" class="form-control eng-font">
+                            <option value="">----------------------------------------------------</option>
+                            @foreach($partners as $partner)
+                                <option value="{{ $partner->id }}" {{ $partner->id === ($article->partner_id ?? null) ? 'selected' : '' }}>{{ $partner->name_en }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <label>متن</label>
                         <textarea id="summernote" name="body" class="form-control" required>{{ $article->body ?? '' }}</textarea>

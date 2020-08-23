@@ -125,4 +125,9 @@ abstract class Repository {
 
         return $body;
     }
+
+    public function processSummaryText($data)
+    {
+        return $data['summary'] ?? str_limit(strip_tags($data['body']), 150);
+    }
 }

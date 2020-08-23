@@ -14,7 +14,7 @@
                                 <h1 class="font-weight-bold eng-font mt-3 mt-md-0">{{ $profile->username }}</h1>
                             </div>
                             <div class="d-block">
-                                <span class="float-right">{{ $profile->name }}</span>
+                                <span class="float-right">{{ $profile->name }}@if (! empty($profile->nickname))<br>{{ $profile->nickname }}@endif</span>
                                 <span data-toggle="tooltip" title="" class="float-left eng-font font-weight-bold" data-original-title="تعداد بازدید از پروفایل">
                                     <i class="fa fa-eye ml-1"></i>{{ number_format($profile->hits) }}
                                 </span>

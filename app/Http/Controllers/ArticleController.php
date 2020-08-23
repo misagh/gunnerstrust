@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Telegram;
+use App\Repositories\UserRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\FixtureRepository;
+use App\Repositories\PartnerRepository;
 
 class ArticleController extends Controller {
 
@@ -33,7 +35,7 @@ class ArticleController extends Controller {
         {
             $rules = [
                 'title'   => ['required'],
-                'summary' => ['required', 'min:150', 'max:160'],
+                'summary' => ['nullable', 'min:150', 'max:160'],
                 'body'    => ['required'],
             ];
 
@@ -49,8 +51,10 @@ class ArticleController extends Controller {
         }
 
         $fixtures = (new FixtureRepository)->getLatestFixtures();
+        $partners = (new PartnerRepository)->getAllRecords();
+        $users = (new UserRepository)->getSelectUsers();
 
-        return view('articles.form', compact('fixtures'));
+        return view('articles.form', compact('fixtures', 'partners', 'users'));
     }
 
     public function edit($id)
@@ -61,7 +65,7 @@ class ArticleController extends Controller {
         {
             $rules = [
                 'title'   => ['required'],
-                'summary' => ['required', 'min:150', 'max:160'],
+                'summary' => ['nullable', 'min:150', 'max:160'],
                 'body'    => ['required'],
             ];
 
@@ -77,8 +81,10 @@ class ArticleController extends Controller {
         $article->tags = $article->tags->pluck('name')->implode(',');
 
         $fixtures = (new FixtureRepository)->getLatestFixtures();
+        $partners = (new PartnerRepository)->getAllRecords();
+        $users = (new UserRepository)->getSelectUsers();
 
-        return view('articles.form', compact('article', 'fixtures'));
+        return view('articles.form', compact('article', 'fixtures', 'partners', 'users'));
     }
 
     public function delete($id)

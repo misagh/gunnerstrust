@@ -50,9 +50,10 @@
                 <div class="card">
                     <div class="card-overlay position-relative">
                         <img src="{{ get_cover($podcast->cover) }}" class="card-img-top" alt="{{ $podcast->title }}">
-                        <h1 class="card-title font-weight-bold position-absolute text-left text-white w-100">{{ $podcast->title }}</h1>
                     </div>
                     <div class="card-body">
+                        <h1 class="card-title font-weight-bold w-100">{{ $podcast->title }}</h1>
+                        <hr>
                         <div class="card-text">
                             <p>{!! $podcast->summary !!}</p>
                             @if (! empty($podcast->embed))

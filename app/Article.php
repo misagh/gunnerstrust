@@ -14,6 +14,11 @@ class Article extends Model {
         return $this->belongsTo(User::class);
     }
 
+    public function partner()
+    {
+        return $this->belongsTo(Partner::class);
+    }
+
     public function fixture()
     {
         return $this->belongsTo(Fixture::class);
