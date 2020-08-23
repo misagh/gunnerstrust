@@ -133,16 +133,16 @@ class ArticleController extends Controller {
         {
             if (! empty(env('TELEGRAM_BOT_TOKEN')))
             {
-                $link = route('articles.short', base64url_encode($article->id));
+                $short_link = route('articles.short', base64url_encode($article->id));
+                $instant_view_link = 'https://t.me/iv?url=' . route('articles.view', $article->slug) . '&rhash=53dc04175a4911';
 
                 $telegram = [
                     'chat_id'    => '@gunnerstrust',
-                    'photo'      => get_cover($article->cover),
-                    'caption'    => "\xE2\x9A\xBD <b>{$article->title}</b>\n{$article->summary}\n\n\xF0\x9F\x92\xA5 <a href='{$link}'>برای خواندن متن خبر و ارسال نظر کلیک کنید</a>\n\n@GunnersTrust",
+                    'text'       => "<a href='{$instant_view_link}'>\xE2\x9A\xBD</a> <b>{$article->title}</b>\n\n\xF0\x9F\x92\xA5 برای ارسال نظر به لینک زیر بروید\n\xF0\x9F\x91\x87\xF0\x9F\x91\x87\xF0\x9F\x91\x87\xF0\x9F\x91\x87\xF0\x9F\x91\x87\xF0\x9F\x91\x87\n{$short_link}\n\xE2\x9E\x96\xE2\x9E\x96\xE2\x9E\x96\xE2\x9E\x96\xE2\x9E\x96\xE2\x9E\x96",
                     'parse_mode' => 'HTML',
                 ];
 
-                Telegram::sendPhoto($telegram);
+                Telegram::sendMessage($telegram);
             }
         }
         catch (\Exception $e)
