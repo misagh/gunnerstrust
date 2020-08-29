@@ -61,6 +61,11 @@ class ArticleController extends Controller {
     {
         $article = (new ArticleRepository)->findOrFail($id);
 
+        if ($article->user_id !== auth()->id() && ! is_admin())
+        {
+            abort(404);
+        }
+
         if (request()->isMethod('post'))
         {
             $rules = [
@@ -127,11 +132,22 @@ class ArticleController extends Controller {
         return redirect()->back();
     }
 
+    public function postToTelegram($id)
+    {
+        $article = (new ArticleRepository)->findOrFail($id);
+
+        $this->updateTelegram($article);
+
+        session()->flash('success', 'خبر با موفقیت در تلگرام ارسال شد.');
+
+        return redirect()->route('articles.edit', $id);
+    }
+
     private function updateTelegram($article)
     {
         try
         {
-            if (! empty(env('TELEGRAM_BOT_TOKEN')))
+            if (! empty(env('TELEGRAM_BOT_TOKEN')) && ! empty($article->cover))
             {
                 $short_link = route('articles.short', base64url_encode($article->id));
                 $instant_view_link = 'https://t.me/iv?url=' . route('articles.view', $article->slug) . '&rhash=53dc04175a4911';

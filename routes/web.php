@@ -41,6 +41,7 @@ Route::prefix('articles')->group(function ()
     Route::any('/add', 'ArticleController@add')->name('articles.add');
     Route::any('/edit/{id}', 'ArticleController@edit')->name('articles.edit');
     Route::get('/delete/{id}', 'ArticleController@delete')->name('articles.delete');
+    Route::post('/telegram/{id}', 'ArticleController@postToTelegram')->name('articles.telegram');
     Route::any('/lists', 'ArticleController@lists')->name('articles.lists');
     Route::post('/pin', 'ArticleController@pin')->name('articles.pin');
     Route::get('{slug}', 'ArticleController@view')->name('articles.view');

@@ -22,7 +22,7 @@ class ArticleRepository extends Repository {
 
         $article = $this->create($data);
 
-        $this->insertTags($article, $data['tags']);
+        $this->insertTags($article, @$data['tags']);
 
         return $article;
     }
@@ -41,7 +41,7 @@ class ArticleRepository extends Repository {
 
         $this->update($this->model, $data);
 
-        $this->updateTags($this->model, $data['tags']);
+        $this->updateTags($this->model, @$data['tags']);
 
         return $this->model;
     }
@@ -82,19 +82,25 @@ class ArticleRepository extends Repository {
 
     private function insertTags(Article $article, $tags_string)
     {
-        $tags = $this->getTags($article, $tags_string);
+        if (! empty($tags_string))
+        {
+            $tags = $this->getTags($tags_string);
 
-        return $article->tags()->saveMany($tags);
+            return $article->tags()->saveMany($tags);
+        }
     }
 
     private function updateTags(Article $article, $tags_string)
     {
-        $tags = $this->getTags($article, $tags_string);
+        if (! empty($tags_string))
+        {
+            $tags = $this->getTags($tags_string);
 
-        return $article->tags()->sync(collect($tags)->pluck('id'));
+            return $article->tags()->sync(collect($tags)->pluck('id'));
+        }
     }
 
-    private function getTags(Article $article, $tags_string)
+    private function getTags($tags_string)
     {
         $tags = [];
 

@@ -14,12 +14,13 @@
                         <input type="text" name="title" class="form-control" value="{{ $article->title ?? '' }}" @if (empty($article->title)) v-model="articleTitle" @endif required>
                     </div>
                     <div class="form-group">
-                        <label>خلاصه</label>
-                        <input type="text" name="summary" class="form-control" value="{{ $article->summary ?? '' }}" maxlength="160" minlength="150">
-                    </div>
-                    <div class="form-group">
                         <label>لینک منبع</label>
                         <input type="text" name="source" class="form-control" value="{{ $article->source ?? '' }}" dir="ltr">
+                    </div>
+                    @if (is_admin())
+                    <div class="form-group">
+                        <label>خلاصه</label>
+                        <input type="text" name="summary" class="form-control" value="{{ $article->summary ?? '' }}" maxlength="160" minlength="150">
                     </div>
                     <div class="form-group">
                         <label>لینک تصویر</label>
@@ -38,7 +39,6 @@
                             @endforeach
                         </select>
                     </div>
-                    @if (is_admin())
                     <div class="form-group">
                         <label>تغییر کاربر</label>
                         <select name="user_id" class="form-control eng-font">
@@ -67,6 +67,13 @@
                     <a href="{{ route('articles.view', $article->slug) }}" class="btn btn-secondary float-left" target="_blank">مشاهده خبر</a>
                     @endif
                 </form>
+                @if (! empty($article))
+                <hr>
+                <form action="{{ route('articles.telegram', $article->id) }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-warning float-left">ارسال در تلگرام</button>
+                </form>
+                @endif
             </div>
         </div>
     </div>
