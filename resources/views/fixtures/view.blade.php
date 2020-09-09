@@ -45,6 +45,10 @@
                             @if (is_admin($auth))
                             <div class="float-right small mt-3">
                                 <a href="{{ route('fixtures.edit', $fixture->id) }}" class="rounded bg-warning py-1 px-3">ویرایش بازی</a>
+                                <form method="post" action="{{ route('games.calculate', $fixture->id) }}" class="d-inline-block">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-danger ml-3">محاسبه امتیازات</button>
+                                </form>
                             </div>
                             @endif
                         </div>

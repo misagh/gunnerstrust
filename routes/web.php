@@ -47,6 +47,13 @@ Route::prefix('articles')->group(function ()
     Route::get('{slug}', 'ArticleController@view')->name('articles.view');
 });
 
+Route::prefix('games')->group(function ()
+{
+    Route::any('/', 'GameController@index')->name('games');
+    Route::post('/add', 'GameController@add')->name('games.add')->middleware('auth');
+    Route::post('/calculate/{id}', 'GameController@calculate')->name('games.calculate')->middleware('admin');
+});
+
 Route::prefix('challenges')->group(function ()
 {
     Route::any('/add', 'ChallengeController@add')->name('challenges.add');

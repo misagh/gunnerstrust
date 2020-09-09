@@ -71,6 +71,26 @@ class Fixture extends Model {
         return $this->comments()->count();
     }
 
+    public function isWin()
+    {
+        return $this->score1 > $this->score2;
+    }
+
+    public function isLost()
+    {
+        return $this->score1 < $this->score2;
+    }
+
+    public function isDraw()
+    {
+        return $this->score1 === $this->score2;
+    }
+
+    public function hasScore()
+    {
+        return ! is_null($this->score1) && ! is_null($this->score2);
+    }
+
     private function getFullSeason($sep = '/')
     {
         return $this->season . $sep . ($this->season + 1);

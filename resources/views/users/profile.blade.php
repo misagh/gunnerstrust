@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('title', 'پروفایل ' . $profile->username)
+@section('description', 'پروفایل کاربری هوادار آرسنال در گانرزتراست | ' . $profile->username)
+
+@section('meta')
+    <meta property="og:title" content="{{ 'پروفایل ' . $profile->username }}">
+    <meta property="og:site_name" content="GunnersTrust">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:description" content="{{ 'پروفایل کاربری هوادار آرسنال در گانرزتراست | ' . $profile->username }}">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="{{ $profile->avatar }}">
+    <meta name="image" content="{{ $profile->avatar }}">
+    <meta itemprop="image" content="{{ $profile->avatar }}">
+    <meta name="twitter:image:src" content="{{ $profile->avatar }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ 'پروفایل ' . $profile->username }}">
+    <meta name="twitter:image:alt" content="{{ 'پروفایل ' . $profile->username }}">
+    <meta name="twitter:description" content="{{ 'پروفایل کاربری هوادار آرسنال در گانرزتراست | ' . $profile->username }}">
+@endsection
 
 @section('content')
     <div class="container">
@@ -27,7 +44,7 @@
                     </div>
                     <div class="col-md-5 col-lg-4 text-center text-md-right">
                         <div class="d-block">
-                            @if ($profile->id === $auth->id)
+                            @if ($profile->id === ($auth->id ?? null))
                             <user-avatar :avatar="{ src: '{{ $profile->avatar }}' }"></user-avatar>
                             @else
                             <img class="rounded shadow" src="{{ $profile->avatar }}" width="200">
@@ -89,7 +106,7 @@
                     </form>
                 </div>
             </div>
-        @else
+        @elseif (! empty($auth))
             <div class="card shadow mt-3">
                 <div class="card-body">
                     <div class="d-block">

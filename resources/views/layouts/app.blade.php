@@ -204,55 +204,20 @@
         @endif
         @yield('content')
     </main>
-{{--    <div class="fixed-bottom bottom-menu p-2 shadow">--}}
-{{--        <div class="container p-0 text-center">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-6">--}}
-{{--                    <div class="btn-group dropup w-100">--}}
-{{--                        <button type="button" class="btn btn-link text-white btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                            <span><i class="fas fa-lg fa-street-view mr-2"></i>بخش هواداری</span>--}}
-{{--                        </button>--}}
-{{--                        <div class="dropdown-menu">--}}
-{{--                            <a class="dropdown-item" href="#">Action</a>--}}
-{{--                            <a class="dropdown-item" href="#">Another action</a>--}}
-{{--                            <a class="dropdown-item" href="#">Something else here</a>--}}
-{{--                            <div class="dropdown-divider"></div>--}}
-{{--                            <a class="dropdown-item" href="#">Separated link</a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col-6">--}}
-{{--                    <div class="btn-group dropup w-100">--}}
-{{--                        <button type="button" class="btn btn-link text-white btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                            <span><i class="fas fa-lg fa-street-view mr-2"></i>بخش هواداری</span>--}}
-{{--                        </button>--}}
-{{--                        <div class="dropdown-menu">--}}
-{{--                            <a class="dropdown-item" href="#">Action</a>--}}
-{{--                            <a class="dropdown-item" href="#">Another action</a>--}}
-{{--                            <a class="dropdown-item" href="#">Something else here</a>--}}
-{{--                            <div class="dropdown-divider"></div>--}}
-{{--                            <a class="dropdown-item" href="#">Separated link</a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-3 col-6 mb-2 mb-md-0">--}}
-{{--                    <a href="{{ route('topics.view', 'اخبار-و-شایعات-نقل-و-انتقالات') }}" class="btn btn-orange btn-block">نقل و انتقالات</a>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-3 col-6 mb-2 mb-md-0">--}}
-{{--                    <a href="{{ route('topics.view', 'بحث-و-تبادل-نظر-فوتبالی') }}" class="btn btn-info btn-block">بحث فوتبالی</a>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-3 col-6">--}}
-{{--                    <a href="{{ route('topics.view', 'قهوه-خونه') }}" class="btn btn-success btn-block">قهوه خونه</a>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-3 col-6">--}}
-{{--                    <a href="{{ route('posts.add') }}" class="btn btn-danger btn-block">ارسال مطلب</a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+    @if (! request()->is('games'))
+    <div class="fixed-bottom bottom-menu p-2 shadow">
+        <div class="container p-0 text-center">
+            <div class="row">
+                <div class="col">
+                    <a href="{{ route('games') }}" class="btn btn-orange text-white btn-lg px-5">بازی حدس نتیجه</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
 
-<footer class="bg-dark text-white mt-auto">
+<footer class="bg-dark text-white mt-auto @if (! request()->is('games')) pb-5 mb-3 @endif">
     <div class="container py-4 text-right">
         <div class="row">
             <div class="col-12">
