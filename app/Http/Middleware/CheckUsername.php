@@ -15,6 +15,15 @@ class CheckUsername {
             return redirect()->route('users.username');
         }
 
+        if (in_array($request->path(), ['login', 'register']))
+        {
+            $request->session()->keep('url_back');
+        }
+        else
+        {
+            $request->session()->flash('url_back', url($request->path()));
+        }
+
         return $next($request);
     }
 }

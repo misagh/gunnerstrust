@@ -42,4 +42,9 @@ class LoginController extends Controller {
     {
         return 'username';
     }
+
+    public function redirectTo()
+    {
+        return session('url_back') ?: $this->redirectTo;
+    }
 }

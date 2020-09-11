@@ -30,7 +30,9 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-warning btn-lg px-5 mt-3" {{ auth()->check() ? '' : 'disabled' }}>ثبت نتیجه</button>
+                        <button type="submit" class="btn btn-warning btn-lg px-5 mt-3" {{ auth()->check() ? '' : 'disabled' }}>
+                            {{ empty($user_guess) ? 'ثبت نتیجه' : 'تغییر نتیجه ثبت شده' }}
+                        </button>
                         @if (! auth()->check())
                             <hr>
                             <p class="mt-3 font-weight-bold">برای شرکت در مسابقه باید وارد سایت شوید</p>

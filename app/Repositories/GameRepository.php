@@ -28,6 +28,7 @@ class GameRepository extends Repository {
                            ->addSelect(['user_id'])
                            ->groupBy('user_id')
                            ->orderByDesc('points')
+                           ->orderBy('id')
                            ->paginate(static::PAGINATION_LIMIT);
     }
 
