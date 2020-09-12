@@ -49,7 +49,7 @@
             </div>
             @else
                 @if (! empty($user_guess))
-                <div class="card bg-dark text-white shadow mb-4">
+                <div class="card bg-dark text-white shadow mb-2">
                     <div class="card-body text-center">
                         <h1 class="font-weight-bold h4 mb-3">حدس شما از نتیجه این بازی</h1>
                         <hr>
@@ -63,6 +63,13 @@
                                 <span class="eng-font font-weight-bold h4">{{ $user_guess->score1 }}</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card bg-success text-white shadow mb-4">
+                    <div class="card-body text-center">
+                        <h1 class="font-weight-bold h4 mb-3">امتیاز شما از این بازی</h1>
+                        <hr>
+                        <p class="mb-0 font-weight-bold h1">{{ $user_guess->points }}</p>
                     </div>
                 </div>
                 @endif

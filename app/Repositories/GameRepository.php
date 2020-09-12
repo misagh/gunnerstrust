@@ -39,6 +39,12 @@ class GameRepository extends Repository {
                            ->first();
     }
 
+    public function getUserGuesses($fixture_id)
+    {
+        return $this->model->where('fixture_id', $fixture_id)
+                           ->get();
+    }
+
     public function calculatePoints(Fixture $fixture)
     {
         $games = $this->model->where('fixture_id', $fixture->id)->get();
