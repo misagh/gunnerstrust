@@ -12,6 +12,11 @@ class TagRepository extends Repository {
         $this->model = $tag ?: new Tag();
     }
 
+    public function getLatestUpdates()
+    {
+        return $this->model->updates()->paginate(static::PAGINATION_LIMIT);
+    }
+
     public function insertTag($name)
     {
         try

@@ -1,7 +1,7 @@
 @if ($podcasts->isNotEmpty())
     <div class="articles-slider">
         <div class="overflow-hidden">
-            <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-podcast fa-lg mr-2"></i>پادکست گانرزتراست</h3>
+            <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-podcast fa-lg mr-2"></i>پادکست هایبوری</h3>
             <a href="{{ route('podcasts.lists') }}" class="float-left mt-3 bg-orange px-3 py-1 text-white">آرشیو قسمت‌ها</a>
         </div>
         <hr class="mt-0">

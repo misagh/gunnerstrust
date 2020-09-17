@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\PostRepository;
+use App\Repositories\UpdateRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\FixtureRepository;
 use App\Repositories\CommentRepository;
@@ -18,10 +19,10 @@ class HomeController extends Controller {
         $pinned = (new ArticleRepository)->getPinnedArticles();
         $interviews = (new InterviewRepository)->getLatestInterviews(6);
         $podcasts = (new PodcastRepository)->getLatestPodcasts(6);
-        $comments = (new CommentRepository)->getLatestComments();
+        $updates = (new UpdateRepository)->getLatestUpdates();
 
         $pinned = @$pinned[0];
 
-        return view('home', compact('articles', 'pinned', 'interviews', 'podcasts', 'comments'));
+        return view('home', compact('articles', 'pinned', 'interviews', 'podcasts', 'updates'));
     }
 }

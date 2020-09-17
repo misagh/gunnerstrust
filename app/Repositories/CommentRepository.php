@@ -27,14 +27,14 @@ class CommentRepository extends Repository {
                            ->get();
     }
 
-    public function getComments($model, $offset = null)
+    public function getComments($model, $offset = null, $limit = null)
     {
         return $model->comments()
                      ->with('user')
                      ->with('reactions')
                      ->orderByDesc('id')
                      ->offset(intval($offset))
-                     ->limit(static::PAGINATION_LIMIT)
+                     ->limit($limit ?: static::PAGINATION_LIMIT)
                      ->get();
     }
 

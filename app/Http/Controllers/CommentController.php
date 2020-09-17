@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\PostRepository;
 use App\Repositories\TopicRepository;
+use App\Repositories\UpdateRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\FixtureRepository;
@@ -15,7 +16,7 @@ class CommentController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['fetch', 'list']]);
+        $this->middleware('auth', ['except' => ['fetch', 'list', 'fetchModal']]);
     }
 
     public function fetch($type, $id)
@@ -26,6 +27,23 @@ class CommentController extends Controller {
         $user = auth()->user();
 
         return response(compact('comments', 'user'));
+    }
+
+    public function fetchModal($type, $id)
+    {
+        $model = $this->getModel($type, $id);
+        $offset = intval(request('offset'));
+
+        $comments = (new CommentRepository)->getComments($model, $offset, 5);
+        $user = auth()->user();
+
+        $data = [
+            'view'  => view('comments.modal_box', compact('comments', 'user'))->render(),
+            'more'  => $comments->count() === 5,
+            'empty' => $offset === 0 ? $comments->isEmpty() : false,
+        ];
+
+        return response($data);
     }
 
     public function add($type, $id)
@@ -112,6 +130,9 @@ class CommentController extends Controller {
                 break;
             case 'podcast':
                 return (new PodcastRepository)->findOrFail($id);
+                break;
+            case 'update':
+                return (new UpdateRepository)->findOrFail($id);
                 break;
             default:
                 return null;

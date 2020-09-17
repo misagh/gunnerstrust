@@ -99,6 +99,33 @@ header {
     }
 }
 
+.updates-list {
+    a {
+        color: $danger;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .update-body {
+        text-align: start;
+        unicode-bidi: plaintext;
+    }
+
+    .index-update-comment-body {
+        font-size: 90% !important;
+    }
+}
+
+.comment-modal-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: $dark;
+    @include border-radius(0);
+}
+
 .articles {
     .carousel-caption {
         left: 0 !important;
