@@ -85,3 +85,13 @@ function shamsi_format($date, $format)
 {
     return \Hekmatinasser\Verta\Verta::persianNumbers(shamsi($date)->format($format));
 }
+
+function shamsi_human_diff($date)
+{
+    return \Hekmatinasser\Verta\Verta::persianNumbers($date->diffForHumans());
+}
+
+function remove_br($text)
+{
+    return str_ireplace(["<br />", "<br>", "<br/>"], "", $text);
+}

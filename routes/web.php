@@ -47,11 +47,30 @@ Route::prefix('articles')->group(function ()
     Route::get('{slug}', 'ArticleController@view')->name('articles.view');
 });
 
+Route::prefix('updates')->group(function ()
+{
+    Route::any('/add', 'UpdateController@add')->name('updates.add');
+    Route::any('/edit/{id}', 'UpdateController@edit')->name('updates.edit');
+    Route::get('/delete/{id}', 'UpdateController@delete')->name('updates.delete');
+    Route::post('/fetch', 'UpdateController@fetch')->name('updates.fetch');
+    Route::get('/{id}', 'UpdateController@view')->name('updates.view');
+});
+
 Route::prefix('games')->group(function ()
 {
     Route::any('/', 'GameController@index')->name('games');
     Route::post('/add', 'GameController@add')->name('games.add')->middleware('auth');
     Route::post('/calculate/{id}', 'GameController@calculate')->name('games.calculate')->middleware('admin');
+});
+
+Route::prefix('tags')->group(function ()
+{
+    Route::any('/{tag?}', 'TagController@index')->name('tags.index');
+});
+
+Route::prefix('categories')->group(function ()
+{
+    Route::any('/{slug}', 'CategoryController@updates')->name('categories.updates');
 });
 
 Route::prefix('challenges')->group(function ()
@@ -145,6 +164,7 @@ Route::prefix('comments')->group(function ()
 {
     Route::get('list', 'CommentController@list')->name('comments.list');
     Route::get('fetch/{type}/{id}', 'CommentController@fetch')->name('comments.fetch');
+    Route::post('fetch-modal/{type}/{id}', 'CommentController@fetchModal')->name('comments.fetch.modal');
     Route::post('add/{type}/{id}', 'CommentController@add')->name('comments.add');
     Route::post('delete/{id}', 'CommentController@delete')->name('comments.delete');
     Route::post('edit/{id}', 'CommentController@edit')->name('comments.edit');

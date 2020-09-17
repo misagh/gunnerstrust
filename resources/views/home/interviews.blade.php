@@ -1,5 +1,5 @@
 @if ($interviews->isNotEmpty())
-    <div class="articles-slider">
+    <div class="articles-slider mb-3">
         <div class="overflow-hidden">
             <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-microphone-alt fa-lg mr-2"></i>مصاحبه با هواداران</h3>
             <a href="{{ route('interviews.lists') }}" class="float-left mt-3 bg-purple px-3 py-1 text-white">آرشیو مصاحبه‌ها</a>

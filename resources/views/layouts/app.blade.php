@@ -8,8 +8,6 @@
     <title>@yield('title') | GunnersTrust</title>
     <meta name="description" content="@yield('description')">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Metal+Mania" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ad682e5c71.js" crossorigin="anonymous"></script>
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <link rel="canonical" href="{{ url()->current() }}">
@@ -128,25 +126,7 @@
         </div>
     </nav>
 
-    <header class="shadow mt-5">
-        <div class="container text-center position-relative">
-            <div class="eng-font mt-3 text-white">
-                <span class="title">Gunners<span class="text-danger">Trust</span></span>
-                <span class="slogan font-weight-bold ml-md-3">Arsenal Fan Club Website in Iran</span>
-            </div>
-            @if (empty($auth))
-            <div class="row mt-2">
-                <div class="col-12">
-                    <a href="{{ route('login') }}" class="btn btn-light text-black-50 btn-sm">ورود با نام کاربری</a>
-                    <a href="{{ route('socialite.login', 'google') }}" class="btn btn-primary text-white btn-sm">ورود با اکانت گوگل</a>
-                    <a href="{{ route('register') }}" class="btn btn-light text-black-50 btn-sm">ثبت نام در سایت</a>
-                </div>
-            </div>
-            @endif
-        </div>
-    </header>
-
-    <main class="py-4">
+    <main class="py-5 mt-4 mt-md-5">
         @if (! empty($new_notifications))
             <div class="container">
                 <div class="alert alert-warning shadow">
@@ -221,8 +201,8 @@
     <div class="container py-4 text-right">
         <div class="row">
             <div class="col-12">
-                <p class="logo m-0">Gunners<span class="text-danger">Trust</span></p>
-                <h1 class="small">گانرزتراست، مرجع خبری باشگاه آرسنال انگلیس برای فارسی زبانان</h1>
+                <p class="eng-font h5 font-weight-bold m-0">Gunners<span class="text-danger">Trust</span></p>
+                <h1 class="small mt-2">گانرزتراست، جامعه هواداری باشگاه آرسنال انگلیس برای فارسی زبانان</h1>
             </div>
             <div class="col-12">
                 <hr>
