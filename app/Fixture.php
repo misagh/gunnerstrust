@@ -91,6 +91,11 @@ class Fixture extends Model {
         return ! is_null($this->score1) && ! is_null($this->score2);
     }
 
+    public function getPenaltyWinner()
+    {
+        return $this->penalty1 > $this->penalty2 ? $this->team1_id : $this->team2_id;
+    }
+
     private function getFullSeason($sep = '/')
     {
         return $this->season . $sep . ($this->season + 1);

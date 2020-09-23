@@ -30,6 +30,20 @@
                                 </select>
                             </div>
                         </div>
+                        @if ($fixture->penalty)
+                        <div class="form-row mt-3">
+                            <div class="col">
+                                <label class="font-weight-bold d-block">تیم صعود کننده به دور بعد؟</label>
+                                <div class="form-group text-center">
+                                    <select class="form-control w-auto px-3 mx-auto" name="winner_id">
+                                        <option value="">انتخاب کنید...</option>
+                                        <option value="{{ $fixture->team1_id }}" {{ ($user_guess->winner_id ?? null) === $fixture->team1_id ? 'selected' : '' }}>{{ $fixture->team1->name_en }}</option>
+                                        <option value="{{ $fixture->team2_id }}" {{ ($user_guess->winner_id ?? null) === $fixture->team2_id ? 'selected' : '' }}>{{ $fixture->team2->name_en }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <button type="submit" class="btn btn-warning btn-lg px-5 mt-3" {{ auth()->check() ? '' : 'disabled' }}>
                             {{ empty($user_guess) ? 'ثبت نتیجه' : 'تغییر نتیجه ثبت شده' }}
                         </button>
@@ -74,6 +88,15 @@
                 </div>
                 @endif
             @endif
+        @endif
+        @if (! is_null($user_points))
+            <div class="card bg-info text-white shadow mb-4">
+                <div class="card-body text-center">
+                    <h1 class="font-weight-bold h4 mb-3">مجموع امتیازات شما</h1>
+                    <hr>
+                    <p class="mb-0 font-weight-bold h1">{{ $user_points }}</p>
+                </div>
+            </div>
         @endif
         <div class="overflow-hidden">
             <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-chart-bar fa-lg mr-2"></i>جدول برترین های مسابقات</h3>

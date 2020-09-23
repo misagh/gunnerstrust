@@ -6,7 +6,7 @@
                 @if ($fixture->played_at > now())
                     <span> vs </span>
                 @else
-                    <span> {{ $fixture->score1 }} - {{ $fixture->score2 }} </span>
+                    <span> {{ $fixture->score1 . ($fixture->penalty1 ? ' (' . $fixture->penalty1 . ')' : '') }} - {{ ($fixture->penalty2 ? '(' . $fixture->penalty2 . ') ' : '') . $fixture->score2 }} </span>
                 @endif
                 <span class="font-weight-bold team-name">{{ $fixture->team2->name_en }}</span>
             </p>

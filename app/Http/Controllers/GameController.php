@@ -12,8 +12,9 @@ class GameController extends Controller {
         $fixture = (new FixtureRepository)->getNextFixture();
         $table = (new GameRepository)->getLeagueTable();
         $user_guess = (new GameRepository)->getUserGuess($fixture->id ?? null, auth()->id());
+        $user_points = (new GameRepository)->getUserPoints(auth()->id());
 
-        return view('games.index', compact('fixture', 'table', 'user_guess'));
+        return view('games.index', compact('fixture', 'table', 'user_guess', 'user_points'));
     }
 
     public function add()

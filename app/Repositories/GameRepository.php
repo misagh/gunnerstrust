@@ -16,7 +16,7 @@ class GameRepository extends Repository {
     public function insertGuess($data, $fixture_id)
     {
         $user_id = auth()->id();
-        $data = array_only($data, ['score1', 'score2']);
+        $data = array_only($data, ['score1', 'score2', 'winner_id']);
 
         return $this->model->updateOrCreate(compact('user_id', 'fixture_id'), $data);
     }
@@ -39,10 +39,15 @@ class GameRepository extends Repository {
                            ->first();
     }
 
-    public function getUserGuesses($fixture_id)
+    public function getUserPoints($user_id)
     {
-        return $this->model->where('fixture_id', $fixture_id)
-                           ->get();
+        if (! $user_id)
+        {
+            return null;
+        }
+
+        return $this->model->where('user_id', $user_id)
+                           ->sum('points');
     }
 
     public function calculatePoints(Fixture $fixture)

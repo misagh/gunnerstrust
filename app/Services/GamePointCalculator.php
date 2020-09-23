@@ -11,17 +11,20 @@ class GamePointCalculator {
     const SCORE_POINTS = 5;
     const DIFF_POINTS = 7;
     const DRAW_POINTS = 14;
+    const WINNER_POINTS = 3;
 
     public function getPoints(Fixture $fixture, Game $game)
     {
+        $winner = ($fixture->penalty && $fixture->getPenaltyWinner() === $game->winner_id) ? static::WINNER_POINTS : 0;
+
         if ($game->score1 === $fixture->score1 && $game->score2 === $fixture->score2)
         {
-            return static::FULL_POINTS;
+            return $winner + static::FULL_POINTS;
         }
 
         if ($fixture->isDraw() && $game->isDraw())
         {
-            return static::DRAW_POINTS;
+            return $winner + static::DRAW_POINTS;
         }
 
         $score1_points = $game->score1 === $fixture->score1 ? static::SCORE_POINTS : 0;
