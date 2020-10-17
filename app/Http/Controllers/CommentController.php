@@ -11,12 +11,13 @@ use App\Repositories\FixtureRepository;
 use App\Repositories\PodcastRepository;
 use App\Repositories\ReactionRepository;
 use App\Repositories\InterviewRepository;
+use App\Repositories\DiscussionRepository;
 
 class CommentController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['fetch', 'list', 'fetchModal']]);
+        $this->middleware('auth', ['except' => ['fetch', 'list', 'reactionList']]);
     }
 
     public function fetch($type, $id)
@@ -27,23 +28,6 @@ class CommentController extends Controller {
         $user = auth()->user();
 
         return response(compact('comments', 'user'));
-    }
-
-    public function fetchModal($type, $id)
-    {
-        $model = $this->getModel($type, $id);
-        $offset = intval(request('offset'));
-
-        $comments = (new CommentRepository)->getComments($model, $offset, 5);
-        $user = auth()->user();
-
-        $data = [
-            'view'  => view('comments.modal_box', compact('comments', 'user'))->render(),
-            'more'  => $comments->count() === 5,
-            'empty' => $offset === 0 ? $comments->isEmpty() : false,
-        ];
-
-        return response($data);
     }
 
     public function add($type, $id)
@@ -65,6 +49,15 @@ class CommentController extends Controller {
         {
             $comments->update(['body' => request('body')]);
         }
+
+        return response(compact('comments'));
+    }
+
+    public function reply($id)
+    {
+        $comments = (new CommentRepository)->findOrFail($id);
+
+        $comments = (new CommentRepository($comments))->insertReply(request('body'));
 
         return response(compact('comments'));
     }
@@ -133,6 +126,9 @@ class CommentController extends Controller {
                 break;
             case 'update':
                 return (new UpdateRepository)->findOrFail($id);
+                break;
+            case 'discussion':
+                return (new DiscussionRepository)->findOrFail($id);
                 break;
             default:
                 return null;

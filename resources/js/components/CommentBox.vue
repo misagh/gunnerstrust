@@ -33,31 +33,27 @@
             <div class="card-header p-0">
                 <div class="username username-user position-absolute float-right text-center text-white eng-font">
                     <b><a :href="'/users/profile/' + comment.user.username">{{ comment.user.username }}</a></b>
+                    <img class="rounded-circle shadow mr-1" :src="comment.user.avatar" width="22">
                 </div>
-                <div class="float-left small m-2 px-2 py-1">{{ comment.posted_at }}</div>
+                <div class="float-left text-muted small m-2 px-2 py-1">{{ comment.posted_at }}</div>
             </div>
-            <div class="card-body pb-2">
+            <div class="card-body p-2 p-md-3">
                 <p v-if="comment.edit">
                     <textarea rows="5" class="form-control mb-3" v-model="commentBodyEdited"></textarea>
                     <button type="button" class="btn btn-success" @click="editComment(comment.id)">ذخیره تغییرات</button>
                     <button type="button" class="btn btn-secondary" @click="comment.edit = false">انصراف</button>
                 </p>
                 <div v-else class="card-text">
-                    <div class="float-right mr-3 mb-3">
-                        <a :href="'/users/profile/' + comment.user.username">
-                            <img class="rounded-circle shadow" :src="comment.user.avatar" width="100">
-                        </a>
-                    </div>
                     <p class="comment-body" v-html="comment.body"></p>
                 </div>
-                <div v-if="user" class="d-block clearfix mb-2">
-                    <div class="float-left position-relative mt-3" v-if="comment.reactions.length > 0 || ! comment.own_comment">
+                <div v-if="comment.reactions.length > 0 || commentable.auth" class="d-block clearfix mt-0 mt-md-3">
+                    <div class="float-left position-relative" v-if="comment.reactions.length > 0 || ! comment.own_comment">
                         <div class="emojies shadow-sm py-1 position-absolute eng-font" v-show="comment.emojies">
                             <div class="d-inline-block m-2 cursor-pointer" v-for="emoji in emojies">
                                 <img v-bind:src="'/img/emoji/' + emoji + '.png'" width="28" @click="addReaction(comment.id, emoji)">
                             </div>
                         </div>
-                        <span class="cursor-pointer d-inline-block mt-2 ml-2" v-if="! comment.own_comment">
+                        <span class="cursor-pointer d-inline-block mt-2 ml-2" v-if="user && ! comment.own_comment">
                             <i class="show-emojies text-muted fas fa-lg fa-smile" @click="showReactionEmojies(comment.id)"></i>
                         </span>
                         <div class="reaction-box d-inline-block float-right mx-1 mb-1 cursor-pointer" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}" data-toggle="modal" data-target="#reactionModal" @click="reactionUsers(comment.id)">
@@ -65,10 +61,47 @@
                             <img v-bind:src="'/img/emoji/' + data.reaction + '.png'" width="20">
                         </div>
                     </div>
-                    <div class="float-right mt-3" v-if="((user && user.role === 'admin') || comment.own_comment) && ! comment.edit">
-                        <button type="button" class="btn btn-outline-secondary btn-sm" @click="comment.edit = true, commentBodyEdited = comment.body">ویرایش</button>
-                        <div class="d-inline-block">
-                            <vue-confirmation-button :messages="customMessages" :css="customCss" v-on:confirmation-success="deleteComment(comment.id)"></vue-confirmation-button>
+                    <div class="float-right mt-1" v-if="commentable.auth">
+                        <div v-if="! comment.edit" class="d-inline-block">
+                            <button type="button" class="btn btn-danger btn-sm" @click="comment.reply = true">پاسخ</button>
+                        </div>
+                        <div v-if="(user.role === 'admin' || comment.own_comment) && ! comment.edit" class="d-inline-block">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="comment.edit = true, commentBodyEdited = comment.body">ویرایش</button>
+                            <div class="d-inline-block">
+                                <vue-confirmation-button :messages="customMessages" :css="customCss" v-on:confirmation-success="deleteComment(comment.id)"></vue-confirmation-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="comment.reply">
+                    <textarea rows="2" class="form-control my-2" v-model="commentBodyReply" required></textarea>
+                    <button type="button" class="btn btn-success" @click="replyComment(comment.id)">ارسال پاسخ</button>
+                    <button type="button" class="btn btn-secondary" @click="comment.reply = false">انصراف</button>
+                </div>
+            </div>
+            <div class="card-footer p-0" v-if="comment.replies_list.length > 0">
+                <div class="accordion" :id="'accordionReplies' + comment.id">
+                    <div class="card border-0">
+                        <div class="card-header p-0" :id="'headingReplies' + comment.id">
+                            <h2 class="mb-0 text-center">
+                                <button class="btn btn-link text-muted btn-sm mx-auto dropdown-toggle" type="button" data-toggle="collapse" :data-target="'#collapseReplies' + comment.id" aria-expanded="true" :aria-controls="'collapseReplies' + comment.id">نمایش پاسخ ها ({{ comment.replies_list.length }})</button>
+                            </h2>
+                        </div>
+                        <div :id="'collapseReplies' + comment.id" :class="'collapse' + (comment.replies_list.length === 1 ? ' show' : '')" :aria-labelledby="'headingReplies' + comment.id" :data-parent="'#accordionReplies' + comment.id">
+                            <div class="card-body p-2">
+                                <div v-for="(reply, index) in comment.replies_list">
+                                    <div class="media">
+                                        <img :src="comment.user.avatar" class="mr-2 shadow-sm" width="24">
+                                        <div class="media-body">
+                                            <h6 class="m-0 font-weight-bold">
+                                                <a :href="'/users/profile/' + comment.user.username">{{ reply.user.username }}</a>
+                                            </h6>
+                                            <span>{{ reply.body }}</span>
+                                        </div>
+                                    </div>
+                                    <hr class="my-2" v-if="index !== (comment.replies_list.length - 1)">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,6 +180,7 @@
                 showEmojies: false,
                 commentBody: '',
                 commentBodyEdited: '',
+                commentBodyReply: '',
                 customCss: 'btn btn-sm btn-outline-secondary',
                 customMessages: [
                     'حذف',
@@ -253,6 +287,31 @@
                             return comment;
                         });
                     });
+            },
+            replyComment(id)
+            {
+                const bodyReply = this.commentBodyReply;
+
+                if (bodyReply.length > 0)
+                {
+                    this.commentBodyReply = '';
+
+                    axios.post('/comments/reply/' + id, {
+                            body: bodyReply
+                        })
+                        .then(({data}) =>
+                        {
+                            this.comments = this.comments.filter(comment =>
+                            {
+                                if (comment.id === id)
+                                {
+                                    comment.replies_list = data.comments.replies_list;
+                                }
+
+                                return comment;
+                            });
+                        });
+                }
             },
             reactionUsers(id)
             {

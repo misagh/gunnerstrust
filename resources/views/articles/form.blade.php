@@ -62,6 +62,10 @@
                         <label>متن</label>
                         <textarea id="summernote" name="body" class="form-control" required>{{ $article->body ?? '' }}</textarea>
                     </div>
+                    <div class="form-group">
+                        <label>ارسال در تلگرام</label>
+                        <input type="checkbox" name="telegram" value="1">
+                    </div>
                     <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
                     @if (! empty($article))
                     <a href="{{ route('articles.view', $article->slug) }}" class="btn btn-secondary float-left" target="_blank">مشاهده خبر</a>

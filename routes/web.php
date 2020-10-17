@@ -22,6 +22,7 @@ Route::get('/f/{id}', 'FixtureController@short')->name('fixtures.short');
 Route::get('/o/{id}', 'TopicController@short')->name('topics.short');
 Route::get('/i/{id}', 'InterviewController@short')->name('interviews.short');
 Route::get('/c/{id}', 'PodcastController@short')->name('podcasts.short');
+Route::get('/d/{id}', 'DiscussionController@short')->name('discussions.short');
 
 Route::get('login/{provider}', 'SocialiteController@login')->name('socialite.login')->where(['provider' => 'google']);
 Route::get('login/{provider}/callback', 'SocialiteController@callback')->name('socialite.login.callback')->where(['provider' => 'google']);
@@ -135,6 +136,15 @@ Route::prefix('topics')->group(function ()
     Route::get('{slug}', 'TopicController@view')->name('topics.view');
 });
 
+Route::prefix('discussions')->group(function ()
+{
+    Route::any('/add', 'DiscussionController@add')->name('discussions.add');
+    Route::any('/edit/{id}', 'DiscussionController@edit')->name('discussions.edit');
+    Route::any('/lists', 'DiscussionController@lists')->name('discussions.lists');
+    Route::post('/vote/{id}', 'DiscussionController@vote')->name('discussions.vote')->middleware('auth');
+    Route::get('{slug}', 'DiscussionController@view')->name('discussions.view');
+});
+
 Route::prefix('notifications')->middleware('auth')->group(function ()
 {
     Route::get('/', 'NotificationController@index')->name('notifications');
@@ -142,6 +152,7 @@ Route::prefix('notifications')->middleware('auth')->group(function ()
 
 Route::prefix('admin')->middleware('admin')->group(function ()
 {
+    Route::get('/', 'AdminController@index')->name('admin.index');
     Route::any('upload', 'AdminController@upload')->name('admin.upload');
 });
 
@@ -164,10 +175,10 @@ Route::prefix('comments')->group(function ()
 {
     Route::get('list', 'CommentController@list')->name('comments.list');
     Route::get('fetch/{type}/{id}', 'CommentController@fetch')->name('comments.fetch');
-    Route::post('fetch-modal/{type}/{id}', 'CommentController@fetchModal')->name('comments.fetch.modal');
     Route::post('add/{type}/{id}', 'CommentController@add')->name('comments.add');
     Route::post('delete/{id}', 'CommentController@delete')->name('comments.delete');
     Route::post('edit/{id}', 'CommentController@edit')->name('comments.edit');
+    Route::post('reply/{id}', 'CommentController@reply')->name('comments.reply');
     Route::post('reaction/add/{id}/{emoji}', 'CommentController@reactionAdd')->name('comments.reaction.add');
     Route::post('reaction/list/{id}', 'CommentController@reactionList')->name('comments.reaction.list');
 });

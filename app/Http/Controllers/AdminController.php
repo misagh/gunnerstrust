@@ -6,6 +6,11 @@ use App\Services\ArticleImageFinder;
 
 class AdminController extends Controller {
 
+    public function index()
+    {
+        return view('admin.index');
+    }
+
     public function upload()
     {
         if (request()->isMethod('post') && $file = request()->file('file'))

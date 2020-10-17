@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model {
 
     protected $guarded = [];
-    protected $appends = ['emojies', 'own_comment', 'reaction_data', 'posted_at', 'edit'];
+    protected $appends = ['emojies', 'own_comment', 'reaction_data', 'posted_at', 'edit', 'reply', 'replies_list'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'reply_id');
     }
 
     public function reactions()
@@ -39,6 +44,11 @@ class Comment extends Model {
         return false;
     }
 
+    public function getReplyAttribute()
+    {
+        return false;
+    }
+
     public function getOwnCommentAttribute()
     {
         return $this->user_id === auth()->id();
@@ -62,5 +72,10 @@ class Comment extends Model {
         }
 
         return $count;
+    }
+
+    public function getRepliesListAttribute()
+    {
+        return $this->replies()->with('user')->orderByDesc('id')->get();
     }
 }

@@ -22,13 +22,13 @@
 </head>
 <body>
 <div id="app" class="rtl">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top py-1 py-md-2">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand mx-0" href="{{ url('/') }}">
                 <span>گانرزتراست</span>
                 <span class="eng-font">GunnersTrust</span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            <button class="navbar-toggler border-0 px-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -57,6 +57,11 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenu">
                             <a class="dropdown-item" href="{{ route('comments.list') }}">نظرات کاربران</a>
                             <a class="dropdown-item" href="{{ route('users.list') }}">آرسنالی ها</a>
+                            @if (is_admin($auth) || is_author($auth))
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('articles.add') }}">{{ __('افزودن خبر') }}</a>
+                                <a class="dropdown-item" href="{{ route('articles.lists') }}">{{ __('ویرایش اخبار') }}</a>
+                            @endif
                         </div>
                     </li>
                     @if (empty($auth))
@@ -83,35 +88,10 @@
                                         <span class="badge badge-success ml-1">{{ $new_messages }}</span>
                                     @endif
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                @if (is_admin($auth) || is_author($auth))
-                                    <a class="dropdown-item" href="{{ route('articles.add') }}">{{ __('افزودن خبر') }}</a>
-                                    <a class="dropdown-item" href="{{ route('articles.lists') }}">{{ __('ویرایش اخبار') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                @endif
                                 @if (is_admin($auth))
-                                    <a class="dropdown-item" href="{{ route('challenges.add') }}">{{ __('افزودن چالش') }}</a>
-                                    <a class="dropdown-item" href="{{ route('challenges.lists') }}">{{ __('ویرایش چالش ها') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('fixtures.add') }}">{{ __('افزودن منوی بازی') }}</a>
-                                    <a class="dropdown-item" href="{{ route('fixtures.lists') }}">{{ __('ویرایش منوی بازی‌ها') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('teams.add') }}">{{ __('افزودن تیم') }}</a>
-                                    <a class="dropdown-item" href="{{ route('teams.lists') }}">{{ __('ویرایش تیم‌ها') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('stadiums.add') }}">{{ __('افزودن استادیوم') }}</a>
-                                    <a class="dropdown-item" href="{{ route('stadiums.lists') }}">{{ __('ویرایش استادیوم‌ها') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('interviews.add') }}">{{ __('افزودن مصاحبه') }}</a>
-                                    <a class="dropdown-item" href="{{ route('interviews.lists') }}">{{ __('ویرایش مصاحبه‌ها') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('podcasts.add') }}">{{ __('افزودن پادکست') }}</a>
-                                    <a class="dropdown-item" href="{{ route('podcasts.lists') }}">{{ __('ویرایش پادکست‌ها') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('admin.upload') }}">{{ __('آپلود') }}</a>
-                                    <a class="dropdown-item" href="{{ route('posts.lists') }}">{{ __('بررسی پست کابران') }}</a>
-                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('admin.index') }}">{{ __('منوی مدیریت') }}</a>
                                 @endif
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('خروج') }}
                                 </a>
@@ -126,7 +106,7 @@
         </div>
     </nav>
 
-    <main class="py-5 mt-4 mt-md-5">
+    <main class="py-5 mt-3 mt-md-4">
         @if (! empty($new_notifications))
             <div class="container">
                 <div class="alert alert-warning shadow">
@@ -182,6 +162,9 @@
                 </div>
             </div>
         @endif
+        @if (! empty($discussion) && ! request()->routeIs('discussions.view'))
+            @include('discussions.card')
+        @endif
         @yield('content')
     </main>
     @if (! request()->is('games'))
@@ -189,7 +172,7 @@
         <div class="container p-0 text-center">
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('games') }}" class="btn btn-orange text-white btn-lg px-5">بازی حدس نتیجه</a>
+                    <a href="{{ route('games') }}" class="btn btn-orange text-white btn-lg py-1 px-4">مسابقه حدس نتیجه</a>
                 </div>
             </div>
         </div>

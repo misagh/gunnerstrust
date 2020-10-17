@@ -21,7 +21,7 @@
 
 <div class="container px-2">
     @if (! empty($pinned))
-        <div class="card shadow bg-secondary mb-3">
+        <div class="card shadow bg-darkred mb-3">
             <div class="card-body p-1">
                 <div class="row no-gutters">
                     <div class="col-md-7 col-lg-7 order-0 order-md-1">
@@ -36,7 +36,7 @@
                             <p class="mt-3 mt-md-3 text-justify px-md-3 d-none d-md-block">{{ $pinned->summary }}</p>
                             <div class="mt-auto text-center mb-4 d-none d-lg-block">
                                 <div class="mb-3">
-                                    <span class="bg-secondary py-2 px-3">مطالعه و ارسال نظر</span>
+                                    <span class="bg-white text-dark py-2 px-3">مطالعه و ارسال نظر</span>
                                 </div>
                             </div>
                         </div>
@@ -47,13 +47,13 @@
     @endif
 
     <div class="row no-gutters updates-list">
-        <div class="col-md-8">
+        <div class="col-md-7">
             @include('updates.box_list')
             <div class="mt-5 row justify-content-center">
                 {{ $updates->links() }}
             </div>
         </div>
-        <div class="col-md-4 pl-md-3">
+        <div class="col-md-5 pl-md-3">
             @include('home.articles')
             @include('home.interviews')
             @include('home.podcasts')
