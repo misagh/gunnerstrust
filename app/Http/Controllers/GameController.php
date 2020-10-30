@@ -9,12 +9,19 @@ class GameController extends Controller {
 
     public function index()
     {
+        $month = intval(request('d'));
+
+        if ($month > 12)
+        {
+            abort(404);
+        }
+
         $fixture = (new FixtureRepository)->getNextFixture();
-        $table = (new GameRepository)->getLeagueTable();
+        $table = (new GameRepository)->getLeagueTable($month);
         $user_guess = (new GameRepository)->getUserGuess($fixture->id ?? null, auth()->id());
         $user_points = (new GameRepository)->getUserPoints(auth()->id());
 
-        return view('games.index', compact('fixture', 'table', 'user_guess', 'user_points'));
+        return view('games.index', compact('fixture', 'table', 'user_guess', 'user_points', 'month'));
     }
 
     public function add()

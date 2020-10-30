@@ -21,15 +21,22 @@ class GameRepository extends Repository {
         return $this->model->updateOrCreate(compact('user_id', 'fixture_id'), $data);
     }
 
-    public function getLeagueTable()
+    public function getLeagueTable($month)
     {
-        return $this->model->with('user')
-                           ->selectRaw('SUM(`points`) AS `points`')
-                           ->addSelect(['user_id'])
-                           ->groupBy('user_id')
-                           ->orderByDesc('points')
-                           ->orderBy('id')
-                           ->paginate(static::PAGINATION_LIMIT);
+        $table = $this->model->with('user')
+                             ->selectRaw('SUM(`games`.`points`) AS `points`')
+                             ->addSelect(['games.user_id'])
+                             ->groupBy('games.user_id')
+                             ->orderByDesc('games.points')
+                             ->orderBy('games.id');
+
+        if ($month > 0)
+        {
+            $table->leftJoin('fixtures', 'games.fixture_id', '=', 'fixtures.id')
+                  ->whereMonth('fixtures.played_at', $month);
+        }
+
+        return $table->paginate(static::PAGINATION_LIMIT);
     }
 
     public function getUserGuess($fixture_id, $user_id)

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'مسابقه حدس نتیجه بازی')
+@section('title', 'مسابقه حدس نتیجه بازی' . ($month > 0 ? ' | برترین های ماه ' . month_name($month) : ''))
 
 @section('content')
     <div class="container">
@@ -99,11 +99,22 @@
             </div>
         @endif
         <div class="overflow-hidden">
-            <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-chart-bar fa-lg mr-2"></i>جدول برترین های مسابقات</h3>
+            <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-chart-bar fa-lg mr-2"></i>جدول برترین های مسابقات{{ $month > 0 ? (' - ماه ' . month_name($month)) : '' }}</h3>
         </div>
         <hr class="mt-0">
         <div class="card">
             <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-6 col-lg-4 order-0 order-lg-0">
+                        <a class="btn btn-block {{ $month == date('m') ? 'btn-success' : 'btn-secondary' }}" href="{{ route('games', ['d' => date('m')]) }}">برترین‌های این ماه</a>
+                    </div>
+                    <div class="col-12 col-lg-4 mt-2 mt-lg-0 order-2 order-lg-1">
+                        <a class="btn btn-block {{ $month == 0 ? 'btn-success' : 'btn-secondary' }}" href="{{ route('games') }}">برترین‌های کل فصل</a>
+                    </div>
+                    <div class="col-6 col-lg-4 order-1 order-lg-2">
+                        <a class="btn btn-block {{ $month == (date('m') - 1) ? 'btn-success' : 'btn-secondary' }}" href="{{ route('games', ['d' => date('m') - 1]) }}">برترین‌های ماه قبل</a>
+                    </div>
+                </div>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -114,7 +125,7 @@
                     </thead>
                     <tbody>
                     @foreach($table as $row)
-                    <tr>
+                    <tr class="{{ $loop->iteration === 1 ? 'font-weight-bold' : '' }}">
                         <th scope="row">{{ $loop->iteration + ((intval(request('page') ?: 1) - 1) * 20) }}</th>
                         <td class="eng-font"><a href="{{ route('users.profile', $row->user->username) }}">{{ $row->user->username }}</a></td>
                         <td class="eng-font">{{ intval($row->points) }}</td>
@@ -123,7 +134,7 @@
                     </tbody>
                 </table>
                 <div class="mt-5 row justify-content-center">
-                    {{ $table->links() }}
+                    {{ $month > 0 ? $table->appends(['d' => $month])->links() : $table->links() }}
                 </div>
             </div>
         </div>
