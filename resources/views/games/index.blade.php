@@ -125,7 +125,7 @@
                     </thead>
                     <tbody>
                     @foreach($table as $row)
-                    <tr class="{{ $loop->iteration === 1 ? 'font-weight-bold' : '' }}">
+                    <tr class="{{ ($loop->iteration + ((intval(request('page') ?: 1) - 1) * 20)) === 1 ? 'font-weight-bold' : '' }}">
                         <th scope="row">{{ $loop->iteration + ((intval(request('page') ?: 1) - 1) * 20) }}</th>
                         <td class="eng-font"><a href="{{ route('users.profile', $row->user->username) }}">{{ $row->user->username }}</a></td>
                         <td class="eng-font">{{ intval($row->points) }}</td>
