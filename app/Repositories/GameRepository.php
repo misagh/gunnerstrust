@@ -27,7 +27,7 @@ class GameRepository extends Repository {
                              ->selectRaw('SUM(`games`.`points`) AS `points`')
                              ->addSelect(['games.user_id'])
                              ->groupBy('games.user_id')
-                             ->orderByDesc('games.points')
+                             ->orderByDesc('points')
                              ->orderBy('games.id');
 
         if ($month > 0)
