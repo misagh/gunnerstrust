@@ -33,7 +33,7 @@
             <div class="card-header p-0">
                 <div class="username username-user position-absolute float-right text-center text-white eng-font">
                     <b><a :href="'/users/profile/' + comment.user.username">{{ comment.user.username }}</a></b>
-                    <img class="rounded-circle shadow mr-1" :src="comment.user.avatar" width="22">
+                    <img class="rounded-circle shadow mr-1" :src="comment.user.avatar" width="35">
                 </div>
                 <div class="float-left text-muted small m-2 px-2 py-1">{{ comment.posted_at }}</div>
             </div>
@@ -75,11 +75,11 @@
                 </div>
                 <div v-if="comment.reply">
                     <textarea rows="2" class="form-control my-2" v-model="commentBodyReply" required></textarea>
-                    <button type="button" class="btn btn-success" @click="replyComment(comment.id)">ارسال پاسخ</button>
+                    <button type="button" class="btn btn-success" @click="replyComment(comment)">ارسال پاسخ</button>
                     <button type="button" class="btn btn-secondary" @click="comment.reply = false">انصراف</button>
                 </div>
             </div>
-            <div class="card-footer p-0" v-if="comment.replies_list.length > 0">
+            <div class="card-footer p-0" v-if="comment.replies_list.length > 0 || comment.force_reply_open">
                 <div class="accordion" :id="'accordionReplies' + comment.id">
                     <div class="card border-0">
                         <div class="card-header p-0" :id="'headingReplies' + comment.id">
@@ -87,16 +87,16 @@
                                 <button class="btn btn-link text-muted btn-sm mx-auto dropdown-toggle" type="button" data-toggle="collapse" :data-target="'#collapseReplies' + comment.id" aria-expanded="true" :aria-controls="'collapseReplies' + comment.id">نمایش پاسخ ها ({{ comment.replies_list.length }})</button>
                             </h2>
                         </div>
-                        <div :id="'collapseReplies' + comment.id" :class="'collapse' + (comment.replies_list.length === 1 ? ' show' : '')" :aria-labelledby="'headingReplies' + comment.id" :data-parent="'#accordionReplies' + comment.id">
+                        <div :id="'collapseReplies' + comment.id" :class="'collapse' + (comment.replies_list.length === 1 || comment.force_reply_open ? ' show' : '')" :aria-labelledby="'headingReplies' + comment.id" :data-parent="'#accordionReplies' + comment.id">
                             <div class="card-body p-2">
                                 <div v-for="(reply, index) in comment.replies_list">
                                     <div class="media">
-                                        <img :src="comment.user.avatar" class="mr-2 shadow-sm" width="24">
+                                        <img :src="reply.user.avatar" class="mr-2 shadow-sm" width="24">
                                         <div class="media-body">
                                             <h6 class="m-0 font-weight-bold">
-                                                <a :href="'/users/profile/' + comment.user.username">{{ reply.user.username }}</a>
+                                                <a :href="'/users/profile/' + reply.user.username">{{ reply.user.username }}</a>
                                             </h6>
-                                            <span>{{ reply.body }}</span>
+                                            <p class="comment-body" v-html="reply.body"></p>
                                         </div>
                                     </div>
                                     <hr class="my-2" v-if="index !== (comment.replies_list.length - 1)">
@@ -288,7 +288,7 @@
                         });
                     });
             },
-            replyComment(id)
+            replyComment(sourceComment)
             {
                 const bodyReply = this.commentBodyReply;
 
@@ -296,20 +296,23 @@
                 {
                     this.commentBodyReply = '';
 
-                    axios.post('/comments/reply/' + id, {
+                    axios.post('/comments/reply/' + sourceComment.id, {
                             body: bodyReply
                         })
                         .then(({data}) =>
                         {
                             this.comments = this.comments.filter(comment =>
                             {
-                                if (comment.id === id)
+                                if (comment.id === sourceComment.id)
                                 {
                                     comment.replies_list = data.comments.replies_list;
                                 }
 
                                 return comment;
                             });
+
+                            sourceComment.reply = false;
+                            sourceComment.force_reply_open = true;
                         });
                 }
             },

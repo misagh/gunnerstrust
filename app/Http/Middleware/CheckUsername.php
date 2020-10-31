@@ -15,7 +15,7 @@ class CheckUsername {
             return redirect()->route('users.username');
         }
 
-        if (in_array($request->path(), ['login', 'register']))
+        if (in_array($request->path(), ['login', 'register']) || starts_with($request->path(), 'comments'))
         {
             $request->session()->keep('url_back');
         }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model {
 
     protected $guarded = [];
-    protected $appends = ['emojies', 'own_comment', 'reaction_data', 'posted_at', 'edit', 'reply', 'replies_list'];
+    protected $appends = ['emojies', 'own_comment', 'reaction_data', 'posted_at', 'edit', 'reply', 'replies_list', 'force_reply_open'];
 
     public function user()
     {
@@ -45,6 +45,11 @@ class Comment extends Model {
     }
 
     public function getReplyAttribute()
+    {
+        return false;
+    }
+
+    public function getForceReplyOpenAttribute()
     {
         return false;
     }
