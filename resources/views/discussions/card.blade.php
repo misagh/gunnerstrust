@@ -1,6 +1,6 @@
 <div class="container mb-2 {{ request()->routeIs('home') ? 'px-2' : '' }}">
-    <div class="card bg-darkblue }}">
-        <div class="row">
+    <div class="card bg-darkblue">
+        <div class="row no-gutters">
             <div class="col-md-4">
                 <img src="{{ get_cover($discussion->cover) }}" class="w-100">
             </div>

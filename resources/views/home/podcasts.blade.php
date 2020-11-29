@@ -5,7 +5,7 @@
             <a href="{{ route('podcasts.lists') }}" class="float-left mt-3 bg-orange px-3 py-1 text-white">همه قسمت‌ها</a>
         </div>
         <hr class="mt-0">
-        <div class="row mt-3">
+        <div class="row no-gutters mt-3">
             @foreach($podcasts as $podcast)
                 <div class="col-md-4 mb-3">
                     <div class="card shadow-sm">
