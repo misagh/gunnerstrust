@@ -1,14 +1,13 @@
 @if ($articles->isNotEmpty())
     <div class="articles-slider mb-3">
         <div class="overflow-hidden">
-            <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-futbol fa-lg mr-2"></i>آخرین مقالات آرسنالی</h3>
-            <a href="{{ route('articles.lists') }}" class="float-left mt-3 bg-success px-3 py-1 text-white">آرشیو مقالات</a>
+            <h3 class="mt-4 h5 font-weight-bold float-right"><i class="fas fa-futbol fa-lg mr-2"></i>مقالات آرسنالی</h3>
+            <a href="{{ route('articles.lists') }}" class="float-left mt-3 bg-success px-3 py-1 text-white">همه مقالات</a>
         </div>
         <hr class="mt-0">
-        <div class="main-carousel mt-3"
-             data-flickity='{ "cellAlign": "center", "freeScroll": true, "wrapAround": true, "autoPlay": 2500, "pauseAutoPlayOnHover": true, "rightToLeft": true, "pageDots": false, "percentPosition": false }'>
+        <div class="row mt-3">
             @foreach($articles as $article)
-                <div class="carousel-cell">
+                <div class="col-md-4 mb-3">
                     <div class="card shadow-sm">
                         <img class="card-img-top" src="{{ get_cover($article->cover) }}" alt="{{ $article->summary }}">
                         <div class="card-body">

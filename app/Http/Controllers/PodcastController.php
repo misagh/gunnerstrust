@@ -79,7 +79,7 @@ class PodcastController extends Controller {
     public function view($slug)
     {
         $podcast = (new PodcastRepository)->findByOrFail('slug', $slug);
-        $podcasts = (new PodcastRepository)->getLatestPodcasts(2, $podcast->id);
+        $podcasts = (new PodcastRepository)->getLatestPodcasts(2, $podcast->id, true);
 
         $podcast->increment('hit');
 

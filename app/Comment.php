@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model {
 
     protected $guarded = [];
-    protected $appends = ['emojies', 'own_comment', 'reaction_data', 'posted_at', 'edit', 'reply', 'replies_list', 'force_reply_open'];
+    protected $appends = ['own_comment', 'like_data', 'posted_at', 'edit', 'reply', 'replies_list', 'force_reply_open', 'short'];
 
     public function user()
     {
@@ -24,6 +24,11 @@ class Comment extends Model {
         return $this->morphMany(Reaction::class, 'reactionable');
     }
 
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
     public function commentable()
     {
         return $this->morphTo();
@@ -32,11 +37,6 @@ class Comment extends Model {
     public function getPostedAtAttribute()
     {
         return $this->created_at->diffForHumans();
-    }
-
-    public function getEmojiesAttribute()
-    {
-        return false;
     }
 
     public function getEditAttribute()
@@ -59,28 +59,35 @@ class Comment extends Model {
         return $this->user_id === auth()->id();
     }
 
-    public function getReactionDataAttribute()
+    public function getLikeDataAttribute()
     {
-        $reactions = $this->reactions->groupBy('reaction');
+        $likes = $this->likes;
 
-        $count = [];
+        $user = $likes->where('user_id', auth()->id())->first();
 
-        foreach ($reactions as $reaction)
-        {
-            $user = $reaction->where('user_id', auth()->id())->first();
-
-            $count[] = [
-                'reaction' => $reaction->first()->reaction,
-                'count'    => $reaction->count(),
-                'user'     => ! empty($user),
-            ];
-        }
-
-        return $count;
+        return [
+            'count' => $likes->count(),
+            'user'  => ! empty($user),
+        ];
     }
 
     public function getRepliesListAttribute()
     {
         return $this->replies()->with('user')->orderByDesc('id')->get();
+    }
+
+    public function getShortAttribute()
+    {
+        return route('comments.view', [$this->id . '-' . $this->user_id]);
+    }
+
+    public function getTitleAttribute()
+    {
+        return $this->user->username . ': ' . get_limited($this->body, 8);
+    }
+
+    public function getSummaryAttribute()
+    {
+        return get_limited($this->body, 40);
     }
 }

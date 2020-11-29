@@ -15,10 +15,10 @@ class HomeController extends Controller {
 
     public function index()
     {
-        $articles = (new ArticleRepository)->getUnpinnedArticles(10);
+        $articles = (new ArticleRepository)->getUnpinnedArticles(3);
         $pinned = (new ArticleRepository)->getPinnedArticles();
         $interviews = (new InterviewRepository)->getLatestInterviews(6);
-        $podcasts = (new PodcastRepository)->getLatestPodcasts(6);
+        $podcasts = (new PodcastRepository)->getLatestPodcasts(3);
         $updates = (new UpdateRepository)->getLatestUpdates();
 
         $pinned = @$pinned[0];

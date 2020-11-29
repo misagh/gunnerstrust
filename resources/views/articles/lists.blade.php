@@ -37,6 +37,10 @@
             </div>
         </div>
         @endif
+        <div class="overflow-hidden">
+            <h1 class="mt-3 h5 font-weight-bold float-right"><i class="fas fa-futbol fa-lg mr-2"></i>مقالات آرسنالی</h1>
+        </div>
+        <hr class="mt-0 mb-4">
         <div class="row">
             <div class="col-12">
                 <div class="card-deck">

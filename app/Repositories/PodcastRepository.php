@@ -28,12 +28,14 @@ class PodcastRepository extends Repository {
         return $this->model;
     }
 
-    public function getLatestPodcasts($limit, $exclude = null)
+    public function getLatestPodcasts($limit, $exclude = null, $random = false)
     {
-        return $this->model->whereNotIn('id', array_wrap($exclude))
-                           ->inRandomOrder()
-                           ->limit($limit)
-                           ->get();
+        $podcasts = $this->model->whereNotIn('id', array_wrap($exclude))
+                                ->limit($limit);
+
+        $random AND $podcasts->inRandomOrder();
+
+        return $podcasts->get();
     }
 
     public function getList()

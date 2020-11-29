@@ -1,33 +1,35 @@
 <template>
     <div class="comment-box">
-        <div v-if="commentable.auth" class="accordion mb-4" id="newComment">
-            <div class="card bg-gradient-success text-white">
-                <div class="card-header" id="newCommentHead">
-                    <h2 class="mb-0">
-                        <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#newCommentArea" aria-expanded="true" aria-controls="newCommentArea">
-                            <span><i class="fas fa-comment-dots mr-2"></i>ارسال نظر جدید</span>
-                        </button>
-                    </h2>
-                </div>
-                <div id="newCommentArea" class="collapse" aria-labelledby="newCommentHead" data-parent="#newComment">
-                    <div class="card-body text-center">
-                        <div v-if="loadingComment">
-                            <span class="d-block mt-3"><i class="fas fa-spin fa-spinner fa-lg"></i></span>
-                        </div>
-                        <div v-else>
-                            <textarea name="body" class="form-control border border-dark shadow" v-model="commentBody" rows="4" required></textarea>
-                            <button type="submit" class="btn btn-dark mt-3 px-4" @click="addComment">ثبت نظر</button>
+        <div v-if="commentable.type">
+            <div v-if="commentable.auth" class="accordion mb-4" id="newComment">
+                <div class="card bg-gradient-success text-white">
+                    <div class="card-header" id="newCommentHead">
+                        <h2 class="mb-0">
+                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#newCommentArea" aria-expanded="true" aria-controls="newCommentArea">
+                                <span><i class="fas fa-comment-dots mr-2"></i>ارسال نظر جدید</span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="newCommentArea" class="collapse" aria-labelledby="newCommentHead" data-parent="#newComment">
+                        <div class="card-body text-center">
+                            <div v-if="loadingComment">
+                                <span class="d-block mt-3"><i class="fas fa-spin fa-spinner fa-lg"></i></span>
+                            </div>
+                            <div v-else>
+                                <textarea name="body" class="form-control border border-dark shadow" v-model="commentBody" rows="4" required></textarea>
+                                <button type="submit" class="btn btn-dark mt-3 px-4" @click="addComment">ثبت نظر</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div v-else class="alert alert-danger overflow-hidden">
-            <span class="float-right my-1">برای ارسال نظر لطفا وارد سایت شوید.</span>
-            <span class="float-left">
-                <a href="/login/google" class="btn btn-success btn-sm">ورود با گوگل<i class="fab fa-google ml-1"></i></a>
-                <a href="/login" class="btn btn-info btn-sm">ورود با نام کاربری</a>
-            </span>
+            <div v-else class="alert alert-danger overflow-hidden">
+                <span class="float-right my-1">برای ارسال نظر لطفا وارد سایت شوید.</span>
+                <span class="float-left">
+                    <a href="/login/google" class="btn btn-success btn-sm">ورود با گوگل<i class="fab fa-google ml-1"></i></a>
+                    <a href="/login" class="btn btn-info btn-sm">ورود با نام کاربری</a>
+                </span>
+            </div>
         </div>
         <div class="card shadow mb-3" v-for="comment in comments" :key="comment.id">
             <div class="card-header p-0">
@@ -35,7 +37,11 @@
                     <b><a :href="'/users/profile/' + comment.user.username">{{ comment.user.username }}</a></b>
                     <img class="rounded-circle shadow mr-1" :src="comment.user.avatar" width="35">
                 </div>
-                <div class="float-left text-muted small m-2 px-2 py-1">{{ comment.posted_at }}</div>
+                <div class="float-left text-muted small m-2 px-2 py-1">
+                    <span>{{ comment.posted_at }}</span>
+                    <span v-if="webShareApiSupported" @click="shareViaWebShare(comment.short)"><i class="fas fa-share-alt fa-lg ml-2 text-secondary"></i></span>
+                    <a v-else :href="comment.short"><i class="fas fa-share-alt fa-lg ml-2 text-secondary"></i></a>
+                </div>
             </div>
             <div class="card-body p-2 p-md-3">
                 <p v-if="comment.edit">
@@ -46,19 +52,27 @@
                 <div v-else class="card-text">
                     <p class="comment-body" v-html="comment.body"></p>
                 </div>
-                <div v-if="comment.reactions.length > 0 || commentable.auth" class="d-block clearfix mt-0 mt-md-3">
-                    <div class="float-left position-relative" v-if="comment.reactions.length > 0 || ! comment.own_comment">
-                        <div class="emojies shadow-sm py-1 position-absolute eng-font" v-show="comment.emojies">
-                            <div class="d-inline-block m-2 cursor-pointer" v-for="emoji in emojies">
-                                <img v-bind:src="'/img/emoji/' + emoji + '.png'" width="28" @click="addReaction(comment.id, emoji)">
+                <div v-if="comment.likes.length > 0 || commentable.auth" class="d-block clearfix mt-0 mt-md-3">
+                    <div class="float-left position-relative eng-font" v-if="comment.likes.length > 0 || ! comment.own_comment">
+                        <div v-if="user && ! comment.own_comment">
+                            <span class="cursor-pointer d-inline-block mt-2 ml-2">
+                                <i :class="(comment.like_data.user ? 'text-danger fas' : 'far') + ' fa-heart fa-lg'" @click="addLike(comment)"></i>
+                            </span>
+                            <div v-if="comment.like_data.count > 0" class="d-inline-block">
+                                <span class="cursor-pointer mt-2 ml-2" data-toggle="modal" data-target="#reactionModal" @click="likeUsers(comment.id)">
+                                    <b>{{ comment.like_data.count }}</b>
+                                </span>
                             </div>
                         </div>
-                        <span class="cursor-pointer d-inline-block mt-2 ml-2" v-if="user && ! comment.own_comment">
-                            <i class="show-emojies text-muted fas fa-lg fa-smile" @click="showReactionEmojies(comment.id)"></i>
-                        </span>
-                        <div class="reaction-box d-inline-block float-right mx-1 mb-1 cursor-pointer" v-for="data in comment.reaction_data" :class="{'bg-secondary text-white': data.user}" data-toggle="modal" data-target="#reactionModal" @click="reactionUsers(comment.id)">
-                            <span class="font-weight-bold">{{ data.count }}</span>
-                            <img v-bind:src="'/img/emoji/' + data.reaction + '.png'" width="20">
+                        <div v-if="(! user || comment.own_comment) && comment.like_data.count > 0">
+                            <div class="d-inline-block cursor-pointer" data-toggle="modal" data-target="#reactionModal" @click="likeUsers(comment.id)">
+                                <span class="d-inline-block mt-2 ml-2">
+                                    <i :class="(comment.own_comment ? 'far' : 'text-danger fas') + ' fa-heart fa-lg'"></i>
+                                </span>
+                                <span class="mt-2 ml-2">
+                                    <b>{{ comment.like_data.count }}</b>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="float-right mt-1" v-if="commentable.auth">
@@ -114,17 +128,17 @@
         <div class="modal fade" id="reactionModal" tabindex="-1" role="dialog" aria-labelledby="reactionModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header py-2 text-white bg-dark" v-if="! loadingReactions">
+                    <div class="modal-header py-2 text-white bg-dark" v-if="! loadingLikes">
                         <h6 class="modal-title">
-                            <span>مجموع واکنش ها:</span> <span class="font-weight-bold" v-text="reactionsCount"></span>
+                            <span>مجموع لایک ها:</span> <span class="font-weight-bold" v-text="likesCount"></span>
                         </h6>
                     </div>
                     <div class="modal-body pt-2">
-                        <span class="d-block text-center mt-3" v-if="loadingReactions"><i class="fas fa-spin fa-spinner fa-lg"></i></span>
-                        <div class="row" v-if="! loadingReactions">
-                            <div class="col-6 mt-2 ml-auto text-right" v-for="reactionList in reactionLists">
-                                <span class="mr-2 eng-font font-weight-bold"><a :href="'/users/profile/' + reactionList.user.username" target="_blank">{{ reactionList.user.username }}</a></span>
-                                <img v-bind:src="'/img/emoji/' + reactionList.reaction + '.png'" width="20">
+                        <span class="d-block text-center mt-3" v-if="loadingLikes"><i class="fas fa-spin fa-spinner fa-lg"></i></span>
+                        <div class="row" v-if="! loadingLikes">
+                            <div class="col-6 mt-2 ml-auto text-right" v-for="likeList in likeLists">
+                                <span class="mr-2 eng-font font-weight-bold"><a :href="'/users/profile/' + likeList.user.username" target="_blank">{{ likeList.user.username }}</a></span>
+                                <img src="/img/emoji/10.png" width="20">
                             </div>
                         </div>
                     </div>
@@ -144,40 +158,37 @@
 
         mounted()
         {
-            this.fetchComments();
+            if (this.commentable.type)
+            {
+                this.fetchComments();
+            }
+            else
+            {
+                this.fetchComment();
+            }
         },
 
-        created()
-        {
-            let self = this;
-
-            window.addEventListener('click', function (e)
+        computed: {
+            webShareApiSupported()
             {
-                if (!e.target.className.includes('show-emojies'))
-                {
-                    self.comments.filter(comment =>
-                    {
-                        return comment.emojies = false;
-                    });
-                }
-            });
+                return navigator.share;
+            }
         },
 
         data: function ()
         {
             return {
-                emojies: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
                 comments: [],
-                reactionLists: [],
+                likeLists: [],
+                like: false,
                 user: '',
                 limit: 20,
                 offset: 0,
                 loadMore: false,
                 loading: false,
                 loadingComment: false,
-                loadingReactions: true,
-                reactionsCount: 0,
-                showEmojies: false,
+                loadingLikes: true,
+                likesCount: 0,
                 commentBody: '',
                 commentBodyEdited: '',
                 commentBodyReply: '',
@@ -205,7 +216,22 @@
                         this.offset += this.limit;
                         this.user = data.user;
                         this.loading = false;
-                    })
+                    });
+            },
+            fetchComment()
+            {
+                axios.get('/comments/fetch-one/' + this.commentable.comment)
+                    .then(({data}) =>
+                    {
+                        if (data.comments.replies_list.length > 0)
+                        {
+                            data.comments.force_reply_open = true;
+                        }
+
+                        this.comments = this.comments.concat(data.comments);
+                        this.user = data.user;
+                        this.loading = false;
+                    });
             },
             moreComments()
             {
@@ -230,30 +256,22 @@
                         });
                 }
             },
-            showReactionEmojies(id)
+            addLike(comment)
             {
-                this.comments.filter(comment =>
-                {
-                    let show = (comment.id === id);
+                let liked = comment.like_data.user;
+                let id = comment.id;
 
-                    if (show && comment.emojies)
-                    {
-                        show = false;
-                    }
+                comment.like_data.user = ! liked;
+                comment.like_data.count = comment.like_data.count + (liked ? -1 : 1);
 
-                    return comment.emojies = show;
-                });
-            },
-            addReaction(id, emoji)
-            {
-                axios.post('/comments/reaction/add/' + id + '/' + emoji)
+                axios.post('/comments/like/add/' + comment.id)
                     .then(({data}) =>
                     {
                         this.comments.filter(comment =>
                         {
                             if (comment.id === id)
                             {
-                                return comment.reaction_data = data.comment.reaction_data;
+                                return comment.like_data = data.comment.like_data;
                             }
                         });
                     });
@@ -316,18 +334,24 @@
                         });
                 }
             },
-            reactionUsers(id)
+            likeUsers(id)
             {
-                this.reactionLists = [];
-                this.loadingReactions = true;
+                this.likeLists = [];
+                this.loadingLikes = true;
 
-                axios.post('/comments/reaction/list/' + id)
+                axios.post('/comments/like/list/' + id)
                     .then(({data}) =>
                     {
-                        this.loadingReactions = false;
-                        this.reactionLists = data.reactions;
-                        this.reactionsCount = data.reactions.length;
+                        this.loadingLikes = false;
+                        this.likeLists = data.likes;
+                        this.likesCount = data.likes.length;
                     });
+            },
+            shareViaWebShare(url)
+            {
+                navigator.share({
+                    url: url
+                })
             }
         }
     }

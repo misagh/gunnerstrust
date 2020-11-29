@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\PostRepository;
+use App\Repositories\LikeRepository;
+use App\Repositories\UserRepository;
 use App\Repositories\TopicRepository;
 use App\Repositories\UpdateRepository;
 use App\Repositories\ArticleRepository;
@@ -17,7 +19,7 @@ class CommentController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['fetch', 'list', 'reactionList']]);
+        $this->middleware('auth', ['except' => ['fetch', 'fetchOne', 'list', 'likeList', 'view']]);
     }
 
     public function fetch($type, $id)
@@ -26,6 +28,14 @@ class CommentController extends Controller {
 
         $comments = (new CommentRepository)->getComments($model, request('offset'));
         $user = auth()->user();
+
+        return response(compact('comments', 'user'));
+    }
+
+    public function fetchOne($id)
+    {
+        $comments = (new CommentRepository)->findOrFail($id);
+        $user = $comments->user;
 
         return response(compact('comments', 'user'));
     }
@@ -51,6 +61,26 @@ class CommentController extends Controller {
         }
 
         return response(compact('comments'));
+    }
+
+    public function view($id)
+    {
+        $token = explode('-', $id);
+
+        if (empty($token[0]) || empty($token[1]))
+        {
+            abort(404);
+        }
+
+        $comment = (new CommentRepository)->findOrFail($token[0]);
+        $user = (new UserRepository)->findOrFail($token[1]);
+
+        if (! is_null($comment->reply_id) || $comment->user_id !== $user->id)
+        {
+            abort(404);
+        }
+
+        return view('comments.view', compact('comment', 'user'));
     }
 
     public function reply($id)
@@ -93,6 +123,27 @@ class CommentController extends Controller {
         $reactions = $comment->reactions()->with('user')->get();
 
         return response(compact('reactions'));
+    }
+
+    public function likeAdd($id)
+    {
+        $comment = (new CommentRepository)->findOrFail($id);
+
+        if ($comment->user_id !== auth()->id())
+        {
+            $comment = (new LikeRepository)->insertLike($comment);
+        }
+
+        return response(compact('comment'));
+    }
+
+    public function likeList($id)
+    {
+        $comment = (new CommentRepository)->findOrFail($id);
+
+        $likes = $comment->likes()->with('user')->get();
+
+        return response(compact('likes'));
     }
 
     public function list()

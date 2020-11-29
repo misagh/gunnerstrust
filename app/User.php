@@ -37,6 +37,11 @@ class User extends Authenticatable {
         return $this->hasMany(Reaction::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
     public function avatars()
     {
         return $this->hasMany(Avatar::class);

@@ -174,13 +174,17 @@ Route::prefix('details')->middleware('auth')->group(function ()
 Route::prefix('comments')->group(function ()
 {
     Route::get('list', 'CommentController@list')->name('comments.list');
+    Route::get('view/{id}', 'CommentController@view')->name('comments.view');
     Route::get('fetch/{type}/{id}', 'CommentController@fetch')->name('comments.fetch');
+    Route::get('fetch-one/{id}', 'CommentController@fetchOne')->name('comments.fetch.one');
     Route::post('add/{type}/{id}', 'CommentController@add')->name('comments.add');
     Route::post('delete/{id}', 'CommentController@delete')->name('comments.delete');
     Route::post('edit/{id}', 'CommentController@edit')->name('comments.edit');
     Route::post('reply/{id}', 'CommentController@reply')->name('comments.reply');
     Route::post('reaction/add/{id}/{emoji}', 'CommentController@reactionAdd')->name('comments.reaction.add');
     Route::post('reaction/list/{id}', 'CommentController@reactionList')->name('comments.reaction.list');
+    Route::post('like/add/{id}', 'CommentController@likeAdd')->name('comments.like.add');
+    Route::post('like/list/{id}', 'CommentController@likeList')->name('comments.like.list');
 });
 
 Route::prefix('messages')->middleware('auth')->group(function ()

@@ -47,16 +47,10 @@
     @endif
 
     <div class="row no-gutters updates-list">
-        <div class="col-md-7">
-            @include('updates.box_list')
-            <div class="mt-5 row justify-content-center">
-                {{ $updates->links() }}
-            </div>
-        </div>
-        <div class="col-md-5 pl-md-3">
+        <div class="col">
+            @include('home.podcasts')
             @include('home.articles')
             @include('home.interviews')
-            @include('home.podcasts')
         </div>
     </div>
 </div>
