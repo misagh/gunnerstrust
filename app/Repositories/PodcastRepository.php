@@ -33,7 +33,14 @@ class PodcastRepository extends Repository {
         $podcasts = $this->model->whereNotIn('id', array_wrap($exclude))
                                 ->limit($limit);
 
-        $random AND $podcasts->inRandomOrder();
+        if ($random)
+        {
+            $podcasts->inRandomOrder();
+        }
+        else
+        {
+            $podcasts->orderByDesc('id');
+        }
 
         return $podcasts->get();
     }
