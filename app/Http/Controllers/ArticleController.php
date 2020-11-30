@@ -38,7 +38,7 @@ class ArticleController extends Controller {
                 'summary' => ['nullable', 'min:150', 'max:160'],
                 'body'    => ['required'],
             ];
-dd(request()->all());
+
             $this->validate(request(), $rules);
 
             $article = (new ArticleRepository)->insertArticle(request()->all());
