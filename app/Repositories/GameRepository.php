@@ -21,7 +21,7 @@ class GameRepository extends Repository {
         return $this->model->updateOrCreate(compact('user_id', 'fixture_id'), $data);
     }
 
-    public function getLeagueTable($month)
+    public function getLeagueTable($m, $y)
     {
         $table = $this->model->with('user')
                              ->selectRaw('SUM(`games`.`points`) AS `points`')
@@ -30,10 +30,11 @@ class GameRepository extends Repository {
                              ->orderByDesc('points')
                              ->orderBy('games.id');
 
-        if ($month > 0)
+        if ($m > 0 && $y > 0)
         {
             $table->leftJoin('fixtures', 'games.fixture_id', '=', 'fixtures.id')
-                  ->whereMonth('fixtures.played_at', $month);
+                  ->whereYear('fixtures.played_at', $y)
+                  ->whereMonth('fixtures.played_at', $m);
         }
 
         return $table->paginate(static::PAGINATION_LIMIT);

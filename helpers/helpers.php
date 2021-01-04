@@ -91,6 +91,11 @@ function shamsi_human_diff($date)
     return \Hekmatinasser\Verta\Verta::persianNumbers($date->diffForHumans());
 }
 
+function persian_numbers($string)
+{
+    return \Hekmatinasser\Verta\Verta::persianNumbers($string);
+}
+
 function remove_br($text)
 {
     return str_ireplace(["<br />", "<br>", "<br/>"], "", $text);
